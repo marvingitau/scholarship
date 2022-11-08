@@ -1,6 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Clerk\ClerkDashboardController;
+use App\Http\Controllers\Clerk\BeneficiaryformController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +24,24 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+// Admin
+Route::group(['middleware'=>'role:admin','prefix'=>'admin'],function () {
+    Route::group(['namespace'=>'Admin'],function () {
+        Route::get('/', [AdminDashboardController::class,'index'])->name('admin.dashboard');
+
+    });
+}); 
+
+// Clerk
+Route::group(['middleware'=>'role:clerk','prefix'=>'clerk'],function(){
+
+    Route::group(['namespace'=>'Clerk'],function(){
+        Route::get('/', [ClerkDashboardController::class,'index'])->name('clerk.dashboard');
+        // Beneficiary form urls
+        Route::get('/new-application',[BeneficiaryformController::class,'index'])->name('clerk.newapplication');
+
+    });
+});
+

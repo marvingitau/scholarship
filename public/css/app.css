@@ -1,0 +1,19 @@
+#app{
+    height: 100vh;
+background: #4e73df;
+}
+
+/* .home-menu {
+    position: fixed !important;
+    width: 100%;
+    z-index: 2;
+} */
+
+.logo-div {
+    width: 3rem;
+    height: auto;
+}
+.logo-div img {
+    width: 3rem;
+    height: auto;
+}

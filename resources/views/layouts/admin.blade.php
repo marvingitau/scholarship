@@ -7,8 +7,6 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="">
-    <meta name="author" content="marvin gitau">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -27,7 +25,7 @@
     <link href="{{ asset('css/scholarship-admin-2.css') }}" rel="stylesheet">
 </head>
 
-<body class="bg-gradient-primary">
+<body>
     <div id="app">
 
 
@@ -85,9 +83,9 @@
                 </div>
             </div>
         </nav>
-        <!-- <main> -->
+        <main>
             @yield('content')
-        <!-- </main> -->
+        </main>
     </div>
     <!-- Bootstrap core JavaScript 3.1.5-->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
