@@ -35,6 +35,8 @@ class CreateBeneficiaryformsTable extends Migration
             $table->string('EmailGuardian')->nullable();
             $table->string('AnotherSponship')->default('NO');
             $table->string('AnotherSponshipRemark')->nullable();
+            $table->string('ClerkStatus')->default('OPEN');//CLOSED-> when clerk achives
+            $table->string('AdminStatus')->default('PENDING');//APPROVED,DECLINED
             $table->timestamps();
             
         });

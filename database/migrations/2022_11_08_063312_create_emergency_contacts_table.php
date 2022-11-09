@@ -19,7 +19,6 @@ class CreateEmergencyContactsTable extends Migration
                 $table->bigInteger('beneficiary_id');
                 $table->string('EmergencyName')->nullable();
                 $table->string('EmergencyRelationship')->nullable();
-                $table->string('EmergencyRelationship')->nullable();
                 $table->string('EmergencyPhysicalAddress')->nullable();
                 $table->string('EmergencyPoBox')->nullable();
                 $table->string('EmergencyTelephone')->nullable();

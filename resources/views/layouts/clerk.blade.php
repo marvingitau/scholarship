@@ -79,7 +79,7 @@
         <!-- Core plugin JavaScript-->
         <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
         <!-- Custom scripts for all pages-->
-        <script src="{{ asset('js/scholarship-admin-2.min.js') }}"></script>
+        <script src="{{ asset('js/scholarship-admin-2.js') }}"></script>
         <!-- Page Specific script -->
         @yield('script')
 

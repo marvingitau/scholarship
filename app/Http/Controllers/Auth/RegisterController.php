@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Str;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -29,7 +32,37 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
+    public function redirectTo()
+    {
+        $usr = Auth::user();
+        $role = $usr->role;
+        switch ($role) {
+            case 'admin':
+                $admin_session_id = Session::get('admin_session_id');
+                if (empty($admin_session_id)) {
+                    $admin_session_id = Str::random(40);
+                    Session::put('admin_session_id', $admin_session_id);
+                }
+                return '/admin';
+                break;
+            case 'clerk':
+                $clerk_session_id = Session::get('clerk_session_id');
+                if (empty($clerk_session_id)) {
+                    $clerk_session_id = Str::random(40);
+                    Session::put('clerk_session_id', $clerk_session_id);
+                }
+                return '/clerk';
+                break;
+            default:
+                Auth::logout();
+                Session::invalidate();
+                Session::regenerateToken();
+                return '/';
+                break;
+        }
+    }
+
 
     /**
      * Create a new controller instance.

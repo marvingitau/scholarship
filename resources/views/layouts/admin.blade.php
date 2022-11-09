@@ -7,7 +7,8 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <meta name="description" content="">
+    <meta name="author" content="marvin gitau">
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
@@ -23,79 +24,64 @@
     <!-- <link href="https://cdn.usebootstrap.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/scholarship-admin-2.css') }}" rel="stylesheet">
+    @yield('style')
 </head>
 
-<body>
-    <div id="app">
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        @include('admin.partials.sidebar')
+        <!-- Sidebar -->
+        <!-- <main> -->
+        @yield('content')
+        <!-- </main> -->
+    </div>
+    <!-- End of Page Wrapper -->
 
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm home-menu">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <!-- {{ config('app.name', 'Laravel') }} -->
-                    <div class="logo-div">
-                        <img src="{{ asset('images/logo.png') }}" alt="">
-                    </div>
-                </a>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                        @if (Route::has('login'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-                        @endif
-
-                        @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
-                        @endif
-                        @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ Auth::user()->name }}
-                            </a>
-
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
-                        @endguest
-                    </ul>
+                        {{ __('Logout') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                    <!-- <a class="btn btn-primary" href="login.html">Logout</a> -->
                 </div>
             </div>
-        </nav>
-        <main>
-            @yield('content')
-        </main>
-    </div>
-    <!-- Bootstrap core JavaScript 3.1.5-->
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('js/scholarship-admin-2.min.js') }}"></script>
-    <!-- Page Specific script -->
-    @yield('script')
+        </div>
+
+
+
+
+
+        <!-- Bootstrap core JavaScript 3.1.5-->
+        <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="{{ asset('js/scholarship-admin-2.js') }}"></script>
+        <!-- Page Specific script -->
+        @yield('script')
 
 </body>
 

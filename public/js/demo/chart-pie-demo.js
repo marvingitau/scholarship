@@ -9,7 +9,7 @@ var myPieChart = new Chart(ctx, {
   data: {
     labels: ["Male", "Female"],
     datasets: [{
-      data: [55000, 334340],
+      data: JSON.parse(localStorage.getItem('piegraph')),
       backgroundColor: ['#4e73df', '#1cc88a', ],
       hoverBackgroundColor: ['#2e59d9', '#17a673',],
       hoverBorderColor: "rgba(234, 236, 244, 1)",

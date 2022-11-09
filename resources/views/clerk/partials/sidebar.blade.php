@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{route('clerk.dashboard')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -30,7 +30,7 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="{{route('clerk.applicationlist')}}">
             <i class="fas fa-list"></i>
             <span>Applications</span></a>
     </li>
@@ -47,8 +47,8 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Physical Form Operations:</h6>
                 <a class="collapse-item" href="{{route('clerk.newapplication')}}">Create a New Application</a>
-                <a class="collapse-item" href="cards.html">Pending Form Entries</a>
-                <a class="collapse-item" href="cards.html">Approved Form Entries</a>
+                <!-- <a class="collapse-item" href="cards.html">Pending Form Entries</a>
+                <a class="collapse-item" href="cards.html">Approved Form Entries</a> -->
             </div>
         </div>
     </li>
