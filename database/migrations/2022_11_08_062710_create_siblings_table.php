@@ -24,47 +24,47 @@ class CreateSiblingsTable extends Migration
             $table->string('SiblingOccupation1')->nullable();
             $table->string('SiblingMobile1')->nullable();
 
-            $table->string('SiblingName2')->nullable();
-            $table->string('SiblingRelation2')->nullable();
-            $table->string('SiblingAge2')->nullable();
-            $table->string('SiblingOccupation2')->nullable();
-            $table->string('SiblingMobile2')->nullable();
+            // $table->string('SiblingName2')->nullable();
+            // $table->string('SiblingRelation2')->nullable();
+            // $table->string('SiblingAge2')->nullable();
+            // $table->string('SiblingOccupation2')->nullable();
+            // $table->string('SiblingMobile2')->nullable();
 
-            $table->string('SiblingName3')->nullable();
-            $table->string('SiblingRelation3')->nullable();
-            $table->string('SiblingAge3')->nullable();
-            $table->string('SiblingOccupation3')->nullable();
-            $table->string('SiblingMobile3')->nullable();
+            // $table->string('SiblingName3')->nullable();
+            // $table->string('SiblingRelation3')->nullable();
+            // $table->string('SiblingAge3')->nullable();
+            // $table->string('SiblingOccupation3')->nullable();
+            // $table->string('SiblingMobile3')->nullable();
 
-            $table->string('SiblingName4')->nullable();
-            $table->string('SiblingRelation4')->nullable();
-            $table->string('SiblingAge4')->nullable();
-            $table->string('SiblingOccupation4')->nullable();
-            $table->string('SiblingMobile4')->nullable();
+            // $table->string('SiblingName4')->nullable();
+            // $table->string('SiblingRelation4')->nullable();
+            // $table->string('SiblingAge4')->nullable();
+            // $table->string('SiblingOccupation4')->nullable();
+            // $table->string('SiblingMobile4')->nullable();
 
-            $table->string('SiblingName5')->nullable();
-            $table->string('SiblingRelation5')->nullable();
-            $table->string('SiblingAge5')->nullable();
-            $table->string('SiblingOccupation5')->nullable();
-            $table->string('SiblingMobile5')->nullable();
+            // $table->string('SiblingName5')->nullable();
+            // $table->string('SiblingRelation5')->nullable();
+            // $table->string('SiblingAge5')->nullable();
+            // $table->string('SiblingOccupation5')->nullable();
+            // $table->string('SiblingMobile5')->nullable();
 
-            $table->string('SiblingName6')->nullable();
-            $table->string('SiblingRelation6')->nullable();
-            $table->string('SiblingAge6')->nullable();
-            $table->string('SiblingOccupation6')->nullable();
-            $table->string('SiblingMobile6')->nullable();
+            // $table->string('SiblingName6')->nullable();
+            // $table->string('SiblingRelation6')->nullable();
+            // $table->string('SiblingAge6')->nullable();
+            // $table->string('SiblingOccupation6')->nullable();
+            // $table->string('SiblingMobile6')->nullable();
 
-            $table->string('SiblingName7')->nullable();
-            $table->string('SiblingRelation7')->nullable();
-            $table->string('SiblingAge7')->nullable();
-            $table->string('SiblingOccupation7')->nullable();
-            $table->string('SiblingMobile7')->nullable();
+            // $table->string('SiblingName7')->nullable();
+            // $table->string('SiblingRelation7')->nullable();
+            // $table->string('SiblingAge7')->nullable();
+            // $table->string('SiblingOccupation7')->nullable();
+            // $table->string('SiblingMobile7')->nullable();
 
-            $table->string('SiblingName8')->nullable();
-            $table->string('SiblingRelation8')->nullable();
-            $table->string('SiblingAge8')->nullable();
-            $table->string('SiblingOccupation8')->nullable();
-            $table->string('SiblingMobile8')->nullable();
+            // $table->string('SiblingName8')->nullable();
+            // $table->string('SiblingRelation8')->nullable();
+            // $table->string('SiblingAge8')->nullable();
+            // $table->string('SiblingOccupation8')->nullable();
+            // $table->string('SiblingMobile8')->nullable();
 
             $table->timestamps();
         });

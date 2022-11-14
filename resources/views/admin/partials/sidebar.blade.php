@@ -2,9 +2,11 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('admin.dashboard')}}">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('clerk.dashboard')}}" style="background: #ffd5d5;">
+        <div class="sidebar-brand-icon ">
+            <!-- <i class="fas fa-laugh-wink"></i> -->
+            <img class="img-profile rounded-circle" src="{{asset('images/logo.png')}}" style="width: 65%;">
+
         </div>
         <div class="sidebar-brand-text mx-3">{{env('APP_NAME')}}</div>
     </a>
@@ -41,18 +43,38 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fab fa-fw fa-wpforms"></i>
-            <span>Beneficiaries</span>
+            <span>Scholarships</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Beneficiaries Status:</h6>
-                <a class="collapse-item" href="{{route('admin.approvedbeneficiaries')}}">Approved Beneficiaries</a>
-                <a class="collapse-item" href="{{route('admin.archivedbeneficiaries')}}">Archived Beneficiaries</a>
+                <h6 class="collapse-header">Scholarships Status:</h6>
+                <a class="collapse-item" href="{{route('admin.approvedbeneficiaries')}}">Approved Scholarships</a>
+                <a class="collapse-item" href="{{route('admin.archivedbeneficiaries')}}">Archived Scholarships</a>
+                <a class="collapse-item" href="{{route('admin.rejectedapplicants')}}">Rejected Scholarships</a>
                
             </div>
         </div>
     </li>
 
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThres" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-cog "></i>
+            <span>Setup</span>
+        </a>
+        <div id="collapseThres" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Setup:</h6>
+                <a class="collapse-item" href="{{route('admin.academicyears')}}">Academic Years</a>
+                <a class="collapse-item" href="{{route('admin.yearlyfee')}}">Yearly Fee</a>
+                <a class="collapse-item" href="{{route('admin.newuser')}}">Create User</a>
+                <a class="collapse-item" href="{{route('admin.userlist')}}">User List</a>
+               
+            </div>
+        </div>
+    </li>
+    
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

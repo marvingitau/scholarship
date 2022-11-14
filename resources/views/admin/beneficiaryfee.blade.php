@@ -30,19 +30,19 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Date</th>
+                                    <th>Year</th>
                                     <th>Term</th>
                                     <th>Amount</th>
-
+                                    <th>Balance</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>Date</th>
+                                    <th>Year</th>
                                     <th>Term</th>
                                     <th>Amount</th>
-
+                                    <th>Balance</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
@@ -50,9 +50,10 @@
                                 @if($data)
                                 @foreach ($data as $item)
                                 <tr>
-                                    <td>{{$item->date}}</td>
+                                    <td>{{$item->year}}</td>
                                     <td>{{$item->term}}</td>
                                     <td>{{$item->amount}}</td>
+                                    <td>{{$item->yearlyfee}}</td>
                                     <td><a class="btn btn-info" href="{{route('admin.viewfee',$item->id)}}">View <i class="fa fa-eye"></i></a></td>
                                 </tr>
                                 @endforeach

@@ -23,13 +23,19 @@
             <div class="card">
 
                 <div class="row p-2">
-                    <div class="col-12">
+                <div class="col-12">
+                            <div class="form-group">
+                                <label for="">Yearly Required Fee</label>
+                                <input type="text" class="form-control"  name="yearlyfee" value="{{number_format($dis->yearlyfee, 2, '.', ',') }}" disabled>
+                            </div>
+                        </div>
+                    <div class="col-6">
                         <div class="form-group">
-                            <label for="">Date</label>
-                            <input type="text" class="form-control" value="{{$dis->date}}" disabled>
+                            <label for="">Year</label>
+                            <input type="text" class="form-control" value="{{$dis->year}}" disabled>
                         </div>
                     </div>
-                    <div class="col-12">
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="">Term</label>
                             <input type="text" name="term" class="form-control" value="{{$dis->term}} " disabled>

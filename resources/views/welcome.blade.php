@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Scholarship</title>
+    <title>{{ config('app.name', 'Laravel') }} - {{env('APP_SLUG')}}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -414,15 +414,30 @@
 </head>
 
 <body class="antialiased">
-    <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
-        @if (Route::has('login'))
+    <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0"
+        style="background: url('https://source.unsplash.com/2JIvboGLeho/1000x800');
+  background-position: center;
+  background-size: cover;
+        "
+    >
+    <div class="contetn-section"
+    style="    background-color: #ffffffc9;
+    padding: 4rem;"
+    >
+    @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
-            <a href="{{ url('/home') }}" class="text-sm text-gray-700 btn btn-info bg-info ">Home</a>
+            <?php $role= auth()->user()->role;?>
+            <a href="{{ url('/',$role) }}" class="text-sm btn btn-danger bg-danger text-white">Home</a>
             @else
-            <a href="{{ route('login') }}" class=" btn btn-info bg-info ">Login</a>
+            <a href="{{ route('login') }}" class=" btn btn-danger text-white"
+            style="
+                padding-left: 3rem;
+                padding-right: 3rem;"
+            >Login</a>
 
-            @if (Route::has('register'))
+            <!-- Route::has('register') -->
+            @if (false)
             <a href="{{ route('register') }}" class="btn btn-info bg-info ">Register</a>
             @endif
             @endif
@@ -431,10 +446,11 @@
 
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-
+                <h3 style="color: #dd3333;
+    font-weight: bold;">{{env('APP_NAME')}} Scholarship</h3>
             </div>
 
-            <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg" id="rotate">
+            <!-- <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg" id="rotate">
                 <div class="grid grid-cols-1 md:grid-cols-2">
                     <div class="p-6">
 
@@ -452,17 +468,19 @@
 
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
             <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
 
 
-                <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
+                <div class=" text-center text-sm text-gray-500 sm:text-right sm:ml-0">
                     Build v{{ Illuminate\Foundation\Application::VERSION }}
                 </div>
             </div>
         </div>
+    </div>
+
     </div>
 </body>
 

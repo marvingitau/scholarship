@@ -17,7 +17,8 @@ class CreateFeeSectionsTable extends Migration
             $table->id();
             $table->bigInteger('beneficiary_id');
             $table->bigInteger('user_id');
-            $table->date('date');
+            $table->string('year');
+            $table->integer('yearlyfee');
             $table->string('term')->nullable();
             $table->string('amount')->nullable();
             $table->timestamps();

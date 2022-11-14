@@ -2,21 +2,29 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
+use App\Models\User;
+use App\Exports\FeeExport;
+use App\Models\Admin\Fees;
+use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use App\Models\Clerk\Sibling;
+use App\Models\Admin\FeeSection;
+use Yajra\Datatables\Datatables;
 use App\Models\Admin\ActionReason;
 use App\Models\Clerk\AcademicInfo;
 use App\Models\Clerk\FamilyDetail;
 use Illuminate\Support\Facades\DB;
 use App\Models\Clerk\StatementNeed;
 use App\Http\Controllers\Controller;
-use App\Models\Admin\DisplinarySection;
-use App\Models\Admin\FeeSection;
-use App\Models\Admin\MentorshipSection;
 use App\Models\Clerk\FamilyProperty;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Clerk\Beneficiaryform;
 use App\Models\Clerk\EmergencyContact;
+use App\Models\Admin\DisplinarySection;
+use App\Models\Admin\MentorshipSection;
 
 class AdminDashboardController extends Controller
 {
@@ -34,6 +42,37 @@ class AdminDashboardController extends Controller
         $expiredApp = Beneficiaryform::where('ClerkStatus', 'CLOSED')->where('AdminStatus', 'APPROVED')->get()->count();
 
         return view('admin.index',compact('totalApp','pendingApp','approvedApp','expiredApp'));
+    }
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function stats()
+    {
+        //Line Graph Stat
+        $currentYear = Carbon::now()->format('Y');
+        $jan = Beneficiaryform::whereMonth('created_at', '1')->whereYear('created_at', $currentYear)->count();
+        $feb = Beneficiaryform::whereMonth('created_at', '2')->whereYear('created_at', $currentYear)->count();
+        $mar = Beneficiaryform::whereMonth('created_at', '3')->whereYear('created_at', $currentYear)->count();
+        $apr = Beneficiaryform::whereMonth('created_at', '4')->whereYear('created_at', $currentYear)->count();
+        $may = Beneficiaryform::whereMonth('created_at', '5')->whereYear('created_at', $currentYear)->count();
+        $jun = Beneficiaryform::whereMonth('created_at', '6')->whereYear('created_at', $currentYear)->count();
+        $jul = Beneficiaryform::whereMonth('created_at', '7')->whereYear('created_at', $currentYear)->count();
+        $aug = Beneficiaryform::whereMonth('created_at', '8')->whereYear('created_at', $currentYear)->count();
+        $sep = Beneficiaryform::whereMonth('created_at', '9')->whereYear('created_at', $currentYear)->count();
+        $oct = Beneficiaryform::whereMonth('created_at', '10')->whereYear('created_at', $currentYear)->count();
+        $nov = Beneficiaryform::whereMonth('created_at', '11')->whereYear('created_at', $currentYear)->count();
+        $dec = Beneficiaryform::whereMonth('created_at', '12')->whereYear('created_at', $currentYear)->count();
+        $lineData = [$jan, $feb, $mar, $apr, $may, $jun, $jul, $aug, $sep, $oct, $nov, $dec];
+
+        //Pie Chart
+        $male = Beneficiaryform::where('gender', 'MALE')->count();
+        $female = Beneficiaryform::where('gender', 'FEMALE')->count();
+        $pieData = [$male, $female];
+
+        // dd($lineDate);
+        return response()->json(['linedata' => $lineData, 'piedata' => $pieData]);
     }
 
     /**
@@ -58,12 +97,13 @@ class AdminDashboardController extends Controller
         $personalSectionAux = Beneficiaryform::where('id', $id)->first();
         if (!is_null($personalSectionAux)) {
             $personalSection = $personalSectionAux->toArray();
-            $academicSection = AcademicInfo::where('beneficiary_id', $id)->first()->toArray();
+            $academicSection = DB::table('academic_infos')->where('beneficiary_id', $id)->get()->toArray();
             $familySection = FamilyDetail::where('beneficiary_id', $id)->first()->toArray();
             $statementSection = StatementNeed::where('beneficiary_id', $id)->first()->toArray();
-            $siblingSection = Sibling::where('beneficiary_id', $id)->first()->toArray();
+            $siblingSection = DB::table('siblings')->where('beneficiary_id', $id)->get()->toArray();
             $emergencySection = EmergencyContact::where('beneficiary_id', $id)->first()->toArray();
-            $familyPropertySection = FamilyProperty::where('beneficiary_id', $id)->first()->toArray();
+            $familyPropertySection = DB::table('family_properties')->where('beneficiary_id', $id)->get()->toArray();
+            // dd($academicSection);
             return view('admin.applicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection']));
         } else {
             return back();
@@ -129,9 +169,17 @@ class AdminDashboardController extends Controller
         $data->ClerkStatus = "OPEN";
         $data->save();
         return back();
-        // dd($data);
       
     }
+    public function unrejectedapplicants($id)
+    {
+        $data = Beneficiaryform::where('id',$id)->first();
+        $data->AdminStatus = "PENDING";
+        $data->save();
+        return back();
+      
+    }
+    
 
     /**
      * Display a listing of the resource.
@@ -144,20 +192,30 @@ class AdminDashboardController extends Controller
         // dd($data);
         return view('admin.archivedbeneficiaries', compact('data'));
     }
+    public function rejectedapplicants()
+    {
+        $data = DB::table('beneficiaryforms')->where('ClerkStatus', 'OPEN')->where('AdminStatus', 'REJECTED')->get()->toArray();
+        // dd($data);
+        return view('admin.rejectedapplicants', compact('data'));
+    }
+    
 
     public function selectbeneficiary($id)
     {
         $personalSectionAux = Beneficiaryform::where('id', $id)->first();
         if (!is_null($personalSectionAux)) {
             $personalSection = $personalSectionAux->toArray();
-            $academicSection = AcademicInfo::where('beneficiary_id', $id)->first()->toArray();
+            $academicSection = DB::table('academic_infos')->where('beneficiary_id', $id)->get()->toArray();
+            // $academicSection = AcademicInfo::where('beneficiary_id', $id)->first()->toArray();
             $familySection = FamilyDetail::where('beneficiary_id', $id)->first()->toArray();
             $statementSection = StatementNeed::where('beneficiary_id', $id)->first()->toArray();
-            $siblingSection = Sibling::where('beneficiary_id', $id)->first()->toArray();
+            // $siblingSection = Sibling::where('beneficiary_id', $id)->first()->toArray(); 
+            $siblingSection = DB::table('siblings')->where('beneficiary_id', $id)->get()->toArray();
             $emergencySection = EmergencyContact::where('beneficiary_id', $id)->first()->toArray();
-            $familyPropertySection = FamilyProperty::where('beneficiary_id', $id)->first()->toArray();
+            // $familyPropertySection = FamilyProperty::where('beneficiary_id', $id)->first()->toArray();
+            $familyPropertySection = DB::table('family_properties')->where('beneficiary_id', $id)->get()->toArray();
             $reasonSection = ActionReason::where('beneficiary_id', $id)->first()->toArray();
-
+ 
             return view('admin.beneficiary', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'reasonSection']));
         } else {
             return back();
@@ -186,6 +244,7 @@ class AdminDashboardController extends Controller
     {
         $data = DB::table('fee_sections')->where('beneficiary_id', $id)->get();
         // dd($data);
+
         return view('admin.beneficiaryfee', compact('data','id'));
     }
 
@@ -286,21 +345,34 @@ class AdminDashboardController extends Controller
     {
         // $data = DB::table('mentorship_sections')->where('beneficiary_id', $id)->get();
         // dd($data);
-        return view('admin.feeform', compact('id'));
+        $activeYear = AcademicYear::where('status',true)->first();
+        $annualFee=Fees::where('beneficiary_id',$id)->where('year',$activeYear->year)->first();
+        // dd($annualFee->yearlyfee);
+        return view('admin.feeform', compact('id','annualFee','activeYear'));
     }
 
     public function postnewfee(Request $request)
     {
+        $request->validate([
+            'yearlyfee'=>'required'
+        ]);
         $usr = Auth::user();
         FeeSection::create(
             [
                 'beneficiary_id' => $request->id,
                 'user_id' => $usr->id,
-                'date' => $request->date,
+                // 'date' => $request->date,
                 'term' => $request->term,
-                'amount' => $request->amount
+                'amount' => $request->amount,
+                'yearlyfee'=>$request->yearlyfee-$request->amount,
+                'year'=>$request->year,
             ]
         );
+        $activeYear = AcademicYear::where('status',true)->first();
+        $annualFee = Fees::where('beneficiary_id',$request->id)->where('year',$activeYear->year)->first();
+        $annualFee->yearlyfeebal=$annualFee->yearlyfeebal - $request->amount;
+        $annualFee->save();
+
         return back()->with('message', 'Posted Successfully');
     }
 
@@ -310,6 +382,130 @@ class AdminDashboardController extends Controller
         return view('admin.feeview', compact('dis'));
     }
 
+
+    public function newuser()
+    {
+        //dis = FeeSection::where('id', $id)->first();
+        return view('admin.newuser');
+    }
+
+    public function createnewuser(Request $request)
+    {
+     
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'password' => Hash::make($request->password),
+        ]);
+        return back()->with('message', 'User Created');
+    }
+
+    public function userlist()
+    {
+        $usrs = User::all();
+        return view('admin.userlist',compact('usrs'));
+    }
+
+    public function academicyears()
+    {
+        $data= AcademicYear::get();
+        return view('admin.academicyears',compact('data'));
+    }
+
+    public function academicyearview()
+    {
+        return view('admin.academicyearform');
+    }
+    public function academicyear(Request $request)
+    {
+
+        $request->validate([
+            'year'=>'unique:academic_years'
+        ]);
+        activity()->log('Academic Year Added');
+
+        AcademicYear::where('status',1)->update(['status'=>0]);
+        AcademicYear::create($request->all());
+        return back()->withInput();
+    }
+
+    public function academicyeardata()
+    {
+        // $feeyear = Fees::select(['beneficiary_id', 'beneficiary','yearlyfee' ,'year']);
+        return Datatables::of(Fees::query())->make(true);
+    }
+
+
+    public function yearlyfees()
+    {
+        return view('admin.yearlyfeelist');
+    }
+
+    public function yearlyfeesdata()
+    {
+        $feeyear = Fees::select(['id','beneficiary_id', 'beneficiary','yearlyfee' ,'year']);
+
+        return Datatables::of($feeyear)
+        ->addColumn('action', function ($feeyear) {
+            return '<a href="/admin/delete/yearlyfee/'.$feeyear->id.'" class="btn btn-xs btn-danger">Delete</a>';
+        })
+        //<a href="/admin/view/yearlyfee/'.$feeyear->id.'" class="btn btn-xs btn-primary">Edit</a> 
+        // ->editColumn('id', 'ID: {{$id}}')
+        ->make(true);
+    }
+
+    public function createyearlyfees()
+    {
+        $data = Beneficiaryform::select(['id','firstname','lastname'])->get();
+        return view('admin.yearlyfeeform',compact('data'));
+    }
+
+    public function postyearlyfees(Request $request)
+    {
+        $valid= $request->validate([
+            'beneficiary_id'=>'required',
+            'yearlyfee'=>['required','numeric'],
+            'year'=>'required'
+        ]);
+
+        //Check year is available and valid
+        $academicYear = AcademicYear::where('year',$valid['year'])->where('status',true)->get()->count();
+        if($academicYear ==1){
+            $data = Beneficiaryform::where('id',$request->beneficiary_id)->first();
+            $name = $data->firstname ." ".$data->lastname;
+
+            Fees::updateOrCreate(['beneficiary_id'=>$request->beneficiary_id,'year'=>$request->year],['beneficiary'=>$name,'yearlyfee'=>$request->yearlyfee,'yearlyfeebal'=>$request->yearlyfee]);
+
+            activity()->log("Yearly Fee added");
+    
+            return back()->with('messagefee','Fee Added');
+        }else{
+            return back()->with('errfee','Academic Year Missing/Closed');
+        }
+       
+    }
+    
+    public function viewyearlyfees()
+    {
+        return back();
+    }
+
+    public function deleteyearlyfees($id)
+    {
+        Fees::where('id',$id)->delete();
+        activity()->log("Yearly Fee Deleted");
+        return back()->with('delfee','Record Deleted');
+    }
+
+    public function downloadyearlyfees($id=null)
+    {
+        return Excel::download(new FeeExport, 'fees-collection.xlsx');
+
+        // Fees::where('id',$id)->delete();
+        // activity()->log("Yearly Fee Deleted");
+        // return back()->with('delfee','Record Deleted');
+    }
 
 
     /**

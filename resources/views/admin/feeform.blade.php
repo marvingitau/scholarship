@@ -21,6 +21,17 @@
             <!-- Content card -->
             <div class="row">
                 <div class="col-12">
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                </div>
+                <div class="col-12">
                     @if (session('message'))
                     <div class="alert alert-success">
                         {{ session('message') }}
@@ -32,23 +43,38 @@
                 <form action="{{route('admin.postnewfee')}}" method="POST">
                     @csrf
                     <input type="hidden" name="id" value="{{$id}}">
+                    <input type="hidden" name="yearlyfee" value="<?php echo is_null($annualFee) != true ? $annualFee->yearlyfeebal: "" ?>">
+                    <input type="hidden" name="year" value="{{$activeYear->year}}">
                     <div class="row p-2">
-                        <div class="col-12">
+                        <!-- <div class="col-12">
                             <div class="form-group">
                                 <label for="">Date</label>
-                                <input type="date" name="date" class="form-control" placeholder="Date">
+                                <input type="date" name="date" class="form-control" placeholder="Date" >
+                            </div>
+                        </div> -->
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="">Yearly Required Fee</label>
+                                <input type="text" class="form-control" name="yearlyfee" value="<?php echo is_null($annualFee) != true ? number_format($annualFee->yearlyfeebal, 2, '.', ',') : "N/A" ?>" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="">Year</label>
+                                <input type="text" class="form-control" value="{{$activeYear->year}}" placeholder="Year" disabled>
+
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="">Term</label>
+                                <input type="text" name="term" class="form-control" placeholder="Term" required>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="">Term</label>
-                                <input type="text" name="term" class="form-control" placeholder="Term">
-                            </div>
-                        </div>
-                        <div class="col-12">
-                        <div class="form-group">
                                 <label for="">Amount</label>
-                                <input type="text" name="amount" class="form-control" placeholder="Amount">
+                                <input type="number" name="amount" class="form-control" placeholder="Amount" required>
                             </div>
                         </div>
                         <div class="col-12">

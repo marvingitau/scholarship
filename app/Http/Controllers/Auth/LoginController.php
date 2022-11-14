@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
@@ -34,6 +35,18 @@ class LoginController extends Controller
     public function redirectTo()
     {
         $usr = Auth::user();
+        // Log::info('User logged-in:'.$usr->id);
+
+        // $log = [];
+        // $log['url'] = $request->fullUrl();
+        // $log['method'] = $request->method();
+        // $log['ip'] = $request->ip();
+        // $log['agent'] = $request->header('user-agent');
+        // $log['user_id'] = auth()->check() ? auth()->user()->id : 1;
+        activity()
+        // ->withProperties(['customProperty' => 'customValue'])
+        ->log('User Logged-in:'.$usr->id);
+
         // if (is_null($usr->email_verified_at) && $usr->role == 'clerk') {
         //     Auth::logout();
         //     return '/login';
@@ -93,12 +106,25 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
+        $usr = Auth::user();
+        // Log::info('User logged-out:'.$usr->id);
+        // $log = [];
+        // $log['url'] = $request->fullUrl();
+        // $log['method'] = $request->method();
+        // $log['ip'] = $request->ip();
+        // $log['agent'] = $request->header('user-agent');
+        // $log['user_id'] = auth()->check() ? auth()->user()->id : 1;
+        activity()
+        // ->withProperties(['customProperty' => 'customValue'])
+        ->log('User Logged-out:'.$usr->id);
+
+
         Auth::logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

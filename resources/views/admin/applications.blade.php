@@ -51,7 +51,7 @@
                                     <td>{{$item->gender}}</td>
                                     <td>{{$item->age}}</td>
                                     <td>{{$item->SecondaryAdmitted}}</td>
-                                    <td>{{$item->TelephoneGuardian}}</td>
+                                    <td>{{$item->MobileActive}}</td>
                                     <td><a class="btn btn-info" href="{{route('admin.selectapplicant',$item->id)}}">View <i class="fa fa-eye"></i></a></td>
                                 </tr>
                                 @endforeach

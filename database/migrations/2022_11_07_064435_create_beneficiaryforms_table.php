@@ -22,20 +22,25 @@ class CreateBeneficiaryformsTable extends Migration
             $table->string('gender')->default('MALE');
             $table->string('age')->nullable();
             $table->date('DOB')->nullable();
+            $table->string('Type')->default('SECONDARY');//TERTIARY,THEOLOGY,SPECIAL
             $table->string('KCPEIndex')->nullable();
             $table->string('SecondaryAdmitted')->nullable();
             $table->string('CurrentForm')->nullable();
             $table->string('FormJoining')->nullable();
+            $table->string('SchoolFees')->nullable();
             $table->string('CurrentAddress')->nullable();
             $table->string('PoBox')->nullable();
             $table->string('PostalCode')->nullable();
             $table->string('CityTown')->nullable();
             $table->string('County')->nullable();
-            $table->string('TelephoneGuardian')->nullable();
-            $table->string('EmailGuardian')->nullable();
+            // $table->string('FatherMobile')->nullable();
+            // $table->string('MotherMobile')->nullable();
+            // $table->string('GuardianMobile')->nullable();
+            $table->string('MobileActive')->nullable();
+            $table->string('EmailActive')->nullable();
             $table->string('AnotherSponship')->default('NO');
             $table->string('AnotherSponshipRemark')->nullable();
-            $table->string('ClerkStatus')->default('OPEN');//CLOSED-> when clerk achives
+            $table->string('ClerkStatus')->default('OPEN');//CLOSED, PENDING,OPEN-> when clerk achives
             $table->string('AdminStatus')->default('PENDING');//APPROVED,DECLINED
             $table->timestamps();
             

@@ -140,7 +140,7 @@
                             </div>
                         </div>
 
-                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                            <button type="submit" class="btn btn-danger btn-user btn-block">
                                 {{ __('Register Account') }}
                             </button>
                             <hr>

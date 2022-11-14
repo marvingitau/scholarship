@@ -68,20 +68,21 @@
                 </div>
             </div>
         </div>
+    </div>
 
 
 
 
 
-        <!-- Bootstrap core JavaScript 3.1.5-->
-        <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-        <!-- Core plugin JavaScript-->
-        <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-        <!-- Custom scripts for all pages-->
-        <script src="{{ asset('js/scholarship-admin-2.js') }}"></script>
-        <!-- Page Specific script -->
-        @yield('script')
+    <!-- Bootstrap core JavaScript 3.1.5-->
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="{{ asset('js/scholarship-admin-2.js') }}"></script>
+    <!-- Page Specific script -->
+    @yield('script')
 
 </body>
 

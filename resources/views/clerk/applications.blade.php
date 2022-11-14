@@ -51,7 +51,7 @@
                                     <td>{{$item->gender}}</td>
                                     <td>{{$item->age}}</td>
                                     <td>{{$item->SecondaryAdmitted}}</td>
-                                    <td>{{$item->TelephoneGuardian}}</td>
+                                    <td>{{$item->MobileActive}}</td>
                                     <!-- <td>$320,800</td> -->
                                 </tr>
                                 @endforeach

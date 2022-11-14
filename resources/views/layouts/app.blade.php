@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="marvin gitau">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} - {{env('APP_SLUG')}}</title>
 
     <!-- Scripts -->
     <!-- <script src="{{ asset('js/app.js') }}" defer></script> -->
@@ -57,8 +57,8 @@
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         @endif
-
-                        @if (Route::has('register'))
+    <!-- Route::has('register') -->
+                        @if (false)
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>

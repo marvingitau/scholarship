@@ -21,25 +21,25 @@ class CreateFamilyPropertiesTable extends Migration
             $table->string('Size1')->nullable();
             $table->string('Location1')->nullable();
 
-            $table->string('Type2')->nullable();
-            $table->string('Size2')->nullable();
-            $table->string('Location2')->nullable();
+            // $table->string('Type2')->nullable();
+            // $table->string('Size2')->nullable();
+            // $table->string('Location2')->nullable();
 
-            $table->string('Type3')->nullable();
-            $table->string('Size3')->nullable();
-            $table->string('Location3')->nullable();
+            // $table->string('Type3')->nullable();
+            // $table->string('Size3')->nullable();
+            // $table->string('Location3')->nullable();
 
-            $table->string('Type4')->nullable();
-            $table->string('Size4')->nullable();
-            $table->string('Location4')->nullable();
+            // $table->string('Type4')->nullable();
+            // $table->string('Size4')->nullable();
+            // $table->string('Location4')->nullable();
 
-            $table->string('Type5')->nullable();
-            $table->string('Size5')->nullable();
-            $table->string('Location5')->nullable();
+            // $table->string('Type5')->nullable();
+            // $table->string('Size5')->nullable();
+            // $table->string('Location5')->nullable();
 
-            $table->string('Type6')->nullable();
-            $table->string('Size6')->nullable();
-            $table->string('Location6')->nullable();
+            // $table->string('Type6')->nullable();
+            // $table->string('Size6')->nullable();
+            // $table->string('Location6')->nullable();
             
             $table->timestamps();
         });
