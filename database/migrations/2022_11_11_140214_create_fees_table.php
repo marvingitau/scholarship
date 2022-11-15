@@ -20,6 +20,10 @@ class CreateFeesTable extends Migration
             $table->integer('yearlyfee')->nullable();
             $table->integer('yearlyfeebal')->nullable();
             $table->integer('year')->nullable();
+            $table->string('school')->nullable();
+            $table->integer('expectedterm1')->nullable();//School expected value
+            $table->integer('expectedterm2')->nullable();
+            $table->integer('expectedterm3')->nullable();
             $table->timestamps();
         });
     }

@@ -24,7 +24,7 @@
                     <a class="nav-link border bg-danger text-white" href="{{route('admin.beneficiaryfee',$personalSection['id'])}}">Payment of Fee</a>
                 </li>
                 <li class="nav-item px-2">
-                    <a class="nav-link border bg-danger text-white" href="{{route('admin.beneficiaryfee',$personalSection['id'])}}">School Result</a>
+                    <a class="nav-link border bg-danger text-white" href="{{route('admin.schoolreport',$personalSection['id'])}}">School Result</a>
                 </li>
 
             </ul>
@@ -37,7 +37,7 @@
                         <!-- <p>Fill all form field to go to next step</p> -->
                         <section id="msform">
                             <!-- progressbar -->
-                            <ul id="progressbar">
+                            <!-- <ul id="progressbar">
                                 <li class="active" id="account"><strong>Personal Information</strong></li>
                                 <li id="personal"><strong>Academic Information</strong></li>
                                 <li id="payment"><strong>Family Details</strong></li>
@@ -48,7 +48,7 @@
                             </ul>
                             <div class="progress">
                                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
+                            </div> -->
                             <br> <!-- fieldsets -->
 
                             <div class="row">
@@ -118,6 +118,10 @@
                                             <label class="fieldlabels">Secondary Admitted: </label>
                                             <input type="text" name="SecondaryAdmitted" value="{{ $personalSection['SecondaryAdmitted']}}" placeholder="Secondary Admitted" disabled />
                                         </div>
+                                        <div class="col-md-3">
+                                            <label class="fieldlabels">School Fees: </label>
+                                            <input type="text" name="SchoolFees	" value="{{ $personalSection['SchoolFees']}}" placeholder="School Fees" disabled />
+                                        </div>
 
                                         <div class="col-md-3">
                                             <label class="fieldlabels">Current Form: </label>
@@ -148,7 +152,20 @@
                                             <label class="fieldlabels">City/Town: </label>
                                             <input type="text" name="CityTown" value="{{ $personalSection['CityTown']}}" placeholder="City/Town" disabled />
                                         </div>
+                                        <div class="col-md-3">
+                                                <label class="fieldlabels">Church Name: </label>
+                                                <input type="text" name="churchname" value="{{ $personalSection['churchname']}}" placeholder="Church Name" disabled/>
+                                            </div>
 
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Pastor Name: </label>
+                                                <input type="text" name="pastorname" value="{{ $personalSection['pastorname']}}" placeholder="Pastor Name" disabled/>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Pastor/Church Mobile: </label>
+                                                <input type="text" name="pastortelephone" value="{{ $personalSection['pastortelephone']}}" placeholder="Pastor/Church Mobile" disabled/>
+                                            </div>
                                         <div class="col-md-3">
                                             <label class="fieldlabels">Have another Sponsor: </label>
                                             <select name="AnotherSponship" disabled>

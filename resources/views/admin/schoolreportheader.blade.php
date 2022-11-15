@@ -13,8 +13,11 @@
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">Archived Scholarships</h1>
+            <div class="d-flex my-1">
 
+                <h1 class="h3 mb-2 text-gray-800">School Report History</h1>
+                <a href="{{route('admin.newschoolreport',$id)}}" class="btn btn-success ml-auto"><i class="fa fa-book mr-1"></i> Add New Report</a>
+            </div>
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -25,34 +28,32 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Gender</th>
-                                    <th>Age</th>
-                                    <th>School</th>
-                                    <th>Telephone</th>
+                                    <th>Id</th>
+                                    <th>Year</th>
+                                    <th>Term</th>
+                                    <th>Mean Grade</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Gender</th>
-                                    <th>Age</th>
-                                    <th>School</th>
-                                    <th>Telephone</th>
+                                    <th>Id</th>
+                                    <th>Year</th>
+                                    <th>Term</th>
+                                    <th>Mean Grade</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @if($data)
-                                @foreach ($data as $item)
+                                @if($schoolreport)
+                                @foreach ($schoolreport as $key=>$item)
                                 <tr>
-                                    <td>{{$item->firstname}} {{$item->lastname}}</td>
-                                    <td>{{$item->gender}}</td>
-                                    <td>{{$item->age}}</td>
-                                    <td>{{$item->SecondaryAdmitted}}</td>
-                                    <td>{{$item->TelephoneGuardian}}</td>
-                                    <td><a class="btn btn-info" href="{{route('admin.selectbeneficiary',$item->id)}}">View <i class="fa fa-eye"></i></a> <a class="btn btn-danger" href="{{route('admin.unarchivebeneficiary',$item->id)}}" onclick="return confirm('Are you sure want to UnArchive?')">UnArchive <i class="fa fa-archive"></i></a></td>
+                                    <td>{{$key}}</td>
+                                    <td>{{$item->year}}</td>
+                                    <td>{{$item->term}}</td>
+                                    <td>{{$item->meangrade}}</td>
+                                
+                                    <td><a class="btn btn-info" href="{{route('admin.viewschoolreport',$item->id)}}">View <i class="fa fa-eye"></i></a></td>
                                 </tr>
                                 @endforeach
                                 @else
@@ -60,9 +61,7 @@
                                     <td>..</td>
                                     <td>.</td>
                                     <td>..</td>
-                                    <td>.</td>
                                     <td>..</td>
-                                    <!-- <td>$320,800</td> -->
                                 </tr>
                                 @endif
 
@@ -75,6 +74,7 @@
 
         </div>
         <!-- /.container-fluid -->
+        
     </div>
 </div>
 

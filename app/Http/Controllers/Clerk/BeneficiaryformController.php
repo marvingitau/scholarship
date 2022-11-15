@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Clerk;
 
 use DateTime;
 use Carbon\Carbon;
+use App\Models\Admin\Fees;
+use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use App\Models\Clerk\Sibling;
 use App\Models\Clerk\AcademicInfo;
@@ -31,6 +33,21 @@ class BeneficiaryformController extends Controller
     public function index()
     {
         return view('clerk.beneficiaryform');
+    }
+
+    public function tertiary()
+    {
+        return view('clerk.tertiallybeneficiaryform');
+    }
+
+    public function theology()
+    {
+        return view('clerk.theologybeneficiaryform');
+    }
+
+    public function special()
+    {
+        return view('clerk.specialbeneficiaryform');
     }
 
     /**
@@ -83,7 +100,10 @@ class BeneficiaryformController extends Controller
         $activeNo = ($request->FatherMobile != null) ? $request->FatherMobile : (($request->MotherMobile != null) ? $request->MotherMobile : ($request->GuardianMobile));
 
         $data = $request->all();
+
         $benObj = Beneficiaryform::where('MobileActive', $data['FatherMobile'])->orWhere('MobileActive', $data['MotherMobile'])->orWhere('MobileActive', $data['GuardianMobile'])->first();
+
+
 
         // dd($benObj);
         if ($benObj != null) {
@@ -224,6 +244,11 @@ class BeneficiaryformController extends Controller
                 // foreach ($data['Type1'] as $key => $value) {
                 //     FamilyProperty::create(['beneficiary_id' => $resp->id, 'Type1' => $value, 'Size1' => $data['Size1'][$key], 'Location1' => $data['Location1'][$key]]);
                 // }
+
+                //Populate Annual Fee on approval
+                $academicYear = AcademicYear::where('status',1)->first();
+                $name = $request->firstname ." ".$request->lastname;
+                Fees::updateOrCreate(['beneficiary_id' => $resp->id, 'year' => $academicYear->year], ['beneficiary' => $name, 'yearlyfee' => $request->SchoolFees, 'yearlyfeebal' => $request->SchoolFees, 'school' => $request->SecondaryAdmitted]);
 
                 Session::put('personal_status', 'Information Uploaded!');
                 return back()->withInput();

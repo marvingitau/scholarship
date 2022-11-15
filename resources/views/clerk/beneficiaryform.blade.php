@@ -171,6 +171,21 @@
                                             </div> -->
 
                                             <div class="col-md-3">
+                                                <label class="fieldlabels">Church Name: </label>
+                                                <input type="text" name="churchname" value="{{ old('churchname') }}" placeholder="Church Name" />
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Pastor Name: </label>
+                                                <input type="text" name="pastorname" value="{{ old('pastorname') }}" placeholder="Pastor Name" />
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Pastor/Church Mobile: </label>
+                                                <input type="text" name="pastortelephone" value="{{ old('pastortelephone') }}" placeholder="Pastor/Church Mobile" />
+                                            </div>
+
+                                            <div class="col-md-3">
                                                 <label class="fieldlabels">Have another Sponsor: </label>
                                                 <select name="AnotherSponship">
                                                     <option value="">Choose</option>
@@ -595,8 +610,8 @@
         box-sizing: border-box;
         font-family: montserrat;
         color: #2C3E50;
-        background-color: #ffffff;
-        /* background-color: #ECEFF1; */
+        /* background-color: #ffffff; */
+        background-color: #ECEFF1;
         font-size: 16px;
         letter-spacing: 1px
     }
@@ -606,8 +621,8 @@
         -moz-box-shadow: none !important;
         -webkit-box-shadow: none !important;
         box-shadow: none !important;
-        border: 1px solid #F00;
-        /* border: 1px solid #673AB7; */
+        /* border: 1px solid #F00; */
+        border: 1px solid #673AB7;
         outline-width: 0
     }
 

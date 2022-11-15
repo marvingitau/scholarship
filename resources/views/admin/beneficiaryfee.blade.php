@@ -15,7 +15,7 @@
             <!-- Page Heading -->
             <div class="d-flex my-1">
 
-                <h1 class="h3 mb-2 text-gray-800">Beneficiary Fee</h1>
+                <h1 class="h3 mb-2 text-gray-800">{{$personalSection['firstname']}} Fee</h1>
                 <a href="{{route('admin.newfee',$id)}}" class="btn btn-success ml-auto"><i class="fa fa-book mr-1"></i> Create New</a>
             </div>
 
@@ -31,8 +31,9 @@
                             <thead>
                                 <tr>
                                     <th>Year</th>
-                                    <th>Term</th>
-                                    <th>Amount</th>
+                                    <th>Term 1</th>
+                                    <th>Term 2</th>
+                                    <th>Term 3</th>
                                     <th>Balance</th>
                                     <th>Action</th>
                                 </tr>
@@ -40,8 +41,9 @@
                             <tfoot>
                                 <tr>
                                     <th>Year</th>
-                                    <th>Term</th>
-                                    <th>Amount</th>
+                                    <th>Term 1</th>
+                                    <th>Term 2</th>
+                                    <th>Term 3</th>
                                     <th>Balance</th>
                                     <th>Action</th>
                                 </tr>
@@ -51,8 +53,9 @@
                                 @foreach ($data as $item)
                                 <tr>
                                     <td>{{$item->year}}</td>
-                                    <td>{{$item->term}}</td>
-                                    <td>{{$item->amount}}</td>
+                                    <td>{{$item->term1}}</td>
+                                    <td>{{$item->term2}}</td>
+                                    <td>{{$item->term3}}</td>
                                     <td>{{$item->yearlyfee}}</td>
                                     <td><a class="btn btn-info" href="{{route('admin.viewfee',$item->id)}}">View <i class="fa fa-eye"></i></a></td>
                                 </tr>

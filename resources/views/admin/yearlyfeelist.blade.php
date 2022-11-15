@@ -16,7 +16,7 @@
             <div class="d-flex my-3">
                 <h1 class="h3 mb-2 text-gray-800">Yearly Fee</h1>
                 <a href="{{route('admin.createyearlyfee')}}" class="btn btn-info ml-auto">Create New</a>
-                <a href="#" class="btn btn-success ml-1">Import Bulk <i class="fa fa-file-excel-o"></i></a>
+                <a href="{{route('admin.importyearlyfee')}}" class="btn btn-success ml-1">Import Bulk <i class="fa fa-file-excel-o"></i></a>
             </div>
 
 
@@ -39,7 +39,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Beneficiary/Scholar</th>
+                                <th>Beneficiary/Scholar No</th>
                                 <th>Beneficiary Name</th>
                                 <th>Yearly Fee</th>
                                 <th>Year</th>
@@ -61,7 +61,7 @@
                             </div>
                         </div>
                     </form> -->
-                    <a  href="{{route('admin.downloadyearlyfee')}}">Download CSV <i class="fa fa-user"></i></a>
+                    <a  href="{{route('admin.downloadyearlyfee')}}" class="btn btn-danger ">Download CSV &nbsp; <i class="far fa-file-excel"></i></a>
                 </div>
             </div>
 

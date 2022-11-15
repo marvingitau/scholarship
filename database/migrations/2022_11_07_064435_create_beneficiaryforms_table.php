@@ -33,6 +33,10 @@ class CreateBeneficiaryformsTable extends Migration
             $table->string('PostalCode')->nullable();
             $table->string('CityTown')->nullable();
             $table->string('County')->nullable();
+            $table->string('churchname')->nullable();
+            $table->string('pastorname')->nullable();
+            $table->string('pastortelephone')->nullable();
+
             // $table->string('FatherMobile')->nullable();
             // $table->string('MotherMobile')->nullable();
             // $table->string('GuardianMobile')->nullable();

@@ -51,6 +51,24 @@
                     @csrf
 
                     <div class="row p-2">
+                    <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">School Expected Term 1 Fee</label>
+                                <input type="number" class="form-control" name="expectedterm1" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">School Expected Term 2 Fee</label>
+                                <input type="number" class="form-control" name="expectedterm2" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">School Expected Term 3 Fee</label>
+                                <input type="number" class="form-control" name="expectedterm3" required>
+                            </div>
+                        </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Scholar</label>

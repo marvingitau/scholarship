@@ -16,7 +16,7 @@
             <div class="d-flex">
 
                 <h1 class="h3 mb-2 text-gray-800">Active Scholarships</h1>
-                <a href="#" class="btn btn-danger ml-auto">Active Scholarship School Fees</a>
+                <!-- <a href="#" class="btn btn-danger ml-auto">Active Scholarship School Fees</a> -->
             </div>
 
             <!-- DataTales Example -->
@@ -33,7 +33,7 @@
                                     <th>Name</th>
                                     <th>Gender</th>
                                     <th>Age</th>
-                                    <th>Secondary</th>
+                                    <th>School</th>
                                     <th>Telephone</th>
                                     <th>Action</th>
                                 </tr>
@@ -44,7 +44,7 @@
                                     <th>Name</th>
                                     <th>Gender</th>
                                     <th>Age</th>
-                                    <th>Secondary</th>
+                                    <th>School</th>
                                     <th>Telephone</th>
                                     <th>Action</th>
                                 </tr>

@@ -83,7 +83,13 @@ Route::group(['middleware'=>'role:admin','prefix'=>'admin'],function () {
         Route::get('/view/yearlyfee/{id}',[AdminDashboardController::class,'viewyearlyfees'])->name('admin.viewyearlyfee');
         Route::get('/delete/yearlyfee/{id}',[AdminDashboardController::class,'deleteyearlyfees'])->name('admin.deleteyearlyfee');
         Route::get('/download/yearlyfee',[AdminDashboardController::class,'downloadyearlyfees'])->name('admin.downloadyearlyfee');
+        Route::get('/import/yearlyfee',[AdminDashboardController::class,'importyearlyfees'])->name('admin.importyearlyfee');
+        Route::post('/import/yearlyfee',[AdminDashboardController::class,'fileImport'])->name('admin.saveyearlyfee');
 
+        Route::get('/schoolreport/{id}',[AdminDashboardController::class,'schoolreport'])->name('admin.schoolreport');
+        Route::get('/newschoolreport/{id}',[AdminDashboardController::class,'newschoolreport'])->name('admin.newschoolreport');
+        Route::post('/postschoolreport',[AdminDashboardController::class,'postschoolreport'])->name('admin.postschoolreport');
+        Route::get('/viewschoolreport/{id}',[AdminDashboardController::class,'viewschoolreport'])->name('admin.viewschoolreport');
 
 
     });
@@ -103,6 +109,10 @@ Route::group(['middleware'=>'role:clerk','prefix'=>'clerk'],function(){
         //Post Beneficiary form :- Personal Details
         Route::post('/personal-details',[BeneficiaryformController::class,'store'])->name('clerk.storepersonaldetail');
         // Route::post('/academic-details',[AcademicInfoController::class,'store'])->name('clerk.storeacademicdetail');
+        Route::get('/tertiary-application',[BeneficiaryformController::class,'tertiary'])->name('clerk.tertiaryapplication');
+        Route::get('/theology-application',[BeneficiaryformController::class,'theology'])->name('clerk.theologyapplication');
+        Route::get('/special-application',[BeneficiaryformController::class,'special'])->name('clerk.specialapplication');
+
 
     });
 });

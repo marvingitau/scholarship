@@ -102,6 +102,10 @@
                                             <label class="fieldlabels">Secondary Admitted: </label>
                                             <input type="text" name="SecondaryAdmitted" value="{{ $personalSection['SecondaryAdmitted']}}" placeholder="Secondary Admitted" disabled />
                                         </div>
+                                        <div class="col-md-3">
+                                            <label class="fieldlabels">School Fees: </label>
+                                            <input type="text" name="SchoolFees	" value="{{ $personalSection['SchoolFees']}}" placeholder="School Fees" disabled />
+                                        </div>
 
                                         <div class="col-md-3">
                                             <label class="fieldlabels">Current Form: </label>
@@ -132,7 +136,20 @@
                                             <label class="fieldlabels">City/Town: </label>
                                             <input type="text" name="CityTown" value="{{ $personalSection['CityTown']}}" placeholder="City/Town" disabled />
                                         </div>
+                                        <div class="col-md-3">
+                                                <label class="fieldlabels">Church Name: </label>
+                                                <input type="text" name="churchname" value="{{ $personalSection['churchname']}}" placeholder="Church Name" disabled/>
+                                            </div>
 
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Pastor Name: </label>
+                                                <input type="text" name="pastorname" value="{{ $personalSection['pastorname']}}" placeholder="Pastor Name" disabled/>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Pastor/Church Mobile: </label>
+                                                <input type="text" name="pastortelephone" value="{{ $personalSection['pastortelephone']}}" placeholder="Pastor/Church Mobile" disabled/>
+                                            </div>
 
                                         <div class="col-md-3">
                                             <label class="fieldlabels">Have another Sponsor: </label>

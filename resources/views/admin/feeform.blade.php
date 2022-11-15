@@ -52,12 +52,34 @@
                                 <input type="date" name="date" class="form-control" placeholder="Date" >
                             </div>
                         </div> -->
-                        <div class="col-12">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <label for="">Yearly Required Fee</label>
+                                <label for="">Yearly Allocated Fund</label>
                                 <input type="text" class="form-control" name="yearlyfee" value="<?php echo is_null($annualFee) != true ? number_format($annualFee->yearlyfeebal, 2, '.', ',') : "N/A" ?>" disabled>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Schools Expected Term 1 Fee</label>
+                                <input type="text" class="form-control" value="{{$annualFee->expectedterm1}}" placeholder="Term 1 Fee" disabled>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Schools Expected Term 2 Fee</label>
+                                <input type="text" class="form-control" value="{{$annualFee->expectedterm2}}" placeholder="Term 2 Fee" disabled>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Schools Expected Term 3 Fee</label>
+                                <input type="text" class="form-control" value="{{$annualFee->expectedterm3}}" placeholder="Term 3 Fee" disabled>
+
+                            </div>
+                        </div>
+                        
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="">Year</label>
@@ -68,7 +90,12 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="">Term</label>
-                                <input type="text" name="term" class="form-control" placeholder="Term" required>
+                                <select name="term" id="" class="form-control">
+                                    <option value="term1">1st Term</option>
+                                    <option value="term2">2nd Term</option>
+                                    <option value="term3">3rd Term</option>
+                                </select>
+                                <!-- <input type="text" name="term"  placeholder="Term" required> -->
                             </div>
                         </div>
                         <div class="col-12">

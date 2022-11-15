@@ -19,7 +19,7 @@
             <div class="row justify-content-center">
                 <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 text-center p-0 mt-3 mb-2">
                     <div class="card px-2 pt-4 pb-0 mt-3 mb-3">
-                        <h2 id="heading">Special Application Form</h2>
+                        <h2 id="heading">Special School Application Form</h2>
                         <!-- <p>Fill all form field to go to next step</p> -->
                         <section id="msform">
                             <!-- progressbar -->
@@ -38,6 +38,7 @@
                             <br> <!-- fieldsets -->
 
                             <form method="POST" action="{{ route('clerk.storepersonaldetail') }}" class="form-input">
+                                <input type="hidden" name="Type" value="SPECIAL">
                                 @csrf
                                 <fieldset>
                                     <div class="form-card">
@@ -72,78 +73,102 @@
                                         </div>
                                         <!-- <form method="POST" action="{{ route('clerk.storepersonaldetail') }}" class="form-input">
                                         @csrf -->
-                                        <label class="fieldlabels">First Name: *</label>
-                                        <input type="text" name="firstname" value="{{ old('firstname') }}" placeholder="First Name" />
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label class="fieldlabels">First Name: *</label>
+                                                <input type="text" name="firstname" value="{{ old('firstname') }}" placeholder="First Name" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="fieldlabels">Middle Name: </label>
+                                                <input type="text" name="middlename" value="{{ old('middlename') }}" placeholder="Middle Name" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="fieldlabels">Last Name: *</label>
+                                                <input type="text" name="lastname" value="{{ old('lastname') }}" placeholder="Last Name" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="fieldlabels">Gender: </label>
+                                                <select name="gender" value="">
 
-                                        <label class="fieldlabels">Middle Name: </label>
-                                        <input type="text" name="middlename" value="{{ old('middlename') }}" placeholder="Middle Name" />
-
-                                        <label class="fieldlabels">Last Name: *</label>
-                                        <input type="text" name="lastname" value="{{ old('lastname') }}" placeholder="Last Name" />
-
-                                        <label class="fieldlabels">Gender: </label>
-                                        <select name="gender" value="">
-
-                                            <option value="">Choose</option>
-                                            <option value="MALE" <?php echo old('gender') == "MALE" ? 'selected' : "" ?>>MALE</option>
-                                            <option value="FEMALE" <?php echo old('gender') == "FEMALE" ? 'selected' : "" ?>>FEMALE</option>
-                                        </select>
-                                        @error('gender')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
+                                                    <option value="">Choose</option>
+                                                    <option value="MALE" <?php echo old('gender') == "MALE" ? 'selected' : "" ?>>MALE</option>
+                                                    <option value="FEMALE" <?php echo old('gender') == "FEMALE" ? 'selected' : "" ?>>FEMALE</option>
+                                                </select>
+                                                @error('gender')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="fieldlabels">Date of Birth: </label>
+                                                <input type="date" name="DOB" value="{{ old('DOB') }}" placeholder="Age" />
+                                            </div>
+                                            <!-- <div class="col-md-4"></div> -->
+                                        </div>
 
                                         <!-- <label class="fieldlabels">Age: </label>
                                         <input type="text" name="age" value="{{ old('age') }}" placeholder="Age" /> -->
 
-                                        <label class="fieldlabels">Date of Birth: </label>
-                                        <input type="date" name="DOB" value="{{ old('DOB') }}" placeholder="Age" />
+
                                         <div class="row">
-                                            <div class="col-3">
+                                            <!-- <div class="col-md-3">
                                                 <label class="fieldlabels">KCPE Index: </label>
                                                 <input type="text" name="KCPEIndex" value="{{ old('KCPEIndex') }}" placeholder="KCPE Index" />
+                                            </div> -->
+
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Institute Admitted: </label>
+                                                <input type="text" name="SecondaryAdmitted" value="{{ old('SecondaryAdmitted') }}" placeholder="Institute Admitted" />
                                             </div>
 
-                                            <div class="col-3">
-                                                <label class="fieldlabels">Secondary Admitted: </label>
-                                                <input type="text" name="SecondaryAdmitted" value="{{ old('SecondaryAdmitted') }}" placeholder="Secondary Admitted" />
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Current Year: </label>
+                                                <input type="text" name="CurrentForm" value="{{ old('CurrentForm') }}" placeholder="Current Year" />
                                             </div>
 
-                                            <div class="col-3">
-                                                <label class="fieldlabels">Current Form: </label>
-                                                <input type="text" name="CurrentForm" value="{{ old('CurrentForm') }}" placeholder="Current Form" />
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Year Joining: </label>
+                                                <input type="text" name="FormJoining" value="{{ old('FormJoining') }}" placeholder="Year Joining" />
                                             </div>
 
-                                            <div class="col-3">
-                                                <label class="fieldlabels">Form Joining: </label>
-                                                <input type="text" name="FormJoining" value="{{ old('FormJoining') }}" placeholder="Form Joining" />
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Annual Fees: </label>
+                                                <input type="number" name="SchoolFees" value="{{ old('SchoolFees') }}" placeholder="Annual Fees" />
                                             </div>
 
-                                            <div class="col-3">
-                                                <label class="fieldlabels">School Fees: </label>
-                                                <input type="number" name="SchoolFees" value="{{ old('SchoolFees') }}" placeholder="School Fees" />
-                                            </div>
-
-                                            <div class="col-3">
+                                            <div class="col-md-3">
                                                 <label class="fieldlabels">Current Address: </label>
                                                 <input type="text" name="CurrentAddress" value="{{ old('CurrentAddress') }}" placeholder="Current Address" />
                                             </div>
 
-                                            <div class="col-3">
+                                            <div class="col-md-3">
                                                 <label class="fieldlabels">P.O. Box: </label>
                                                 <input type="text" name="PoBox" value="{{ old('PoBox') }}" placeholder="P.O. Box" />
                                             </div>
 
-                                            <div class="col-3">
+                                            <div class="col-md-3">
                                                 <label class="fieldlabels">Postal Code: </label>
                                                 <input type="text" name="PostalCode" value="{{ old('PostalCode') }}" placeholder="Postal Code" />
                                             </div>
 
-                                            <div class="col-3">
+                                            <div class="col-md-3">
                                                 <label class="fieldlabels">City/Town: </label>
                                                 <input type="text" name="CityTown" value="{{ old('CityTown') }}" placeholder="City/Town" />
                                             </div>
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Church Name: </label>
+                                                <input type="text" name="churchname" value="{{ old('churchname') }}" placeholder="Church Name" />
+                                            </div>
 
-                                            <div class="col-3">
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Pastor Name: </label>
+                                                <input type="text" name="pastorname" value="{{ old('pastorname') }}" placeholder="Pastor Name" />
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Pastor/Church Mobile: </label>
+                                                <input type="text" name="pastortelephone" value="{{ old('pastortelephone') }}" placeholder="Pastor/Church Mobile" />
+                                            </div>
+                                            <!-- <div class="col-3">
                                                 <label class="fieldlabels">Guardian Telephone: </label>
                                                 <input type="text" name="TelephoneGuardian" value="{{ old('TelephoneGuardian') }}" class="@error('TelephoneGuardian') is-invalid @enderror" value="{{ old('TelephoneGuardian') }}" placeholder="Guardian Telephone" />
                                                 @error('TelephoneGuardian')
@@ -157,9 +182,9 @@
                                                 @error('EmailGuardian')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                 @enderror
-                                            </div>
+                                            </div> -->
 
-                                            <div class="col-3">
+                                            <div class="col-md-3">
                                                 <label class="fieldlabels">Have another Sponsor: </label>
                                                 <select name="AnotherSponship">
                                                     <option value="">Choose</option>
@@ -173,7 +198,7 @@
 
                                             <div class="col-12">
                                                 <label class="fieldlabels">Have another Sponsor Remark: </label>
-                                                <textarea name="AnotherSponshipRemark" id="" cols="30" rows="10">{{ old('AnotherSponshipRemark') }}</textarea>
+                                                <textarea name="AnotherSponshipRemark" id="" cols="30" rows="3">{{ old('AnotherSponshipRemark') }}</textarea>
                                             </div>
 
 
@@ -202,11 +227,11 @@
                                             <div class="row">
                                                 <div class="col-md-5">
                                                     <label class="fieldlabels">Subject : </label>
-                                                    <input type="text" name="Subject1[]" placeholder="Subject" required />
+                                                    <input type="text" name="Subject1[]" placeholder="Subject"  />
                                                 </div>
                                                 <div class="col-md-5">
-                                                    <label class="fieldlabels">Marks : </label>
-                                                    <input type="number" name="Marks1[]" placeholder="Marks" required />
+                                                    <label class="fieldlabels">Marks/Grade : </label>
+                                                    <input type="text" name="Marks1[]" placeholder="Marks"  />
 
                                                 </div>
                                                 <div class="col-md-2">
@@ -221,7 +246,7 @@
 
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <label class="fieldlabels">Total Marks</label>
+                                                <label class="fieldlabels">Total Marks/Grade</label>
                                                 <input type="text" name="TotalMarks" value="{{ old('TotalMarks') }}" placeholder="Total Marks" />
                                             </div>
                                             <!-- @error('Marks1')
@@ -245,105 +270,64 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-6">
+                                            <div class="col-md-3">
                                                 <label class="fieldlabels">Father: *</label>
                                                 <input type="text" name="Father" value="{{ old('Father') }}" placeholder="Father" />
                                             </div>
-                                            <div class="col-6">
-                                                <label class="fieldlabels">Mother: *</label>
-                                                <input type="text" name="Mother" value="{{ old('Mother') }}" placeholder="Mother" />
-                                            </div>
 
-                                            <div class="col-6">
-                                                <label class="fieldlabels">Father Alive: *</label>
-                                                <input type="text" name="FatherAlive" value="{{ old('FatherAlive') }}" placeholder="Father Alive" />
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="fieldlabels">Mother Alive: *</label>
-                                                <input type="text" name="MotherAlive" value="{{ old('MotherAlive') }}" placeholder="Mother Alive" />
-                                            </div>
-
-                                            <div class="col-6">
-                                                <label class="fieldlabels">Father Age: *</label>
-                                                <input type="text" name="FatherAge" value="{{ old('FatherAge') }}" placeholder="Father Age" />
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="fieldlabels">Mother Age: *</label>
-                                                <input type="text" name="MotherAge" value="{{ old('MotherAge') }}" placeholder="Mother Age" />
-                                            </div>
-
-                                            <div class="col-6">
+                                            <div class="col-md-3">
                                                 <label class="fieldlabels">Fathe ID: *</label>
                                                 <input type="text" name="FatherID" value="{{ old('FatherID') }}" placeholder="Father ID" />
                                             </div>
-                                            <div class="col-6">
-                                                <label class="fieldlabels">Mother ID: *</label>
-                                                <input type="text" name="MotherID" value="{{ old('MotherID') }}" placeholder="Mother ID" />
-                                            </div>
-
-                                            <div class="col-6">
-                                                <label class="fieldlabels">Father Occupation: *</label>
-                                                <input type="text" name="FatherOccupation" value="{{ old('FatherOccupation') }}" placeholder="Father Occupation" />
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="fieldlabels">Mother Occupation: *</label>
-                                                <input type="text" name="MotherOccupation" value="{{ old('MotherOccupation') }}" placeholder="Mother Occupation" />
-                                            </div>
-
-                                            <div class="col-6">
-                                                <label class="fieldlabels">Father Other Source of Income: *</label>
-                                                <input type="text" name="FatherOtherSourceIncome" value="{{ old('FatherOtherSourceIncome') }}" placeholder="Father Other Source of Income" />
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="fieldlabels">Mother Other Source of Income: *</label>
-                                                <input type="text" name="MotherOtherSourceIncome" value="{{ old('MotherOtherSourceIncome') }}" placeholder="Mother Other Source of Income" />
-                                            </div>
-
-                                            <div class="col-6">
+                                            <div class="col-md-3">
                                                 <label class="fieldlabels">Father Mobile: *</label>
                                                 <input type="text" name="FatherMobile" value="{{ old('FatherMobile') }}" placeholder="Father Mobile" />
                                             </div>
-                                            <div class="col-6">
+
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Father Occupation: *</label>
+                                                <input type="text" name="FatherOccupation" value="{{ old('FatherOccupation') }}" placeholder="Father Occupation" />
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Mother: *</label>
+                                                <input type="text" name="Mother" value="{{ old('Mother') }}" placeholder="Mother" />
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Mother ID: *</label>
+                                                <input type="text" name="MotherID" value="{{ old('MotherID') }}" placeholder="Mother ID" />
+                                            </div>
+                                            <div class="col-md-3">
                                                 <label class="fieldlabels">Mother Mobile: *</label>
                                                 <input type="text" name="MotherMobile" value="{{ old('MotherMobile') }}" placeholder="Mother Mobile" />
                                             </div>
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Mother Occupation: *</label>
+                                                <input type="text" name="MotherOccupation" value="{{ old('MotherOccupation') }}" placeholder="Mother Occupation" />
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="fieldlabels">If Applicable</label>
 
-                                            <div class="col-6">
-                                                <label class="fieldlabels">FatherTelephone: *</label>
-                                                <input type="text" name="FatherTelephone" value="{{ old('FatherTelephone') }}" placeholder="Father Telephone" />
                                             </div>
-                                            <div class="col-6">
-                                                <label class="fieldlabels">Mother Telephone: *</label>
-                                                <input type="text" name="MotherTelephone" value="{{ old('MotherTelephone') }}" placeholder="Mother Telephone" />
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Guardian Name: *</label>
+                                                <input type="text" name="Guardian" value="{{ old('Guardian') }}" placeholder="Guardian" />
                                             </div>
-
-                                            <div class="col-6">
-                                                <label class="fieldlabels">Father Email: *</label>
-                                                <input type="text" name="FatherEmail" value="{{ old('FatherEmail') }}" placeholder="Father Email" />
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Guardian ID: *</label>
+                                                <input type="text" name="GuardianID" value="{{ old('GuardianID') }}" placeholder="Guardian ID" />
                                             </div>
-                                            <div class="col-6">
-                                                <label class="fieldlabels">Mother Email: *</label>
-                                                <input type="text" name="MotherEmail" value="{{ old('MotherEmail') }}" placeholder="Mother Email" />
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Guardian Mobile: *</label>
+                                                <input type="text" name="GuardianMobile" value="{{ old('GuardianMobile') }}" placeholder="Guardian Mobile" />
                                             </div>
-
-                                            <div class="col-12">
-                                                <label class="fieldlabels">Active Phone Number: *</label>
-                                                <input type="text" name="ActivePhoneNumber" value="{{ old('ActivePhoneNumber') }}" placeholder="Active Phone Number" />
-                                                @error('ActivePhoneNumber')
-                                                <div class="alert alert-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                            <div class="col-12">
-                                                <label class="fieldlabels">Lives With Name: *</label>
-                                                <input type="text" name="LiveWithName" value="{{ old('LiveWithName') }}" placeholder="Lives With" />
-                                            </div>
-
-                                            <div class="col-12">
-                                                <label class="fieldlabels">Lives With Relationship: *</label>
-                                                <input type="text" name="LiveWitRelation" value="{{ old('LiveWitRelation') }}" placeholder="Lives With Relationship" />
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Guardian Occupation:*</label>
+                                                <input type="text" name="GuardianOccupation" value="{{ old('GuardianOccupation') }}" placeholder="Guardian Occupation" />
                                             </div>
 
                                         </div>
+
 
                                     </div>
                                     <!-- <input type="button" name="next" class="next action-button" value="Submit" /> 
@@ -363,7 +347,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <label class="fieldlabels">Statement of Need: *</label>
-                                                <textarea name="StatementofNeed" cols="30" rows="10">{{ old('StatementofNeed') }}</textarea>
+                                                <textarea name="StatementofNeed" cols="30" rows="5">{{ old('StatementofNeed') }}</textarea>
                                             </div>
                                         </div>
 
@@ -409,7 +393,7 @@
 
                                                 <div class="col-md-3">
                                                     <label class="fieldlabels">Sibling Name</label>
-                                                    <input type="text" name="SiblingName1[]" placeholder="Sibling Name"/>
+                                                    <input type="text" name="SiblingName1[]" placeholder="Sibling Name" />
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label class="fieldlabels">Sibling Relation</label>
@@ -423,10 +407,10 @@
                                                     <label class="fieldlabels">Sibling Occupation</label>
                                                     <input type="text" name="SiblingOccupation1[]" placeholder="Sibling Occupation" />
                                                 </div>
-                                                <div class="col-md-10">
+                                                <!-- <div class="col-md-10">
                                                     <label class="fieldlabels">Sibling Mobile</label>
                                                     <input type="text" name="SiblingMobile1[]" placeholder="Sibling Mobile" />
-                                                </div>
+                                                </div> -->
                                                 <div class="col-md-2">
                                                     <label class="fieldlabels">Action</label>
                                                     <button class="add_sibling_button btn btn-outline-success" style="font-weight: 500;margin:0px">Add Sibling </button>
@@ -499,7 +483,7 @@
                                 <input type="button" name="previous" class="previous action-button-previous" value="Previous" /> -->
                                 </fieldset>
 
-                                <fieldset>
+                                <!-- <fieldset>
                                     <div class="form-card">
                                         <div class="row">
                                             <div class="col-7">
@@ -511,33 +495,32 @@
                                         </div>
 
                                         <div class="property_repeater">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <label class="fieldlabels">Type of Property/Animals</label>
-                                                <input type="text" name="Type1[]"  placeholder="Type " />
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label class="fieldlabels">Size/Quantity</label>
-                                                <input type="text" name="Size1[]"  placeholder="Size " />
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label class="fieldlabels">Location:</label>
-                                                <input type="text" name="Location1[]"  placeholder="Location " />
-                                            </div>
-                                            <div class="col-md-2">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label class="fieldlabels">Type of Property/Animals</label>
+                                                    <input type="text" name="Type1[]" placeholder="Type " />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="fieldlabels">Size/Quantity</label>
+                                                    <input type="text" name="Size1[]" placeholder="Size " />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="fieldlabels">Location:</label>
+                                                    <input type="text" name="Location1[]" placeholder="Location " />
+                                                </div>
+                                                <div class="col-md-2">
                                                     <label class="fieldlabels">Action</label>
                                                     <button class="add_property_button btn btn-outline-success" style="font-weight: 500;margin:0px">Add Property </button>
-                                            </div>
+                                                </div>
 
                                             </div>
                                         </div>
-                                       
+
 
 
                                     </div>
-                                    <!-- <input type="button" name="next" class="next action-button" value="Next" />
-                                <input type="button" name="previous" class="previous action-button-previous" value="Previous" /> -->
-                                </fieldset>
+                                   
+                                </fieldset> -->
 
                                 <button class="btn btn-success w-100" type="submit">Submit</button>
                             </form>
@@ -584,10 +567,11 @@
         font-weight: normal
     } */
     #heading {
-	text-transform: uppercase;
-	color: #464646;
-	font-weight: normal;
-}
+        text-transform: uppercase;
+        color: #464646;
+        font-weight: normal;
+    }
+
     #msform {
         text-align: center;
         position: relative;
@@ -625,8 +609,8 @@
         box-sizing: border-box;
         font-family: montserrat;
         color: #2C3E50;
-        background-color: #ffffff;
-        /* background-color: #ECEFF1; */
+        /* background-color: #ffffff; */
+        background-color: #ECEFF1;
         font-size: 16px;
         letter-spacing: 1px
     }
@@ -636,13 +620,14 @@
         -moz-box-shadow: none !important;
         -webkit-box-shadow: none !important;
         box-shadow: none !important;
-        border: 1px solid #F00;
-        /* border: 1px solid #673AB7; */
+        /* border: 1px solid #F00; */
+        border: 1px solid #673AB7;
         outline-width: 0
     }
+
     #msform input:focus-visible,
     #msform textarea:focus-visible {
-      border: none;
+        border: none;
     }
 
     #msform .action-button {
@@ -710,7 +695,8 @@
 
     .fieldlabels {
         color: gray;
-        text-align: left
+        text-align: left;
+        font-weight: bold;
     }
 
     #progressbar {
@@ -909,7 +895,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row"><div class="col-md-5"><label class="fieldlabels">Subject : </label><input type="text" name="Subject1[]"  placeholder="Subject" required /></div><div class="col-md-5"><label class="fieldlabels">Marks : </label><input type="number" name="Marks1[]"  placeholder="Marks" required /></div><div class="col-md-2"> <label class="fieldlabels">Action </label><button class="btn btn-outline-danger remove_field" type="button">Remove</button></div></div>'); //add input box
+                $(wrapper).append('<div class="row"><div class="col-md-5"><label class="fieldlabels">Subject : </label><input type="text" name="Subject1[]"  placeholder="Subject" required /></div><div class="col-md-5"><label class="fieldlabels">Marks/Grade : </label><input type="text" name="Marks1[]"  placeholder="Marks" required /></div><div class="col-md-2"> <label class="fieldlabels">Action </label><button class="btn btn-outline-danger remove_field" type="button">Remove</button></div></div>'); //add input box
             }
         })
 
@@ -929,7 +915,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper2).append('<div class="row"><div class="col-md-3"><label class="fieldlabels">Sibling Name</label><input type="text" name="SiblingName1[]"placeholder="Sibling Name" /></div><div class="col-md-3"><label class="fieldlabels">Sibling Relation</label><input type="text" name="SiblingRelation1[]"  placeholder="Sibling Relation" /></div><div class="col-md-3"><label class="fieldlabels">Sibling Age</label><input type="text" name="SiblingAge1[]"  placeholder="Sibling Age" /></div><div class="col-md-3"><label class="fieldlabels">Sibling Occupation</label><input type="text" name="SiblingOccupation1[]"  placeholder="Sibling Occupation" /></div><div class="col-md-10"><label class="fieldlabels">Sibling Mobile</label><input type="text" name="SiblingMobile1[]"  placeholder="Sibling Mobile" /></div><div class="col-md-2"> <label class="fieldlabels">Action </label><button class="btn btn-outline-danger remove_sibling_field" type="button">Remove</button></div></div>'); //add input box
+                $(wrapper2).append('<div class="row"><div class="col-md-3"><label class="fieldlabels">Sibling Name</label><input type="text" name="SiblingName1[]"placeholder="Sibling Name" /></div><div class="col-md-3"><label class="fieldlabels">Sibling Relation</label><input type="text" name="SiblingRelation1[]"  placeholder="Sibling Relation" /></div><div class="col-md-3"><label class="fieldlabels">Sibling Age</label><input type="text" name="SiblingAge1[]"  placeholder="Sibling Age" /></div><div class="col-md-3"><label class="fieldlabels">Sibling Occupation</label><input type="text" name="SiblingOccupation1[]"  placeholder="Sibling Occupation" /></div><div class="col-md-2"> <label class="fieldlabels">Action </label><button class="btn btn-outline-danger remove_sibling_field" type="button">Remove</button></div></div>'); //add input box
             }
         })
 

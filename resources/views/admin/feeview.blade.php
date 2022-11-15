@@ -23,7 +23,7 @@
             <div class="card">
 
                 <div class="row p-2">
-                <div class="col-12">
+                <div class="col-6">
                             <div class="form-group">
                                 <label for="">Yearly Required Fee</label>
                                 <input type="text" class="form-control"  name="yearlyfee" value="{{number_format($dis->yearlyfee, 2, '.', ',') }}" disabled>
@@ -35,18 +35,25 @@
                             <input type="text" class="form-control" value="{{$dis->year}}" disabled>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
-                            <label for="">Term</label>
-                            <input type="text" name="term" class="form-control" value="{{$dis->term}} " disabled>
+                            <label for="">Term 1</label>
+                            <input type="text" name="term" class="form-control" value="{{$dis->term1}} " disabled>
                         </div>
                     </div>
-                    <div class="col-12">
+                    <div class="col-4">
                         <div class="form-group">
-                            <label for="">Amount</label>
-                            <input type="text" name="amount" class="form-control" value="{{$dis->amount}} " disabled>
+                            <label for="">Term 2</label>
+                            <input type="text" name="term" class="form-control" value="{{$dis->term2}} " disabled>
                         </div>
                     </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="">Term 3</label>
+                            <input type="text" name="term" class="form-control" value="{{$dis->term3}} " disabled>
+                        </div>
+                    </div>
+                  
                    
                 </div>
 
