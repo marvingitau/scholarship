@@ -29,6 +29,10 @@ class CreateFamilyDetailsTable extends Migration
             $table->string('GuardianID')->nullable();
             $table->string('GuardianMobile')->nullable();
             $table->string('GuardianOccupation')->nullable();
+            $table->string('SpouseName')->nullable();
+            $table->string('SpouseID')->nullable();
+            $table->string('SpouseMobile')->nullable();
+            $table->string('SpouseOccupation')->nullable();
             // $table->string('FatherAlive')->nullable();
             // $table->string('MotherAlive')->nullable();
             // $table->string('FatherAge')->nullable();

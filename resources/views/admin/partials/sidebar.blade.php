@@ -51,7 +51,43 @@
                 <a class="collapse-item" href="{{route('admin.approvedbeneficiaries')}}">Approved Scholarships</a>
                 <a class="collapse-item" href="{{route('admin.archivedbeneficiaries')}}">Archived Scholarships</a>
                 <a class="collapse-item" href="{{route('admin.rejectedapplicants')}}">Rejected Scholarships</a>
-               
+
+            </div>
+        </div>
+    </li>
+
+     <!-- Divider -->
+     <!-- <hr class="sidebar-divider d-none d-md-block">
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSMS" aria-expanded="true" aria-controls="collapseFour">
+            <i class="fa fa-comment"></i>
+            <span>Messaging</span>
+        </a>
+        <div id="collapseSMS" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Messaging actions:</h6>
+                <a class="collapse-item" href="{{route('admin.academicyears')}}">Text Alert</a>
+                <a class="collapse-item" href="{{route('admin.yearlyfee')}}">Yearly Fee</a>
+                <a class="collapse-item" href="{{route('admin.newuser')}}">Create User</a>
+                <a class="collapse-item" href="{{route('admin.userlist')}}">User List</a>
+
+            </div>
+        </div>
+    </li> -->
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseThree">
+            <i class="fa fa-book"></i>
+            <span>Reports</span>
+        </a>
+        <div id="collapseReport" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Beneficiaries Report:</h6>
+                <a class="collapse-item" href="{{route('admin.selectreport')}}">Academic Performance</a>
+             
+
             </div>
         </div>
     </li>
@@ -70,11 +106,12 @@
                 <a class="collapse-item" href="{{route('admin.yearlyfee')}}">Yearly Fee</a>
                 <a class="collapse-item" href="{{route('admin.newuser')}}">Create User</a>
                 <a class="collapse-item" href="{{route('admin.userlist')}}">User List</a>
-               
+
             </div>
         </div>
     </li>
-    
+
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

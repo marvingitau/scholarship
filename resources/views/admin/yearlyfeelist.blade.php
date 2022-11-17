@@ -39,7 +39,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Beneficiary/Scholar No</th>
+                                <th> No</th>
                                 <th>Beneficiary Name</th>
                                 <th>Yearly Fee</th>
                                 <th>Year</th>

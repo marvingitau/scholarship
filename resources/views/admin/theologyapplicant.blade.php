@@ -18,7 +18,7 @@
             <div class="row justify-content-center">
                 <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 text-center p-0 mt-3 mb-2">
                     <div class="card px-2 pt-4 pb-0 mt-3 mb-3">
-                        <h2 id="heading"> Applicant Form</h2>
+                        <h2 id="heading">THEOLOGY Applicant Form</h2>
                         <!-- <p>Fill all form field to go to next step</p> -->
                         <section id="msform">
                             <!-- progressbar -->
@@ -90,16 +90,20 @@
                                             <label class="fieldlabels">Date of Birth: </label>
                                             <input type="date" name="DOB" value="{{ $personalSection['DOB']}}" placeholder="DOB" disabled />
                                         </div>
+                                        <div class="col-md-4">
+                                                <label class="fieldlabels">Active Phone Number: *</label>
+                                                <input type="text" name="MobileActive" value="{{ $personalSection['MobileActive']}}" placeholder="Active Mobile" />
+                                            </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <!-- <div class="col-md-3">
                                             <label class="fieldlabels">KCPE Index: </label>
                                             <input type="text" name="KCPEIndex" value="{{ $personalSection['KCPEIndex']}}" placeholder="KCPE Index" disabled />
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-md-6">
-                                            <label class="fieldlabels">Secondary Admitted: </label>
+                                            <label class="fieldlabels">Institute Admitted: </label>
                                             <input type="text" name="SecondaryAdmitted" value="{{ $personalSection['SecondaryAdmitted']}}" placeholder="Secondary Admitted" disabled />
                                         </div>
                                         <div class="col-md-3">
@@ -108,13 +112,13 @@
                                         </div>
 
                                         <div class="col-md-3">
-                                            <label class="fieldlabels">Current Form: </label>
-                                            <input type="text" name="CurrentForm" value="{{ $personalSection['CurrentForm']}}" placeholder="Current Form" disabled />
+                                            <label class="fieldlabels">Current Year: </label>
+                                            <input type="text" name="CurrentForm" value="{{ $personalSection['CurrentForm']}}" placeholder="Current Year" disabled />
                                         </div>
 
                                         <div class="col-md-3">
-                                            <label class="fieldlabels">Form Joining: </label>
-                                            <input type="text" name="FormJoining" value="{{ $personalSection['FormJoining']}}" placeholder="Form Joining" disabled />
+                                            <label class="fieldlabels">Year Joining: </label>
+                                            <input type="text" name="FormJoining" value="{{ $personalSection['FormJoining']}}" placeholder="Year Joining" disabled />
                                         </div>
 
                                         <div class="col-md-3">
@@ -151,6 +155,7 @@
                                                 <input type="text" name="pastortelephone" value="{{ $personalSection['pastortelephone']}}" placeholder="Pastor/Church Mobile" disabled/>
                                             </div>
 
+                                            
                                         <div class="col-md-3">
                                             <label class="fieldlabels">Have another Sponsor: </label>
                                             <select name="AnotherSponsorship" disabled>
@@ -229,7 +234,7 @@
                                 <div class="form-card ">
                                     <div class="row">
                                         <div class="col-7">
-                                            <h2 class="fs-title">Family Information:</h2>
+                                            <h2 class="fs-title">Spouse Information:</h2>
                                         </div>
                                         <div class="col-5">
                                             <h2 class="steps">Step 3 - 7</h2>
@@ -237,60 +242,25 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label class="fieldlabels">Father: *</label>
-                                            <input type="text" name="Father" value="{{$familySection['Father']}}" placeholder="Father" />
+                                            <label class="fieldlabels">Name: *</label>
+                                            <input type="text" name="Spouse" value="{{$familySection['SpouseName']}}" placeholder="Father" />
                                         </div>
 
                                         <div class="col-md-3">
-                                            <label class="fieldlabels">Fathe ID: *</label>
-                                            <input type="text" name="FatherID" value="{{$familySection['FatherID']}}" placeholder="Father ID" />
+                                            <label class="fieldlabels"> ID: *</label>
+                                            <input type="text" name="SpouseID" value="{{$familySection['SpouseID']}}" placeholder="Spouse ID" />
                                         </div>
                                         <div class="col-md-3">
-                                            <label class="fieldlabels">Father Mobile: *</label>
-                                            <input type="text" name="FatherMobile" value="{{$familySection['FatherMobile']}}" placeholder="Father Mobile" />
+                                            <label class="fieldlabels"> Mobile: *</label>
+                                            <input type="text" name="SpouseMobile" value="{{$familySection['SpouseMobile']}}" placeholder="Spouse Mobile" />
                                         </div>
 
                                         <div class="col-md-3">
-                                            <label class="fieldlabels">Father Occupation: *</label>
-                                            <input type="text" name="FatherOccupation" value="{{$familySection['FatherOccupation']}}" placeholder="Father Occupation" />
+                                            <label class="fieldlabels"> Occupation: *</label>
+                                            <input type="text" name="SpouseOccupation" value="{{$familySection['SpouseOccupation']}}" placeholder="Spouse Occupation" />
                                         </div>
 
-                                        <div class="col-md-3">
-                                            <label class="fieldlabels">Mother: *</label>
-                                            <input type="text" name="Mother" value="{{ $familySection['Mother']}}" placeholder="Mother" />
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="fieldlabels">Mother ID: *</label>
-                                            <input type="text" name="MotherID" value="{{ $familySection['MotherID']}}" placeholder="Mother ID" />
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="fieldlabels">Mother Mobile: *</label>
-                                            <input type="text" name="MotherMobile" value="{{ $familySection['MotherMobile']}}" placeholder="Mother Mobile" />
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="fieldlabels">Mother Occupation: *</label>
-                                            <input type="text" name="MotherOccupation" value="{{ $familySection['MotherOccupation']}}" placeholder="Mother Occupation" />
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label class="fieldlabels">If Applicable</label>
-
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="fieldlabels">Guardian Name: *</label>
-                                            <input type="text" name="Guardian" value="{{ $familySection['Guardian']}}" placeholder="Guardian" />
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="fieldlabels">Guardian ID: *</label>
-                                            <input type="text" name="GuardianID" value="{{ $familySection['GuardianID']}}" placeholder="Guardian ID" />
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="fieldlabels">Guardian Mobile: *</label>
-                                            <input type="text" name="GuardianMobile" value="{{ $familySection['GuardianMobile']}}" placeholder="Guardian Mobile" />
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="fieldlabels">Guardian Occupation:*</label>
-                                            <input type="text" name="GuardianOccupation" value="{{ $familySection['GuardianOccupation']}}" placeholder="Guardian Occupation" />
-                                        </div>
+                                       
 
                                     </div>
 
@@ -333,7 +303,7 @@
                                 <div class="form-card">
                                     <div class="row">
                                         <div class="col-7">
-                                            <h2 class="fs-title">Siblings Information:</h2>
+                                            <h2 class="fs-title">Children Information:</h2>
                                         </div>
                                         <div class="col-5">
                                             <h2 class="steps">Step 5 - 7</h2>
@@ -344,21 +314,21 @@
                                     <div class="row">
                                         @if($siblingSection)
                                         @foreach($siblingSection as $itm)
-                                        <div class="col-3">
-                                            <label class="fieldlabels">Sibling Name : *</label>
-                                            <input type="text" name="SiblingName1" value="{{ $itm->SiblingName1 }}" placeholder="Sibling Name 1" disabled />
+                                        <div class="col-md-3">
+                                            <label class="fieldlabels"> Name : *</label>
+                                            <input type="text" name="SiblingName1" value="{{ $itm->SiblingName1 }}" placeholder=" Name " disabled />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="fieldlabels"> Relation : *</label>
+                                            <input type="text" name="SiblingRelation1" value="{{ $itm->SiblingRelation1 }}" placeholder=" Relation " disabled />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="fieldlabels"> Age : *</label>
+                                            <input type="text" name="SiblingAge1" value="{{ $itm->SiblingAge1 }}" placeholder=" Age " disabled />
                                         </div>
                                         <div class="col-3">
-                                            <label class="fieldlabels">Sibling Relation : *</label>
-                                            <input type="text" name="SiblingRelation1" value="{{ $itm->SiblingRelation1 }}" placeholder="Sibling Relation 1" disabled />
-                                        </div>
-                                        <div class="col-3">
-                                            <label class="fieldlabels">Sibling Age : *</label>
-                                            <input type="text" name="SiblingAge1" value="{{ $itm->SiblingAge1 }}" placeholder="Sibling Age 1" disabled />
-                                        </div>
-                                        <div class="col-3">
-                                            <label class="fieldlabels">Sibling Occupation : *</label>
-                                            <input type="text" name="SiblingOccupation1" value="{{ $itm->SiblingOccupation1 }}" placeholder="Sibling Occupation 1" disabled />
+                                            <label class="fieldlabels"> Occupation : *</label>
+                                            <input type="text" name="SiblingOccupation1" value="{{ $itm->SiblingOccupation1 }}" placeholder=" Occupation " disabled />
                                         </div>
 
                                         @endforeach
@@ -480,7 +450,7 @@
 <style>
     #heading {
         text-transform: uppercase;
-        color: #575360;
+        color: #673AB7;
         font-weight: normal
     }
 

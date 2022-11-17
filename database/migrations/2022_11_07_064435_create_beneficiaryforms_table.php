@@ -42,10 +42,14 @@ class CreateBeneficiaryformsTable extends Migration
             // $table->string('GuardianMobile')->nullable();
             $table->string('MobileActive')->nullable();
             $table->string('EmailActive')->nullable();
-            $table->string('AnotherSponship')->default('NO');
-            $table->string('AnotherSponshipRemark')->nullable();
+            $table->string('AnotherSponsorship')->default('NO');
+            $table->string('AnotherSponsorshipRemark')->nullable();
             $table->string('ClerkStatus')->default('OPEN');//CLOSED, PENDING,OPEN-> when clerk achives
             $table->string('AdminStatus')->default('PENDING');//APPROVED,DECLINED
+            $table->string('TypeofDisability')->nullable();//CLOSED, PENDING,OPEN-> when clerk achives
+            $table->text('ExtentofDisability')->nullable();
+            $table->integer('CreatedBy')->nullable();
+            $table->integer('ApprovedBy')->nullable();
             $table->timestamps();
             
         });

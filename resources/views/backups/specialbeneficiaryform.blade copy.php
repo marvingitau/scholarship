@@ -161,19 +161,19 @@
 
                                             <div class="col-3">
                                                 <label class="fieldlabels">Have another Sponsor: </label>
-                                                <select name="AnotherSponship">
+                                                <select name="AnotherSponsorship">
                                                     <option value="">Choose</option>
-                                                    <option value="YES" <?php echo old('AnotherSponship') == "YES" ? 'selected' : "" ?>>YES</option>
-                                                    <option value="NO" <?php echo old('AnotherSponship') == "NO" ? 'selected' : "" ?>>NO</option>
+                                                    <option value="YES" <?php echo old('AnotherSponsorship') == "YES" ? 'selected' : "" ?>>YES</option>
+                                                    <option value="NO" <?php echo old('AnotherSponsorship') == "NO" ? 'selected' : "" ?>>NO</option>
                                                 </select>
-                                                @error('AnotherSponship')
+                                                @error('AnotherSponsorship')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
 
                                             <div class="col-12">
                                                 <label class="fieldlabels">Have another Sponsor Remark: </label>
-                                                <textarea name="AnotherSponshipRemark" id="" cols="30" rows="10">{{ old('AnotherSponshipRemark') }}</textarea>
+                                                <textarea name="AnotherSponsorshipRemark" id="" cols="30" rows="10">{{ old('AnotherSponsorshipRemark') }}</textarea>
                                             </div>
 
 
@@ -585,7 +585,7 @@
     } */
     #heading {
 	text-transform: uppercase;
-	color: #464646;
+	color: #575360;
 	font-weight: normal;
 }
     #msform {

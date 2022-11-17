@@ -17,3 +17,10 @@ background: #dd3333b8;
     width: 3rem;
     height: auto;
 }
+/* .SWEET_ALERT_CONFIRM_BUTTON_CLASS{
+    background: #dd3333b8;
+} */
+.swal2-styled.swal2-confirm{
+    background: #dd3333b8 !important;
+    outline-color: #dd3333b8 !important;
+}

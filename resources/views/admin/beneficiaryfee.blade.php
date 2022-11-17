@@ -15,7 +15,7 @@
             <!-- Page Heading -->
             <div class="d-flex my-1">
 
-                <h1 class="h3 mb-2 text-gray-800">{{$personalSection['firstname']}} Fee</h1>
+                <h1 class="h3 mb-2 text-gray-800">{{$personalSection['firstname']}} Fee Ledger</h1>
                 <a href="{{route('admin.newfee',$id)}}" class="btn btn-success ml-auto"><i class="fa fa-book mr-1"></i> Create New</a>
             </div>
 

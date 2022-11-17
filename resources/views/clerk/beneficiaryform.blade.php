@@ -19,7 +19,7 @@
             <div class="row justify-content-center">
                 <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 text-center p-0 mt-3 mb-2">
                     <div class="card px-2 pt-4 pb-0 mt-3 mb-3">
-                        <h2 id="heading">Secondary Application Form</h2>
+                        <h2 id="heading">High school Application Form</h2>
                         <!-- <p>Fill all form field to go to next step</p> -->
                         <section id="msform">
                             <!-- progressbar -->
@@ -51,11 +51,11 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
-                                                @if (session('personal_status'))
+                                                <!-- @if (session('personal_status'))
                                                 <div class="alert alert-success">
                                                     {{ session('personal_status') }}
                                                 </div>
-                                                @endif
+                                                @endif -->
                                             </div>
                                             <div class="col-12">
                                                 @if ($errors->any())
@@ -187,19 +187,19 @@
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Have another Sponsor: </label>
-                                                <select name="AnotherSponship">
+                                                <select name="AnotherSponsorship">
                                                     <option value="">Choose</option>
-                                                    <option value="YES" <?php echo old('AnotherSponship') == "YES" ? 'selected' : "" ?>>YES</option>
-                                                    <option value="NO" <?php echo old('AnotherSponship') == "NO" ? 'selected' : "" ?>>NO</option>
+                                                    <option value="YES" <?php echo old('AnotherSponsorship') == "YES" ? 'selected' : "" ?>>YES</option>
+                                                    <option value="NO" <?php echo old('AnotherSponsorship') == "NO" ? 'selected' : "" ?>>NO</option>
                                                 </select>
-                                                @error('AnotherSponship')
+                                                @error('AnotherSponsorship')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
 
                                             <div class="col-12">
                                                 <label class="fieldlabels">Have another Sponsor Remark: </label>
-                                                <textarea name="AnotherSponshipRemark" id="" cols="30" rows="3">{{ old('AnotherSponshipRemark') }}</textarea>
+                                                <textarea name="AnotherSponsorshipRemark" id="" cols="30" rows="3">{{ old('AnotherSponsorshipRemark') }}</textarea>
                                             </div>
 
 
@@ -569,7 +569,7 @@
     } */
     #heading {
         text-transform: uppercase;
-        color: #464646;
+        color: #575360;
         font-weight: normal;
     }
 

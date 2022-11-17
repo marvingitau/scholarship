@@ -28,7 +28,7 @@
                                     <th>Name</th>
                                     <th>Gender</th>
                                     <th>Age</th>
-                                    <th>Secondary</th>
+                                    <th>School</th>
                                     <th>Telephone</th>
                                     <!-- <th>Salary</th> -->
                                 </tr>
@@ -38,7 +38,7 @@
                                     <th>Name</th>
                                     <th>Gender</th>
                                     <th>Age</th>
-                                    <th>Secondary</th>
+                                    <th>School</th>
                                     <th>Telephone</th>
                                     <!-- <th>Salary</th> -->
                                 </tr>

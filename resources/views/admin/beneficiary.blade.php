@@ -26,6 +26,9 @@
                 <li class="nav-item px-2">
                     <a class="nav-link border bg-danger text-white" href="{{route('admin.schoolreport',$personalSection['id'])}}">School Result</a>
                 </li>
+                <li class="nav-item px-2">
+                    <a class="nav-link border bg-danger text-white" href="{{route('admin.additionalinfo',$personalSection['id'])}}">Additional Information</a>
+                </li>
 
             </ul>
             <!-- </div> -->
@@ -168,16 +171,16 @@
                                             </div>
                                         <div class="col-md-3">
                                             <label class="fieldlabels">Have another Sponsor: </label>
-                                            <select name="AnotherSponship" disabled>
-                                                <option value="">{{ $personalSection['AnotherSponship']}}</option>
-                                                <option value="YES" <?php echo old('AnotherSponship') == "YES" ? 'selected' : "" ?>>YES</option>
-                                                <option value="NO" <?php echo old('AnotherSponship') == "NO" ? 'selected' : "" ?>>NO</option>
+                                            <select name="AnotherSponsorship" disabled>
+                                                <option value="">{{ $personalSection['AnotherSponsorship']}}</option>
+                                                <option value="YES" <?php echo old('AnotherSponsorship') == "YES" ? 'selected' : "" ?>>YES</option>
+                                                <option value="NO" <?php echo old('AnotherSponsorship') == "NO" ? 'selected' : "" ?>>NO</option>
                                             </select>
                                         </div>
 
                                         <div class="col-md-12">
                                             <label class="fieldlabels">Have another Sponsor Remark: </label>
-                                            <textarea name="AnotherSponshipRemark" id="" cols="30" rows="10" disabled>{{ $personalSection['AnotherSponshipRemark']}}</textarea>
+                                            <textarea name="AnotherSponsorshipRemark" id="" cols="30" rows="10" disabled>{{ $personalSection['AnotherSponsorshipRemark']}}</textarea>
                                         </div>
 
 
@@ -503,7 +506,7 @@
 <style>
     #heading {
         text-transform: uppercase;
-        color: #673AB7;
+        color: #575360;
         font-weight: normal
     }
 

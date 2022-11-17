@@ -76,15 +76,22 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">First Name: *</label>
-                                                <input type="text" name="firstname" value="{{ old('firstname') }}" placeholder="First Name" />
+                                                <input type="text" name="firstname" value="{{ old('firstname') }}" placeholder="First Name" required/>
+                                                @error('firstname')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Middle Name: </label>
                                                 <input type="text" name="middlename" value="{{ old('middlename') }}" placeholder="Middle Name" />
+                                                
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Last Name: *</label>
-                                                <input type="text" name="lastname" value="{{ old('lastname') }}" placeholder="Last Name" />
+                                                <input type="text" name="lastname" value="{{ old('lastname') }}" placeholder="Last Name" required/>
+                                                @error('lastname')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Gender: </label>
@@ -100,7 +107,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Date of Birth: </label>
-                                                <input type="date" name="DOB" value="{{ old('DOB') }}" placeholder="Age" />
+                                                <input type="date" name="DOB" value="{{ old('DOB') }}" placeholder="Age" required/>
                                             </div>
                                             <!-- <div class="col-md-4"></div> -->
                                         </div>
@@ -188,19 +195,19 @@
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Have another Sponsor: </label>
-                                                <select name="AnotherSponship">
+                                                <select name="AnotherSponsorship">
                                                     <option value="">Choose</option>
-                                                    <option value="YES" <?php echo old('AnotherSponship') == "YES" ? 'selected' : "" ?>>YES</option>
-                                                    <option value="NO" <?php echo old('AnotherSponship') == "NO" ? 'selected' : "" ?>>NO</option>
+                                                    <option value="YES" <?php echo old('AnotherSponsorship') == "YES" ? 'selected' : "" ?>>YES</option>
+                                                    <option value="NO" <?php echo old('AnotherSponsorship') == "NO" ? 'selected' : "" ?>>NO</option>
                                                 </select>
-                                                @error('AnotherSponship')
+                                                @error('AnotherSponsorship')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
 
                                             <div class="col-12">
                                                 <label class="fieldlabels">Have another Sponsor Remark: </label>
-                                                <textarea name="AnotherSponshipRemark" id="" cols="30" rows="3">{{ old('AnotherSponshipRemark') }}</textarea>
+                                                <textarea name="AnotherSponsorshipRemark" id="" cols="30" rows="3">{{ old('AnotherSponsorshipRemark') }}</textarea>
                                             </div>
 
 
@@ -570,7 +577,7 @@
     } */
     #heading {
         text-transform: uppercase;
-        color: #464646;
+        color: #575360;
         font-weight: normal;
     }
 

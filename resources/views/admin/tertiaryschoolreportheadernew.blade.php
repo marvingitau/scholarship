@@ -13,7 +13,7 @@
         <div class="container-fluid">
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">New Academic Result</h1>
+                <h1 class="h3 mb-0 text-gray-800">New Institute Academic Result</h1>
                 <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
             </div>
 
@@ -65,13 +65,16 @@
                         </div>
                         <div class="col-3">
                             <div class="form-group">
-                                <label for="">Form ( Highschool)</label>
+                                <label for="">Year</label>
                                 <select class="form-control year-selector" name="form">
-                                    <option value="">Choose Class</option>
-                                    <option value="Form 1">Form One</option>
-                                    <option value="Form 2">Form Two</option>
-                                    <option value="Form 3">Form Three</option>
-                                    <option value="Form 4">Form Four</option>
+                                    <option value="">Choose Year</option>
+                                    <option value="Year 1">Year One</option>
+                                    <option value="Year 2">Year Two</option>
+                                    <option value="Year 3">Year Three</option>
+                                    <option value="Year 4">Year Four</option>
+                                    <option value="Year 5">Year Five</option>
+                                    <option value="Year 6">Year Six</option>
+                                    <option value="Year 7">Year Seven</option>
                                 </select>
 
                             </div>
@@ -84,7 +87,6 @@
                                     <option value="2nd Term/Semester">2nd Term/Semester</option>
                                     <option value="3rd Term/Semester">3rd Term/Semester</option>
                                     <option value="Yearly Report">Yearly Report</option>
-
                                 </select>
 
                             </div>

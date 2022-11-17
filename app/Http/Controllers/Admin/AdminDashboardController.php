@@ -105,8 +105,14 @@ class AdminDashboardController extends Controller
             $siblingSection = DB::table('siblings')->where('beneficiary_id', $id)->get()->toArray();
             $emergencySection = EmergencyContact::where('beneficiary_id', $id)->first()->toArray();
             $familyPropertySection = DB::table('family_properties')->where('beneficiary_id', $id)->get()->toArray();
-            // dd($academicSection);
-            return view('admin.applicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection']));
+            // dd($personalSection['Type']);
+            if ($personalSection['Type'] == 'THEOLOGY') {
+                return view('admin.theologyapplicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection']));
+            } elseif ($personalSection['Type'] == 'SPECIAL') {
+                return view('admin.specialapplicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection']));
+            } else {
+                return view('admin.applicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection']));
+            }
         } else {
             return back();
         }
@@ -116,31 +122,37 @@ class AdminDashboardController extends Controller
 
     public function approve(Request $request)
     {
+        $user = Auth::user();
         $personalSection = Beneficiaryform::where('id', $request->applicant)->first();
         $personalSection->AdminStatus = "APPROVED";
+        $personalSection->ApprovedBy = $user->id;
         $personalSection->save();
 
-        $user = Auth::user();
+
         ActionReason::updateOrCreate(
             ['beneficiary_id' => $request->applicant],
             ['user_id' => $user->id, 'reason' => $request->applicantactionreason]
         );
-
-        return back()->with('message', 'Approval Success');
+        activity()->log("Beneficiary Approved:" . $personalSection->firstname . " " . $personalSection->lastname);
+        alert('APPROVE', 'Beneficiary Approval was a Success', 'success')->autoClose(10000);
+        return back();
     }
 
 
     public function reject(Request $request)
     {
+        $user = Auth::user();
         $personalSection = Beneficiaryform::where('id', $request->applicant)->first();
         $personalSection->AdminStatus = "REJECTED";
+        $personalSection->ApprovedBy = $user->id;
         $personalSection->save();
 
-        $user = Auth::user();
         ActionReason::updateOrCreate(
             ['beneficiary_id' => $request->applicant],
             ['user_id' => $user->id, 'reason' => $request->applicantactionreason]
         );
+        activity()->log("Beneficiary Rejected:" . $personalSection->firstname . " " . $personalSection->lastname);
+        alert('REJECT', 'Beneficiary Rejection was a Success', 'success')->autoClose(10000);
         return back()->with('message', 'Rejection Success');
     }
 
@@ -216,7 +228,13 @@ class AdminDashboardController extends Controller
             $familyPropertySection = DB::table('family_properties')->where('beneficiary_id', $id)->get()->toArray();
             $reasonSection = ActionReason::where('beneficiary_id', $id)->first()->toArray();
 
-            return view('admin.beneficiary', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'reasonSection']));
+            if ($personalSection['Type'] == 'SPECIAL') {
+                return view('admin.beneficiaryspecial', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'reasonSection']));
+            } elseif ($personalSection['Type'] == 'THEOLOGY') {
+                return view('admin.beneficiarytheology', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'reasonSection']));
+            } else {
+                return view('admin.beneficiary', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'reasonSection']));
+            }
         } else {
             return back();
         }
@@ -349,7 +367,14 @@ class AdminDashboardController extends Controller
     {
         // $data = DB::table('mentorship_sections')->where('beneficiary_id', $id)->get();
         // dd($data);
+
         $activeYear = AcademicYear::where('status', true)->first();
+        if (is_null($activeYear)) {
+            // activity()->log("Beneficiary Approved:".$personalSection->firstname." ".$personalSection->lastname);
+            alert('DANGER', 'Active Academic Year is Missing!!', 'danger')->autoClose(10000);
+            return back();
+        }
+
         $annualFee = Fees::where('beneficiary_id', $id)->where('year', $activeYear->year)->first();
 
         // dd($annualFee->yearlyfee);
@@ -598,47 +623,66 @@ class AdminDashboardController extends Controller
 
     public function newschoolreport($id)
     {
-        return view('admin.schoolreportheadernew', compact('id'));
+        //check whether its collega or high school
+        $beneficialLevel = Beneficiaryform::where('id',$id)->first()->Type;
+        if($beneficialLevel == 'TERTIARY'){
+            return view('admin.tertiaryschoolreportheadernew', compact('id'));
+        }elseif($beneficialLevel == 'THEOLOGY'){
+            return view('admin.tertiaryschoolreportheadernew', compact('id'));
+        }elseif($beneficialLevel == 'SPECIAL'){
+            return view('admin.tertiaryschoolreportheadernew', compact('id'));
+        }else{
+            return view('admin.schoolreportheadernew', compact('id'));
+        }
     }
 
     public function postschoolreport(Request $request)
     {
         $data = $request->all();
-        $reportHeader = SchoolReportHeader::where('year',$request->year)->where('beneficiary_id', $request->id,)->where('term', $request->term)->first();
-        if($reportHeader != null){
-            $reportHeader->beneficiary_id= $request->id;
-            $reportHeader->year=$request->year;
-            // $reportHeader->beneficiary_id=$request->beneficiary_id;
-            $reportHeader->term=$request->term;
-            $reportHeader->meangrade=$request->meangrade;
+        $reportHeader = SchoolReportHeader::where('year', $request->year)->where('beneficiary_id', $request->id,)->where('term', $request->term)->where('form', $request->form)->first();
+        if ($reportHeader != null) {
+            $reportHeader->beneficiary_id = $request->id;
+            $reportHeader->year = $request->year;
+            $reportHeader->form = $request->form;
+            $reportHeader->term = $request->term;
+            $reportHeader->meangrade = $request->meangrade;
             $reportHeader->save();
 
-            AcademicInfo::where('beneficiary_id', $request->id)->where('schoolreportheader_id',$reportHeader->id)->delete();
+            AcademicInfo::where('beneficiary_id', $request->id)->where('schoolreportheader_id', $reportHeader->id)->delete();
             foreach ($data['Subject1'] as $key => $value) {
                 AcademicInfo::create(['beneficiary_id' => $request->id, 'schoolreportheader_id' => $reportHeader->id, 'Subject1' => $value, 'Grade' => $data['Marks1'][$key], 'TotalMarks' =>  $request->meangrade]);
             }
-            return back()->with('reportuploaded', 'Report Updated');
 
-        }else{
-            $resp = SchoolReportHeader::create(['beneficiary_id' => $request->id, 'year' => $request->year, 'term' =>  $request->term, 'meangrade' => $request->meangrade]);
+            activity()->log("Result Slip Updated For: " . $request->id);
+            alert('UPDATED', 'School Report Update was a Success', 'success')->autoClose(10000);
+            return back();
+        } else {
+            $resp = SchoolReportHeader::create(['beneficiary_id' => $request->id, 'form' => $request->form, 'year' => $request->year, 'term' =>  $request->term, 'meangrade' => $request->meangrade]);
 
             if ($resp->id) {
                 foreach ($data['Subject1'] as $key => $value) {
                     AcademicInfo::create(['beneficiary_id' => $request->id, 'schoolreportheader_id' => $resp->id, 'Subject1' => $value, 'Grade' => $data['Marks1'][$key], 'TotalMarks' =>  $request->meangrade]);
                 }
             }
-            return back()->with('reportuploaded', 'Report Uploaded');
+            activity()->log("Result Slip Added For: " . $request->id);
+            alert('UPLOAD', 'School Report Upload was a Success', 'success')->autoClose(10000);
+            return back();
         }
-       
     }
 
     public function viewschoolreport($id)
     {
         $reporthead = SchoolReportHeader::where('id', $id)->first();
- 
-        $reportlist = AcademicInfo::where('schoolreportheader_id',$reporthead->id)->get()->toArray();
-        return view('admin.schoolreportheaderview',compact('reporthead','reportlist'));
+
+        $reportlist = AcademicInfo::where('schoolreportheader_id', $reporthead->id)->get()->toArray();
+        return view('admin.schoolreportheaderview', compact('reporthead', 'reportlist'));
     }
+
+    public function additionalinfo($id)
+    {
+        return view('admin.additionalinfo.index',compact('id'));
+    }
+
 
     /**
      * Show the form for creating a new resource.

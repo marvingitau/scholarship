@@ -50,7 +50,7 @@
 
 
                 <div class="row p-2">
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="form-group">
                             <label for="">Year</label>
                             <select class="form-control year-selector" name="year" disabled>
@@ -61,7 +61,17 @@
 
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="">Form</label>
+                            <select class="form-control year-selector" name="form" disabled>
+                                <option value="">{{$reporthead->form}}</option>
+
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-3">
                         <div class="form-group">
                             <label for="">Term</label>
                             <select class="form-control year-selector" name="term" disabled>
@@ -72,7 +82,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="">Mean Grade/Total Marks</label>
                             <input type="text" class="form-control" name="meangrade" value="{{$reporthead->meangrade}}" disabled>
@@ -84,7 +94,7 @@
                 <div class="academic_repeater p-2">
                     <div class="row">
                         @if($reportlist)
-                        @foreach($reportlist as $item)
+                        @foreach($reportlist as $item) 
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label class="">Subject : </label>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSchoolReportHeadersTable extends Migration
+class CreateSchoolInfosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateSchoolReportHeadersTable extends Migration
      */
     public function up()
     {
-        Schema::create('school_report_headers', function (Blueprint $table) {
+        Schema::create('school_infos', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('beneficiary_id');
-            $table->integer('year');
-            $table->string('form')->nullable();
-            $table->string('term');
-            $table->string('meangrade');
+            $table->string('name')->nullable();
+            $table->string('bankname')->nullable();
+            $table->string('branch')->nullable();
+            $table->string('accountno')->nullable();
+            $table->tinyInteger('current')->default(0);
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateSchoolReportHeadersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('school_report_headers');
+        Schema::dropIfExists('school_infos');
     }
 }

@@ -18,7 +18,7 @@
             <div class="row justify-content-center">
                 <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 text-center p-0 mt-3 mb-2">
                     <div class="card px-2 pt-4 pb-0 mt-3 mb-3">
-                        <h2 id="heading"> Applicant Form</h2>
+                        <h2 id="heading">Special Applicant Form</h2>
                         <!-- <p>Fill all form field to go to next step</p> -->
                         <section id="msform">
                             <!-- progressbar -->
@@ -162,8 +162,16 @@
 
                                         <div class="col-md-12">
                                             <label class="fieldlabels">Have another Sponsor Remark: </label>
-                                            <textarea name="AnotherSponsorshipRemark" id="" cols="30" rows="10" disabled>{{ $personalSection['AnotherSponsorshipRemark']}}</textarea>
+                                            <textarea name="AnotherSponsorshipRemark" id="" cols="30" rows="3" disabled>{{ $personalSection['AnotherSponsorshipRemark']}}</textarea>
                                         </div>
+                                        <div class="col-md-12">
+                                                <label class="fieldlabels">Type of Disability: </label>
+                                                <input type="text" name="TypeofDisability" value="{{ $personalSection['TypeofDisability']}}" placeholder="Type of Disability" />
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="fieldlabels">Extent Disability: </label>
+                                                <textarea name="ExtentofDisability" id="" cols="30" rows="3">{{ $personalSection['ExtentofDisability']}}</textarea>
+                                            </div>
 
 
                                     </div>
@@ -480,7 +488,7 @@
 <style>
     #heading {
         text-transform: uppercase;
-        color: #575360;
+        color: #673AB7;
         font-weight: normal
     }
 

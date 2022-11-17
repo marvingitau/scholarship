@@ -37,7 +37,7 @@
                             </div>  -->
                             <br> <!-- fieldsets -->
 
-                            <form method="POST" action="{{ route('clerk.storepersonaldetail') }}" class="form-input">
+                            <form method="POST" action="{{ route('clerk.storespecialdetail') }}" class="form-input">
                                 <input type="hidden" name="Type" value="SPECIAL">
                                 @csrf
                                 <fieldset>
@@ -51,13 +51,13 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-12">
+                                            <!-- <div class="col-12">
                                                 @if (session('personal_status'))
                                                 <div class="alert alert-success">
                                                     {{ session('personal_status') }}
                                                 </div>
                                                 @endif
-                                            </div>
+                                            </div> -->
                                             <div class="col-12">
                                                 @if ($errors->any())
                                                 <div class="alert alert-danger">
@@ -71,12 +71,14 @@
                                             </div>
 
                                         </div>
-                                        <!-- <form method="POST" action="{{ route('clerk.storepersonaldetail') }}" class="form-input">
-                                        @csrf -->
+                                      
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">First Name: *</label>
-                                                <input type="text" name="firstname" value="{{ old('firstname') }}" placeholder="First Name" />
+                                                <input type="text" name="firstname" value="{{ old('firstname') }}" placeholder="First Name" required/>
+                                                @error('firstname')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Middle Name: </label>
@@ -84,7 +86,10 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Last Name: *</label>
-                                                <input type="text" name="lastname" value="{{ old('lastname') }}" placeholder="Last Name" />
+                                                <input type="text" name="lastname" value="{{ old('lastname') }}" placeholder="Last Name" required/>
+                                                @error('lastname')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Gender: </label>
@@ -100,7 +105,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Date of Birth: </label>
-                                                <input type="date" name="DOB" value="{{ old('DOB') }}" placeholder="Age" />
+                                                <input type="date" name="DOB" value="{{ old('DOB') }}" placeholder="Age" required/>
                                             </div>
                                             <!-- <div class="col-md-4"></div> -->
                                         </div>
@@ -121,13 +126,13 @@
                                             </div>
 
                                             <div class="col-md-3">
-                                                <label class="fieldlabels">Current Year: </label>
-                                                <input type="text" name="CurrentForm" value="{{ old('CurrentForm') }}" placeholder="Current Year" />
+                                                <label class="fieldlabels">Current Class: </label>
+                                                <input type="text" name="CurrentForm" value="{{ old('CurrentForm') }}" placeholder="Current Class" />
                                             </div>
 
                                             <div class="col-md-3">
-                                                <label class="fieldlabels">Year Joining: </label>
-                                                <input type="text" name="FormJoining" value="{{ old('FormJoining') }}" placeholder="Year Joining" />
+                                                <label class="fieldlabels">Class Joining: </label>
+                                                <input type="text" name="FormJoining" value="{{ old('FormJoining') }}" placeholder="Class Joining" />
                                             </div>
 
                                             <div class="col-md-3">
@@ -186,21 +191,29 @@
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Have another Sponsor: </label>
-                                                <select name="AnotherSponship">
+                                                <select name="AnotherSponsorship">
                                                     <option value="">Choose</option>
-                                                    <option value="YES" <?php echo old('AnotherSponship') == "YES" ? 'selected' : "" ?>>YES</option>
-                                                    <option value="NO" <?php echo old('AnotherSponship') == "NO" ? 'selected' : "" ?>>NO</option>
+                                                    <option value="YES" <?php echo old('AnotherSponsorship') == "YES" ? 'selected' : "" ?>>YES</option>
+                                                    <option value="NO" <?php echo old('AnotherSponsorship') == "NO" ? 'selected' : "" ?>>NO</option>
                                                 </select>
-                                                @error('AnotherSponship')
+                                                @error('AnotherSponsorship')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
 
                                             <div class="col-12">
                                                 <label class="fieldlabels">Have another Sponsor Remark: </label>
-                                                <textarea name="AnotherSponshipRemark" id="" cols="30" rows="3">{{ old('AnotherSponshipRemark') }}</textarea>
+                                                <textarea name="AnotherSponsorshipRemark" id="" cols="30" rows="3">{{ old('AnotherSponsorshipRemark') }}</textarea>
                                             </div>
 
+                                            <div class="col-md-12">
+                                                <label class="fieldlabels">Type of Disability: </label>
+                                                <input type="text" name="TypeofDisability" value="{{ old('TypeofDisability') }}" placeholder="Type of Disability" />
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="fieldlabels">Extent Disability: </label>
+                                                <textarea name="ExtentofDisability" id="" cols="30" rows="3">{{ old('ExtentofDisability') }}</textarea>
+                                            </div>
 
                                         </div>
                                         <!-- <button type="submit" class="btn btn-success rounded-0">Submit</button>
@@ -568,7 +581,7 @@
     } */
     #heading {
         text-transform: uppercase;
-        color: #464646;
+        color: #575360;
         font-weight: normal;
     }
 

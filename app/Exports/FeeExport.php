@@ -9,8 +9,9 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class FeeExport implements FromCollection,WithHeadings,ShouldAutoSize, WithEvents
+class FeeExport implements FromCollection,WithHeadings,ShouldAutoSize, WithEvents,WithStrictNullComparison
 {
     /**
     * @return \Illuminate\Support\Collection

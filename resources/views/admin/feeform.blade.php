@@ -61,21 +61,21 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Schools Expected Term 1 Fee</label>
-                                <input type="text" class="form-control" value="{{$annualFee->expectedterm1}}" placeholder="Term 1 Fee" disabled>
+                                <input type="text" class="form-control" value="<?php echo is_null($annualFee) != true ? number_format($annualFee->expectedterm1, 2, '.', ',') : "N/A" ?>" placeholder="Term 1 Fee" disabled>
 
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Schools Expected Term 2 Fee</label>
-                                <input type="text" class="form-control" value="{{$annualFee->expectedterm2}}" placeholder="Term 2 Fee" disabled>
+                                <input type="text" class="form-control" value="<?php echo is_null($annualFee) != true ? number_format($annualFee->expectedterm2, 2, '.', ',') : "N/A" ?>" placeholder="Term 2 Fee" disabled>
 
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Schools Expected Term 3 Fee</label>
-                                <input type="text" class="form-control" value="{{$annualFee->expectedterm3}}" placeholder="Term 3 Fee" disabled>
+                                <input type="text" class="form-control" value="<?php echo is_null($annualFee) != true ? number_format($annualFee->expectedterm3, 2, '.', ',') : "N/A" ?>" placeholder="Term 3 Fee" disabled>
 
                             </div>
                         </div>

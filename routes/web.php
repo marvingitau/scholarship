@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Clerk\AcademicInfoController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Clerk\ClerkDashboardController;
 use App\Http\Controllers\Clerk\BeneficiaryformController;
 
@@ -33,8 +34,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 // Admin
-Route::group(['middleware'=>'role:admin','prefix'=>'admin'],function () {
-    Route::group(['namespace'=>'Admin'],function () {
+Route::group(['middleware'=>'role:admin'],function () {
+    Route::group(['namespace'=>'Admin','prefix'=>'admin'],function () {
         Route::get('/', [AdminDashboardController::class,'index'])->name('admin.dashboard');
         Route::get('/stats', [ClerkDashboardController::class,'stats'])->name('admin.stats');
         Route::get('/application-list',[AdminDashboardController::class,'applicationlist'])->name('admin.applicationlist');
@@ -91,6 +92,15 @@ Route::group(['middleware'=>'role:admin','prefix'=>'admin'],function () {
         Route::post('/postschoolreport',[AdminDashboardController::class,'postschoolreport'])->name('admin.postschoolreport');
         Route::get('/viewschoolreport/{id}',[AdminDashboardController::class,'viewschoolreport'])->name('admin.viewschoolreport');
 
+        // Reports
+        Route::get('/report',[ReportController::class,'index'])->name('admin.selectreport');
+        Route::get('/report/get',[ReportController::class,'viewreport'])->name('admin.postviewreport');
+        Route::get('/report/excel',[ReportController::class,'excelreport'])->name('admin.getexcelreport');
+
+        //Additional Information
+        Route::get('/additionalinfo/{id}',[AdminDashboardController::class,'additionalinfo'])->name('admin.additionalinfo');
+
+
 
     });
 }); 
@@ -108,6 +118,8 @@ Route::group(['middleware'=>'role:clerk','prefix'=>'clerk'],function(){
         Route::get('/application-list',[BeneficiaryformController::class,'applicationlist'])->name('clerk.applicationlist');
         //Post Beneficiary form :- Personal Details
         Route::post('/personal-details',[BeneficiaryformController::class,'store'])->name('clerk.storepersonaldetail');
+        Route::post('/special-personal-details',[BeneficiaryformController::class,'storeSpecial'])->name('clerk.storespecialdetail');
+        Route::post('/theology-personal-details',[BeneficiaryformController::class,'storeTheology'])->name('clerk.theostorepersonaldetail');
         // Route::post('/academic-details',[AcademicInfoController::class,'store'])->name('clerk.storeacademicdetail');
         Route::get('/tertiary-application',[BeneficiaryformController::class,'tertiary'])->name('clerk.tertiaryapplication');
         Route::get('/theology-application',[BeneficiaryformController::class,'theology'])->name('clerk.theologyapplication');

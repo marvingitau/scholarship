@@ -30,6 +30,7 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Year</th>
+                                    <th>Form/Class</th>
                                     <th>Term</th>
                                     <th>Mean Grade</th>
                                     <th>Action</th>
@@ -39,6 +40,7 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Year</th>
+                                    <th>Form/Class</th>
                                     <th>Term</th>
                                     <th>Mean Grade</th>
                                     <th>Action</th>
@@ -48,8 +50,9 @@
                                 @if($schoolreport)
                                 @foreach ($schoolreport as $key=>$item)
                                 <tr>
-                                    <td>{{$key}}</td>
+                                    <td>{{++$key}}</td>
                                     <td>{{$item->year}}</td>
+                                    <td>{{$item->form}}</td>
                                     <td>{{$item->term}}</td>
                                     <td>{{$item->meangrade}}</td>
                                 
