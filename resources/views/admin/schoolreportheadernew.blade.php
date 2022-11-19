@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="card">
-                <form action="{{route('admin.postschoolreport')}}" method="POST">
+                <form action="{{route('admin.postschoolreport')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id" value="{{$id}}">
                     <div class="row p-2">
@@ -128,8 +128,24 @@
                     </div>
 
                     <div class="row p-2">
-                        <div class="col-12">
-                            <button class="btn btn-info" type="submit">Submit</button>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="" for="">Select Slip</label>
+                                <input type="file" name="file" class="form-control" id="chooseFile">
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="row p-2">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6 ">
+                            <div class="form-group text-right">
+                                <!-- <label class="" for="">Action</label> -->
+                                <button class="btn btn-info" type="submit">Submit</button>
+                            </div>
+
                         </div>
                     </div>
                 </form>
@@ -165,7 +181,7 @@
 
         $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
             e.preventDefault();
-            $(this).parent('div').parent('div').remove();
+            $(this).parent('div').parent('div').parent('div').remove();
             x--;
         })
 

@@ -1,4 +1,4 @@
-@extends('layouts.clerk')
+@extends('layouts.admin')
 @section('content')
 
 
@@ -7,14 +7,17 @@
     <!-- Main Content -->
     <div id="content">
         <!--  Topbar -->
-        @include('clerk.partials.topnav')
+        @include('admin.partials.topnav')
         <!-- End of Topbar -->
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">Pending Application</h1>
+            <div class="d-flex my-1">
 
+                <h1 class="h3 mb-2 text-gray-800">Mailed Material List</h1>
+                <!-- <a href="{{route('admin.createstudymaterial')}}" class="btn btn-success ml-auto"><i class="fa fa-book mr-1"></i> Add New Material</a> -->
+            </div>
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -25,34 +28,38 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Name</th>
-                                    <th>Gender</th>
-                                    <th>Age</th>
-                                    <th>School</th>
-                                    <th>Telephone</th>
+                                    <th>Designated</th>
+                                    <th>Creation Date</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
+                                    <th>No</th>
                                     <th>Name</th>
-                                    <th>Gender</th>
-                                    <th>Age</th>
-                                    <th>School</th>
-                                    <th>Telephone</th>
+                                    <th>Designated</th>
+                                    <th>Creation Date</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @if($data)
-                                @foreach ($data as $item)
+                                @if($studyres)
+                                @foreach ($studyres as $key=>$item)
                                 <tr>
-                                    <td>{{$item->firstname}} {{$item->lastname}}</td>
-                                    <td>{{$item->gender}}</td>
-                                    <td>{{$item->age}}</td>
-                                    <td>{{$item->SecondaryAdmitted}}</td>
-                                    <td>{{$item->MobileActive}}</td>
-                                    <td> <a href="{{route('clerk.editapplication',$item->id)}}" class="btn btn-dark"> Edit <i class="fas fa-edit ml-2 "></i></a></td>
+                                    <td>{{++$key}}</td>
+                                    <td>{{$item->name}}</td>
+                                    <td>{{$item->category}}</td>
+                                    <td>{{$item->created_at}}</td>
+                                    <td><?php echo $item->mailed==0?"PENDING":"MAILED"?></td>
+                                
+                                    <td><a class="btn btn-info" href="{{route('admin.viewstudymaterial',$item->id)}}">View <i class="fa fa-eye"></i></a>
+                                
+                                    <a class="btn btn-danger" href="{{route('admin.mailmaterials',$item->id)}}" onclick="return confirm('Are you sure want to Mail?')">Mail <i class="fas fa-mail-bulk"></i></a>
+                                </td>
                                 </tr>
                                 @endforeach
                                 @else
@@ -60,9 +67,7 @@
                                     <td>..</td>
                                     <td>.</td>
                                     <td>..</td>
-                                    <td>.</td>
                                     <td>..</td>
-                                    <!-- <td>$320,800</td> -->
                                 </tr>
                                 @endif
 
@@ -75,6 +80,7 @@
 
         </div>
         <!-- /.container-fluid -->
+        
     </div>
 </div>
 

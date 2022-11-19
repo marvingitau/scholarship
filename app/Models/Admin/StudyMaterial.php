@@ -5,8 +5,13 @@ namespace App\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TransferHistory extends Model
+class StudyMaterial extends Model
 {
     use HasFactory;
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'name',
+        'file_path',
+        'category',
+        'mailed',
+    ];
 }

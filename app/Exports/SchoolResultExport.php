@@ -10,7 +10,7 @@ class SchoolResultExport implements FromView
 {
 
 
-    public function __construct($year,$Type,$form,$academicyear,$term)
+    public function __construct($year, $Type, $form, $academicyear, $term)
     {
         $this->year = $year;
         $this->Type = $Type;
@@ -21,14 +21,10 @@ class SchoolResultExport implements FromView
 
     public function view(): View
     {
-        if($this->Type !=="SECONDARY APPLICANTS"){
-            $res = SchoolReportHeader::join('beneficiaryforms','school_report_headers.beneficiary_id','=','beneficiaryforms.id')->where('year',$this->year)->where('form',$this->academicyear )->where('term',$this->term)->get();
-          
-       
-        }else{
-            $res = SchoolReportHeader::join('beneficiaryforms','school_report_headers.beneficiary_id','=','beneficiaryforms.id')->where('year',$this->year)->where('form', $this->form)->where('term',$this->term)->get();
-            
-        
+        if ($this->Type !== "SECONDARY APPLICANTS") {
+            $res = SchoolReportHeader::join('beneficiaryforms', 'school_report_headers.beneficiary_id', '=', 'beneficiaryforms.id')->where('year', $this->year)->where('form', $this->academicyear)->where('term', $this->term)->get();
+        } else {
+            $res = SchoolReportHeader::join('beneficiaryforms', 'school_report_headers.beneficiary_id', '=', 'beneficiaryforms.id')->where('year', $this->year)->where('form', $this->form)->where('term', $this->term)->get();
         }
 
         // $arr = SchoolReportHeader::all();
@@ -36,7 +32,4 @@ class SchoolResultExport implements FromView
             'slip' => $res
         ]);
     }
-
-
-  
 }

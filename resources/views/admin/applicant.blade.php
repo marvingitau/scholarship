@@ -90,6 +90,10 @@
                                             <label class="fieldlabels">Date of Birth: </label>
                                             <input type="date" name="DOB" value="{{ $personalSection['DOB']}}" placeholder="DOB" disabled />
                                         </div>
+                                        <div class="col-md-3">
+                                            <label class="fieldlabels">Active Email: </label>
+                                            <input type="email" name="EmailActive" value="{{ $personalSection['EmailActive']}}" placeholder="Active Email" disabled />
+                                        </div>
                                     </div>
 
                                     <div class="row">

@@ -19,7 +19,7 @@
             <div class="row justify-content-center">
                 <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 text-center p-0 mt-3 mb-2">
                     <div class="card px-2 pt-4 pb-0 mt-3 mb-3">
-                        <h2 id="heading">High school Application Form</h2>
+                        <h2 id="heading">Edit High school Application Form</h2>
                         <!-- <p>Fill all form field to go to next step</p> -->
                         <section id="msform">
                             <!-- progressbar -->
@@ -100,10 +100,6 @@
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Date of Birth: </label>
                                                 <input type="date" name="DOB" value="{{ old('DOB') }}" placeholder="Age" />
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="fieldlabels">Active Email: </label>
-                                                <input type="email" name="EmailActive" value="{{ old('EmailActive') }}" placeholder="Active Email" />
                                             </div>
                                             <!-- <div class="col-md-4"></div> -->
                                         </div>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Clerk\AcademicInfoController;
+use App\Http\Controllers\Admin\StudyMaterialController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Clerk\ClerkDashboardController;
 use App\Http\Controllers\Clerk\BeneficiaryformController;
@@ -91,6 +92,7 @@ Route::group(['middleware'=>'role:admin'],function () {
         Route::get('/newschoolreport/{id}',[AdminDashboardController::class,'newschoolreport'])->name('admin.newschoolreport');
         Route::post('/postschoolreport',[AdminDashboardController::class,'postschoolreport'])->name('admin.postschoolreport');
         Route::get('/viewschoolreport/{id}',[AdminDashboardController::class,'viewschoolreport'])->name('admin.viewschoolreport');
+        Route::get('/dowloadschoolslip/{id}',[AdminDashboardController::class,'viewschoolslip'])->name('admin.viewschoolslip');
 
         // Reports
         Route::get('/report',[ReportController::class,'index'])->name('admin.selectreport');
@@ -99,6 +101,32 @@ Route::group(['middleware'=>'role:admin'],function () {
 
         //Additional Information
         Route::get('/additionalinfo/{id}',[AdminDashboardController::class,'additionalinfo'])->name('admin.additionalinfo');
+        Route::post('/updateadditionalinfo/{id}',[AdminDashboardController::class,'updateadditionalinfo'])->name('admin.updateadditionalinfo');
+        Route::get('/newschoolinfo/{id}',[AdminDashboardController::class,'newschoolinfo'])->name('admin.newschoolinfo');
+        Route::post('/postnewschoolinfo',[AdminDashboardController::class,'postnewschoolinfo'])->name('admin.postnewschoolinfo');
+        Route::get('/getschoolinfo/{id}',[AdminDashboardController::class,'getschoolinfo'])->name('admin.getschoolinfo');
+        Route::post('/updatenewschoolinfo',[AdminDashboardController::class,'updatenewschoolinfo'])->name('admin.updatenewschoolinfo');
+        Route::get('/deleteschoolinfo/{id}',[AdminDashboardController::class,'delschoolinfo'])->name('admin.deleteschoolinfo');
+
+        Route::get('/newtransfer/{id}',[AdminDashboardController::class,'newtransfer'])->name('admin.newtransfer');
+        Route::post('/postnewtransfer',[AdminDashboardController::class,'postnewtransfer'])->name('admin.postnewtransfer');
+        Route::get('/gettransfer/{id}',[AdminDashboardController::class,'gettransfer'])->name('admin.gettransfer');
+        Route::post('/updatenewtransfer',[AdminDashboardController::class,'updatenewtransfer'])->name('admin.updatenewtransfer');
+        Route::get('/deletetransfer/{id}',[AdminDashboardController::class,'deltransfer'])->name('admin.deletetransfer');
+
+
+        //Study Materials
+        Route::get('/studymaterials',[StudyMaterialController::class,'index'])->name('admin.studymaterials');
+        Route::get('/create/studymaterial',[StudyMaterialController::class,'create'])->name('admin.createstudymaterial');
+        Route::post('/upload/studymaterial',[StudyMaterialController::class,'fileUpload'])->name('admin.uploadstudymaterial');
+        Route::get('view/studymaterial/{id}',[StudyMaterialController::class,'download'])->name('admin.viewstudymaterial');
+        Route::get('delete/studymaterial/{id}',[StudyMaterialController::class,'deltefile'])->name('admin.deletestudymaterial');
+
+        Route::get('/mailedstudymaterials',[StudyMaterialController::class,'mailedmaterials'])->name('admin.mailedstudymaterials');
+        Route::get('/mailstudymaterials/{id}',[StudyMaterialController::class,'mailmaterials'])->name('admin.mailmaterials');
+
+        //Fee Payment
+        Route::get('/feepayment',[StudyMaterialController::class,'mailedmaterials'])->name('admin.feepayment');
 
 
 
@@ -116,6 +144,7 @@ Route::group(['middleware'=>'role:clerk','prefix'=>'clerk'],function(){
         // Beneficiary form urls
         Route::get('/new-application',[BeneficiaryformController::class,'index'])->name('clerk.newapplication');
         Route::get('/application-list',[BeneficiaryformController::class,'applicationlist'])->name('clerk.applicationlist');
+        Route::get('/edit/application/{id}',[BeneficiaryformController::class,'editapplication'])->name('clerk.editapplication');
         //Post Beneficiary form :- Personal Details
         Route::post('/personal-details',[BeneficiaryformController::class,'store'])->name('clerk.storepersonaldetail');
         Route::post('/special-personal-details',[BeneficiaryformController::class,'storeSpecial'])->name('clerk.storespecialdetail');

@@ -20,6 +20,7 @@ use App\Models\Clerk\EmergencyContact;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\StoreBeneficiaryformRequest;
 use App\Http\Requests\UpdateBeneficiaryformRequest;
+use App\Models\Admin\Communication;
 
 // use GuzzleHttp\Psr7\Request;
 
@@ -61,6 +62,25 @@ class BeneficiaryformController extends Controller
         // dd($data);
         return view('clerk.applications', compact('data'));
     }
+
+
+    public function editapplication($id)
+    {
+        $personalInfo = Beneficiaryform::where('id',$id)->first();
+        $academicInfo =AcademicInfo::where('beneficiary_id',$id)->get();
+        if($personalInfo->Type=="THEOLOGY"){
+            return view('clerk.edittheologybeneficiaryform',compact('personalInfo','academicInfo'));
+
+        }elseif($personalInfo->Type=="TERTIARY"){
+
+        }elseif($personalInfo->Type=="SPECIAL"){
+
+        }else{
+
+            return view('clerk.editbeneficiaryform',compact('personalInfo','academicInfo'));
+        }
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -110,6 +130,7 @@ class BeneficiaryformController extends Controller
             $benObj->gender = $request->gender;
             $benObj->age = $dff->y;
             $benObj->DOB = $request->DOB;
+            $benObj->EmailActive = $request->EmailActive;
             $benObj->KCPEIndex = $request->KCPEIndex;
             $benObj->SecondaryAdmitted = $request->SecondaryAdmitted;
             $benObj->CurrentForm = $request->CurrentForm;
@@ -182,6 +203,10 @@ class BeneficiaryformController extends Controller
             $emergence->EmergencyEmail = $request->EmergencyEmail;
             $emergence->save();
 
+            $communication = Communication::where('beneficiary_id', $benObj->id)->first();
+            $communication->email = $activeNo;
+            $communication->phone = $request->EmailActive;
+            $communication->save();
 
             // FamilyProperty::where('beneficiary_id', $benObj->id)->delete();
             // foreach ($data['Type1'] as $key => $value) {
@@ -191,7 +216,7 @@ class BeneficiaryformController extends Controller
             activity()->log('Beneficiary record updated:' . $request->firstname . " " . $request->middlename);
             alert('UPDATED', 'Beneficiary Updated was a Success', 'success')->autoClose(10000);
             return back();
-        } else {
+        } else { 
             $request->validate(
                 [
                     // 'TelephoneGuardian'=>['required'],
@@ -236,6 +261,8 @@ class BeneficiaryformController extends Controller
                 $academicYear = AcademicYear::where('status', 1)->first();
                 $name = $request->firstname . " " . $request->lastname;
                 // Fees::updateOrCreate(['beneficiary_id' => $resp->id, 'year' => $academicYear->year], ['beneficiary' => $name, 'yearlyfee' => $request->SchoolFees, 'yearlyfeebal' => $request->SchoolFees, 'school' => $request->SecondaryAdmitted]);
+                
+                Communication::create(['beneficiary_id' => $resp->id,'phone'=>$activeNo,'email'=>$request->EmailActive]);
 
                 activity()->log('Beneficiary record uploaded:' . $request->firstname . " " . $request->middlename);
                 alert('UPLOAD', 'Beneficiary Uploaded was a Success', 'success')->autoClose(10000);

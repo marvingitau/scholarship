@@ -47,74 +47,81 @@
                 </div>
             </div>
             <div class="card">
+                <div class="card-body">
+                    <div class="row p-2">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="">Year</label>
+                                <select class="form-control year-selector" name="year" disabled>
 
+                                    <option>{{$reporthead->year}}</option>
 
-                <div class="row p-2">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="">Year</label>
-                            <select class="form-control year-selector" name="year" disabled>
+                                </select>
 
-                                <option>{{$reporthead->year}}</option>
-
-                            </select>
-
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="">Form</label>
-                            <select class="form-control year-selector" name="form" disabled>
-                                <option value="">{{$reporthead->form}}</option>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="">Form</label>
+                                <select class="form-control year-selector" name="form" disabled>
+                                    <option value="">{{$reporthead->form}}</option>
 
-                            </select>
+                                </select>
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="">Term</label>
-                            <select class="form-control year-selector" name="term" disabled>
-                                <option value="">{{$reporthead->term}}</option>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="">Term</label>
+                                <select class="form-control year-selector" name="term" disabled>
+                                    <option value="">{{$reporthead->term}}</option>
 
-                            </select>
+                                </select>
 
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="">Mean Grade/Total Marks</label>
-                            <input type="text" class="form-control" name="meangrade" value="{{$reporthead->meangrade}}" disabled>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="">Mean Grade/Total Marks</label>
+                                <input type="text" class="form-control" name="meangrade" value="{{$reporthead->meangrade}}" disabled>
+                            </div>
                         </div>
+
                     </div>
 
+                    <div class="academic_repeater p-2">
+                        <div class="row">
+                            @if($reportlist)
+                            @foreach($reportlist as $item)
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="">Subject : </label>
+                                    <input type="text" name="Subject1[]" value="{{$item['Subject1']}}" class="form-control" placeholder="Subject/Unit" />
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="">Marks/Grade : </label>
+                                    <input type="text" name="Marks1[]" value="{{$item['Grade']}}" class="form-control" placeholder="Marks/Grade" />
+                                </div>
+
+                            </div>
+                            @endforeach
+                            @endif
+                        </div>
+
+
+
+                    </div>
                 </div>
-
-                <div class="academic_repeater p-2">
+                
+                <div class="card-footer">
                     <div class="row">
-                        @if($reportlist)
-                        @foreach($reportlist as $item) 
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label class="">Subject : </label>
-                                <input type="text" name="Subject1[]" value="{{$item['Subject1']}}" class="form-control" placeholder="Subject/Unit" />
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label class="">Marks/Grade : </label>
-                                <input type="text" name="Marks1[]" value="{{$item['Grade']}}" class="form-control" placeholder="Marks/Grade" />
-                            </div>
-
-                        </div>
-                        @endforeach
-                        @endif
+                        <a href="{{route('admin.viewschoolslip',$reporthead->id)}}" class="btn btn-danger"> View Slip</a>
                     </div>
-
-
-
                 </div>
+
 
 
             </div>

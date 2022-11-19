@@ -9,19 +9,23 @@ use App\Models\Admin\Fees;
 use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use App\Models\Clerk\Sibling;
+use App\Imports\AnnualFeeImport;
 use App\Models\Admin\FeeSection;
+use App\Models\Admin\SchoolInfo;
+use App\Models\Admin\SchoolSlip;
 use Yajra\Datatables\Datatables;
 use App\Models\Admin\ActionReason;
 use App\Models\Clerk\AcademicInfo;
 use App\Models\Clerk\FamilyDetail;
 use Illuminate\Support\Facades\DB;
+use App\Models\Admin\Communication;
 use App\Models\Clerk\StatementNeed;
 use App\Http\Controllers\Controller;
-use App\Imports\AnnualFeeImport;
 use App\Models\Clerk\FamilyProperty;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Admin\TransferHistory;
 use App\Models\Clerk\Beneficiaryform;
 use App\Models\Clerk\EmergencyContact;
 use App\Models\Admin\DisplinarySection;
@@ -610,7 +614,8 @@ class AdminDashboardController extends Controller
 
         Excel::import(new AnnualFeeImport, $request->file('yearlydata')->store('temp'));
         activity()->log("Yearly Fee Uploaded");
-        return back()->with('csvstatus', 'File Uploaded');
+        alert('IMPORTED', 'File Uploaded', 'success')->autoClose(10000);
+        return back();
     }
 
 
@@ -624,17 +629,19 @@ class AdminDashboardController extends Controller
     public function newschoolreport($id)
     {
         //check whether its collega or high school
-        $beneficialLevel = Beneficiaryform::where('id',$id)->first()->Type;
-        if($beneficialLevel == 'TERTIARY'){
+        $beneficialLevel = Beneficiaryform::where('id', $id)->first()->Type;
+        if ($beneficialLevel == 'TERTIARY') {
             return view('admin.tertiaryschoolreportheadernew', compact('id'));
-        }elseif($beneficialLevel == 'THEOLOGY'){
+        } elseif ($beneficialLevel == 'THEOLOGY') {
             return view('admin.tertiaryschoolreportheadernew', compact('id'));
-        }elseif($beneficialLevel == 'SPECIAL'){
+        } elseif ($beneficialLevel == 'SPECIAL') {
             return view('admin.tertiaryschoolreportheadernew', compact('id'));
-        }else{
+        } else {
             return view('admin.schoolreportheadernew', compact('id'));
         }
     }
+
+
 
     public function postschoolreport(Request $request)
     {
@@ -653,6 +660,26 @@ class AdminDashboardController extends Controller
                 AcademicInfo::create(['beneficiary_id' => $request->id, 'schoolreportheader_id' => $reportHeader->id, 'Subject1' => $value, 'Grade' => $data['Marks1'][$key], 'TotalMarks' =>  $request->meangrade]);
             }
 
+            $request->validate([
+                'file' => 'mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:2048'
+                // 'file' => 'required|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:2048'
+            ]);
+            SchoolSlip::where('schoolreportheader_id', $reportHeader->id)->delete();
+            $fileModel = new SchoolSlip;
+            if ($request->file()) {
+                $fileName = time() . '_' . $request->file->getClientOriginalName();
+                $filePath = $request->file('file')->storeAs('uploads/schoolslip', $fileName, 'public');
+                $fileModel->name = $request->file->getClientOriginalName();
+                $fileModel->filename = time() . '_' . $request->file->getClientOriginalName();
+                $fileModel->path = $filePath;
+                $fileModel->schoolreportheader_id =  $reportHeader->id;
+                $fileModel->beneficiary_id =  $request->id;
+                // $fileModel->file_path = '/storage/' . $filePath;
+              
+                $fileModel->save();
+    
+            }
+
             activity()->log("Result Slip Updated For: " . $request->id);
             alert('UPDATED', 'School Report Update was a Success', 'success')->autoClose(10000);
             return back();
@@ -664,6 +691,26 @@ class AdminDashboardController extends Controller
                     AcademicInfo::create(['beneficiary_id' => $request->id, 'schoolreportheader_id' => $resp->id, 'Subject1' => $value, 'Grade' => $data['Marks1'][$key], 'TotalMarks' =>  $request->meangrade]);
                 }
             }
+            
+            $request->validate([
+                'file' => 'mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:2048'
+                // 'file' => 'required|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:2048'
+            ]);
+            $fileModel = new SchoolSlip;
+            if ($request->file()) {
+                $fileName = time() . '_' . $request->file->getClientOriginalName();
+                $filePath = $request->file('file')->storeAs('uploads/schoolslip', $fileName, 'public');
+                $fileModel->name = $request->file->getClientOriginalName();
+                $fileModel->filename = time() . '_' . $request->file->getClientOriginalName();
+                $fileModel->path = $filePath;
+                $fileModel->schoolreportheader_id =  $resp->id;
+                $fileModel->beneficiary_id =  $resp->beneficiary_id;
+                // $fileModel->file_path = '/storage/' . $filePath;
+              
+                $fileModel->save();
+    
+            }
+
             activity()->log("Result Slip Added For: " . $request->id);
             alert('UPLOAD', 'School Report Upload was a Success', 'success')->autoClose(10000);
             return back();
@@ -678,11 +725,150 @@ class AdminDashboardController extends Controller
         return view('admin.schoolreportheaderview', compact('reporthead', 'reportlist'));
     }
 
-    public function additionalinfo($id)
+    public function viewschoolslip($id)
     {
-        return view('admin.additionalinfo.index',compact('id'));
+        $path = SchoolSlip::where('schoolreportheader_id', $id)->first()->path;
+        return response()->download(storage_path('app/public/' . $path));
     }
 
+    public function additionalinfo($id)
+    {
+        $commData = Communication::where('beneficiary_id', $id)->first();
+        $schoolData = SchoolInfo::where('beneficiary_id', $id)->get();
+        $transferData = TransferHistory::where('beneficiary_id', $id)->get();
+        return view('admin.additionalinfo.index', compact('id', 'commData', 'schoolData', 'transferData'));
+    }
+
+    public function updateadditionalinfo(Request $request, $id)
+    {
+        $request->validate([
+            'phone' => 'required',
+            'email' => 'required',
+        ]);
+        //Check on this logic 
+        //Something might be misssing
+        //Missing a trail from whom the active number belongs
+        // $count = Beneficiaryform::where('id',$id)->where('EmailActive',$request->email)->orWhere('MobileActive',$request->phone)->count();
+        // if($count>1){
+
+        // }
+        $beneficiary = Beneficiaryform::where('id', $id)->first();
+        $beneficiary->EmailActive = $request->email;
+        $beneficiary->MobileActive = $request->phone;
+        $beneficiary->save();
+
+        $comm = Communication::where('beneficiary_id', $id)->first();
+        if (is_null($comm)) {
+            Communication::create(['beneficiary_id' => $id, 'email' => $request->email, 'phone' => $request->phone, 'belongsto' => $request->belongsto, 'beneficiary_type' => $beneficiary->Type]);
+        } else {
+            $comm->email = $request->email;
+            $comm->phone = $request->phone;
+            $comm->belongsto = $request->belongsto;
+            $comm->beneficiary_type = $beneficiary->Type;
+            $comm->save();
+        }
+
+        activity()->log("Communication Info Updated for usr: " . $id);
+        alert('UPDATED', 'Communication Info Update was a Success', 'success')->autoClose(10000);
+        return back();
+    }
+
+
+    public function newschoolinfo($id)
+    {
+        return view('admin.additionalinfo.newschoolinfoform', compact('id'));
+    }
+
+    public function getschoolinfo($id)
+    {
+        $schrec = SchoolInfo::where('id', $id)->first();
+        return view('admin.additionalinfo.editschoolinfoform', compact('schrec'));
+    }
+
+
+
+    public function postnewschoolinfo(Request $request)
+    {
+        $schrec = SchoolInfo::create($request->all());
+        activity()->log("School Info Creation for user: " . $request->beneficiary_id . " ,record:" . $schrec->id);
+        alert('CREATED', 'School Information Creation was a Success', 'success')->autoClose(10000);
+        return back();
+    }
+
+
+    public function updatenewschoolinfo(Request $request)
+    {
+
+        // dd($request->all());
+
+        $schrec = SchoolInfo::where('id', $request->id)->first();
+        $schrec->name = $request->name;
+        $schrec->bankname = $request->bankname;
+        $schrec->branch = $request->branch;
+        $schrec->accountno = $request->accountno;
+        $schrec->current = is_null($request->current) ? 0 : 1;
+        $schrec->save();
+
+        activity()->log("School Info Update for user: " . $request->beneficiary_id . " ,record:" . $schrec->id);
+        alert('UPDATED', 'School Information Update was a Success', 'success')->autoClose(10000);
+        return back();
+    }
+
+    public function delschoolinfo($id)
+    {
+        SchoolInfo::where('id', $id)->delete();
+
+        activity()->log("School Info Deletion for record:" . $id);
+        alert('DELETED', 'School Information Deletion was a Success', 'success')->autoClose(10000);
+        return back();
+    }
+
+    public function newtransfer($id)
+    {
+        $schoolList = SchoolInfo::where('id', $id)->get();
+        return view('admin.additionalinfo.newtransfer', compact('id', 'schoolList'));
+    }
+
+    public function postnewtransfer(Request $request)
+    {
+        $schrec = TransferHistory::create($request->all());
+        activity()->log("School Transfer Creation for user: " . $request->beneficiary_id . " ,record:" . $schrec->id);
+        alert('CREATED', 'School Transfer Creation was a Success', 'success')->autoClose(10000);
+        return back();
+    }
+
+
+    public function gettransfer($id)
+    {
+        $schrec = TransferHistory::where('id', $id)->first();
+        return view('admin.additionalinfo.edittransfer', compact('schrec', 'id'));
+    }
+
+    public function updatenewtransfer(Request $request)
+    {
+
+        // dd($request->all());
+
+        $schrec = TransferHistory::where('id', $request->id)->first();
+        $schrec->schoolname = $request->schoolname;
+        $schrec->from = $request->from;
+        $schrec->to = $request->to;
+        $schrec->reason = $request->reason;
+        $schrec->save();
+
+        activity()->log("School Transfer Update for user: " . $request->beneficiary_id . " ,record:" . $schrec->id);
+        alert('UPDATED', 'School Transfer Update was a Success', 'success')->autoClose(10000);
+        return back();
+    }
+
+    public function deltransfer($id)
+    {
+        TransferHistory::where('id', $id)->delete();
+
+        activity()->log("School Transfer Deletion for record:" . $id);
+        alert('DELETED', 'School Transfer Deletion was a Success', 'success')->autoClose(10000);
+        return back();
+    }
 
     /**
      * Show the form for creating a new resource.

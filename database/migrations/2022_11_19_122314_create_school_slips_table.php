@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCommunicationsTable extends Migration
+class CreateSchoolSlipsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateCommunicationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('communications', function (Blueprint $table) {
+        Schema::create('school_slips', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('beneficiary_id');
-            $table->string('email')->unique();
-            $table->string('phone')->unique();
-            $table->string('belongsto')->nullable();
-            $table->string('beneficiary_type')->nullable();
+            $table->integer('schoolreportheader_id');
+            $table->bigInteger('beneficiary_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('filename')->nullable();
+            $table->string('path')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateCommunicationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('communications');
+        Schema::dropIfExists('school_slips');
     }
 }

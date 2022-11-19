@@ -106,6 +106,14 @@
                                             <label class="fieldlabels">Date of Birth: </label>
                                             <input type="date" name="DOB" value="{{ $personalSection['DOB']}}" placeholder="DOB" disabled />
                                         </div>
+                                        <div class="col-md-6">
+                                            <label class="fieldlabels">Active Email: </label>
+                                            <input type="text" name="EmailActive" value="{{ $personalSection['EmailActive']}}" placeholder="Active Email" disabled />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="fieldlabels">Active Phone: </label>
+                                            <input type="text" name="MobileActive" value="{{ $personalSection['MobileActive']}}" placeholder="Active Mobile" disabled />
+                                        </div>
 
                                     </div>
 
