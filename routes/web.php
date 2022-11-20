@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\Admin\FeeSection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\FeeSectionController;
 use App\Http\Controllers\Clerk\AcademicInfoController;
 use App\Http\Controllers\Admin\StudyMaterialController;
 use App\Http\Controllers\Admin\AdminDashboardController;
@@ -126,7 +128,14 @@ Route::group(['middleware'=>'role:admin'],function () {
         Route::get('/mailstudymaterials/{id}',[StudyMaterialController::class,'mailmaterials'])->name('admin.mailmaterials');
 
         //Fee Payment
-        Route::get('/feepayment',[StudyMaterialController::class,'mailedmaterials'])->name('admin.feepayment');
+        Route::get('/feepayment',[FeeSectionController::class,'index'])->name('admin.feepayment');
+        Route::get('get/feepayment',[FeeSectionController::class,'getfeeexcel'])->name('admin.getfeepayment');
+
+        //Communications
+        Route::get('/contacts',[ReportController::class,'contacts'])->name('admin.contacts');
+        Route::get('/excelcontacts',[ReportController::class,'contactxcel'])->name('admin.excelcontacts');
+
+
 
 
 

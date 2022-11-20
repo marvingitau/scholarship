@@ -104,6 +104,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Beneficiaries Report:</h6>
                 <a class="collapse-item" href="{{route('admin.selectreport')}}">Academic Performance</a>
+                <a class="collapse-item" href="{{route('admin.contacts')}}">Messaging List</a>
              
 
             </div>

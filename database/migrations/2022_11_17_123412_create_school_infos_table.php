@@ -16,10 +16,12 @@ class CreateSchoolInfosTable extends Migration
         Schema::create('school_infos', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('beneficiary_id');
-            $table->string('name')->nullable();
+            $table->string('name')->nullable(); //school name
+            $table->string('bankcode')->nullable();
             $table->string('bankname')->nullable();
             $table->string('branch')->nullable();
             $table->string('accountno')->nullable();
+            $table->string('admissionno')->nullable(); 
             $table->tinyInteger('current')->default(0);
             $table->timestamps();
         });

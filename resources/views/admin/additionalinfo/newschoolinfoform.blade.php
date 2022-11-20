@@ -45,30 +45,44 @@
                     <input type="hidden" name="beneficiary_id" value="{{$id}}">
                     <div class="row p-2">
                         
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">School Name</label>
                                 <input type="text" class="form-control" name="name" placeholder="School Name">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Bank Name</label>
                                 <input type="text" class="form-control" name="bankname" placeholder="Bank Name" >
 
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">Branch</label>
-                                <input type="text" class="form-control" name="branch" placeholder="Branch" >
+                                <label for="">Bank Code</label>
+                                <input type="text" class="form-control" name="bankcode" placeholder="Bank Code" >
 
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Branch Code</label>
+                                <input type="text" class="form-control" name="branch" placeholder="Branch Code" >
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Account No</label>
                                 <input type="text" class="form-control" name="accountno" placeholder="Account No" >
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Student Admission No</label>
+                                <input type="text" class="form-control" name="admissionno"  placeholder="Admission No" >
 
                             </div>
                         </div>

@@ -46,30 +46,44 @@
                     <input type="hidden" name="beneficiary_id" value="{{$schrec->beneficiary_id}}">
                     <div class="row p-2">
                         
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">School Name</label>
                                 <input type="text" class="form-control" name="name" value="{{$schrec->name}}" placeholder="School Name">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Bank Name</label>
                                 <input type="text" class="form-control" name="bankname" value="{{$schrec->bankname}}" placeholder="Bank Name" >
 
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Bank Code</label>
+                                <input type="text" class="form-control" name="bankcode" value="{{$schrec->bankcode}}" placeholder="Bank Code" >
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Branch</label>
                                 <input type="text" class="form-control" name="branch" value="{{$schrec->branch}}" placeholder="Branch" >
 
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Account No</label>
                                 <input type="text" class="form-control" name="accountno" value="{{$schrec->accountno}}" placeholder="Account No" >
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Student Admission No</label>
+                                <input type="text" class="form-control" name="admissionno" value="{{$schrec->admissionno}}" placeholder="Admission No" >
 
                             </div>
                         </div>

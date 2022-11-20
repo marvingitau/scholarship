@@ -804,8 +804,10 @@ class AdminDashboardController extends Controller
         $schrec = SchoolInfo::where('id', $request->id)->first();
         $schrec->name = $request->name;
         $schrec->bankname = $request->bankname;
+        $schrec->bankcode = $request->bankcode;
         $schrec->branch = $request->branch;
         $schrec->accountno = $request->accountno;
+        $schrec->admissionno = $request->admissionno;
         $schrec->current = is_null($request->current) ? 0 : 1;
         $schrec->save();
 
