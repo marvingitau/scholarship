@@ -468,7 +468,8 @@ class AdminDashboardController extends Controller
     public function viewfee($id)
     {
         $dis = FeeSection::where('id', $id)->first();
-        return view('admin.feeview', compact('dis'));
+        $yearfee = Fees::where('beneficiary_id', $dis->beneficiary_id)->first();
+        return view('admin.feeview', compact('dis','yearfee'));
     }
 
 
@@ -537,8 +538,12 @@ class AdminDashboardController extends Controller
 
         return Datatables::of($feeyear)
             ->addColumn('action', function ($feeyear) {
-                return '<a href="/admin/delete/yearlyfee/' . $feeyear->id . '" class="btn btn-sm btn-danger"><small>Delete</small></a>';
+                return '
+                
+                <a href="/admin/beneficiary/fee/' . $feeyear->beneficiary_id . '" class="btn btn-md btn-info"><small>View</small></a>
+                ';
             })
+            // <a href="/admin/delete/yearlyfee/' . $feeyear->id . '" class="btn btn-sm btn-danger" onclick="return confirm("Are you sure want to Archive?")"><small>Delete</small></a>
             //<a href="/admin/view/yearlyfee/'.$feeyear->id.'" class="btn btn-xs btn-primary">Edit</a> 
             // ->editColumn('id', 'ID: {{$id}}')
             ->make(true);
@@ -574,10 +579,13 @@ class AdminDashboardController extends Controller
             );
 
             activity()->log("Yearly Fee added");
-
-            return back()->with('messagefee', 'Fee Added');
+            alert('SUCCESS', 'Fees Added', 'success')->autoClose(10000);
+            return back();
         } else {
-            return back()->with('errfee', 'Academic Year Missing/Closed');
+            activity()->log("Academic Year Missing/Closed");
+            alert('ERROR', 'Academic Year Missing/Closed', 'error')->autoClose(10000);
+            return back();
+            // return back()->with('errfee', 'Academic Year Missing/Closed');
         }
     }
 
@@ -675,9 +683,8 @@ class AdminDashboardController extends Controller
                 $fileModel->schoolreportheader_id =  $reportHeader->id;
                 $fileModel->beneficiary_id =  $request->id;
                 // $fileModel->file_path = '/storage/' . $filePath;
-              
+
                 $fileModel->save();
-    
             }
 
             activity()->log("Result Slip Updated For: " . $request->id);
@@ -691,7 +698,7 @@ class AdminDashboardController extends Controller
                     AcademicInfo::create(['beneficiary_id' => $request->id, 'schoolreportheader_id' => $resp->id, 'Subject1' => $value, 'Grade' => $data['Marks1'][$key], 'TotalMarks' =>  $request->meangrade]);
                 }
             }
-            
+
             $request->validate([
                 'file' => 'mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:2048'
                 // 'file' => 'required|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:2048'
@@ -706,9 +713,8 @@ class AdminDashboardController extends Controller
                 $fileModel->schoolreportheader_id =  $resp->id;
                 $fileModel->beneficiary_id =  $resp->beneficiary_id;
                 // $fileModel->file_path = '/storage/' . $filePath;
-              
+
                 $fileModel->save();
-    
             }
 
             activity()->log("Result Slip Added For: " . $request->id);

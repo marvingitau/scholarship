@@ -102,8 +102,11 @@
                                                 <input type="date" name="DOB" value="{{ old('DOB') }}" placeholder="Age" />
                                             </div>
                                             <div class="col-md-4">
-                                                <label class="fieldlabels">Active Email: </label>
-                                                <input type="email" name="EmailActive" value="{{ old('EmailActive') }}" placeholder="Active Email" />
+                                                <label class="fieldlabels">Active Email:* </label>
+                                                <input type="email" name="email" value="{{ old('email') }}" placeholder="Active Email" required/>
+                                                @error('email')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <!-- <div class="col-md-4"></div> -->
                                         </div>

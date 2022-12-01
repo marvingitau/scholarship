@@ -221,14 +221,14 @@
                                         @if($academicSection)
                                         @foreach($academicSection as $itm)
 
-                                        <div class="col-6">
+                                        <!-- <div class="col-6">
                                             <label class="fieldlabels">Subject:</label>
                                             <input type="text" name="Subject1" value="{{ $itm->Subject1 }}" placeholder="Subject 1" disabled />
                                         </div>
                                         <div class="col-6">
                                             <label class="fieldlabels">Marks:</label>
                                             <input type="number" name="Marks1" value="{{ $itm->Marks1 }}" placeholder="Marks" disabled />
-                                        </div>
+                                        </div> -->
 
                                         @endforeach
                                         <div class="col-12">

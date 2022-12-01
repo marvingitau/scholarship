@@ -30,6 +30,7 @@
                                     <th>Age</th>
                                     <th>School</th>
                                     <th>Telephone</th>
+                                    <th>Type</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -40,6 +41,7 @@
                                     <th>Age</th>
                                     <th>School</th>
                                     <th>Telephone</th>
+                                    <th>Type</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
@@ -52,6 +54,7 @@
                                     <td>{{$item->age}}</td>
                                     <td>{{$item->SecondaryAdmitted}}</td>
                                     <td>{{$item->MobileActive}}</td>
+                                    <td>{{$item->Type}}</td>
                                     <td> <a href="{{route('clerk.editapplication',$item->id)}}" class="btn btn-dark"> Edit <i class="fas fa-edit ml-2 "></i></a></td>
                                 </tr>
                                 @endforeach

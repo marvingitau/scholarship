@@ -93,6 +93,29 @@
         </div>
     </li>
 
+
+
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThres" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-cog "></i>
+            <span>Advance</span>
+        </a>
+        <div id="collapseThres" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Advance Operations:</h6>
+                <a class="collapse-item" href="{{route('admin.yearlyfee')}}">Yearly Fee</a>
+                <a class="collapse-item" href="{{route('admin.feepayment')}}">Fee Payment</a>
+                <a class="collapse-item" href="{{route('admin.academicyears')}}">Academic Years</a>
+                <a class="collapse-item" href="{{route('admin.newuser')}}">Create User</a>
+                <a class="collapse-item" href="{{route('admin.userlist')}}">User List</a>
+
+            </div>
+        </div>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
     <li class="nav-item">
@@ -111,27 +134,6 @@
         </div>
     </li>
 
-
-
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThres" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-cog "></i>
-            <span>Advance</span>
-        </a>
-        <div id="collapseThres" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Advance Operations:</h6>
-                <a class="collapse-item" href="{{route('admin.academicyears')}}">Academic Years</a>
-                <a class="collapse-item" href="{{route('admin.yearlyfee')}}">Yearly Fee</a>
-                <a class="collapse-item" href="{{route('admin.feepayment')}}">Fee Payment</a>
-                <a class="collapse-item" href="{{route('admin.newuser')}}">Create User</a>
-                <a class="collapse-item" href="{{route('admin.userlist')}}">User List</a>
-
-            </div>
-        </div>
-    </li>
 
 
     <!-- Divider -->

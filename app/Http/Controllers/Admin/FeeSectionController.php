@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Admin\Fees;
 use App\Exports\FeePayment;
 use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use App\Models\Admin\FeeSection;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreFeeSectionRequest;
 use App\Http\Requests\UpdateFeeSectionRequest;
-use Maatwebsite\Excel\Facades\Excel;
 
 class FeeSectionController extends Controller
 {
@@ -26,8 +27,12 @@ class FeeSectionController extends Controller
 
     public function getfeeexcel(Request $request)
     {
-        return Excel::download(new FeePayment($request->year), 'feepayment-'.date('h.i.s.a').'.xlsx');
-        
+
+        $data = Fees::join('school_infos','fees.beneficiary_id','=','school_infos.beneficiary_id')->join('fee_sections','school_infos.beneficiary_id','=','fee_sections.beneficiary_id')->where('fee_sections.year',$request->year)->select(['term1'])->get()->toArray();
+        // 
+    
+        // return Excel::download(new FeePayment($request->year), 'feepayment-'.date('h.i.s.a').'.xlsx');
+        dd($data);
         // return view('admin.feepayment.index',compact('years'));
     }
 

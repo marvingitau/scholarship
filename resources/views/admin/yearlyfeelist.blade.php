@@ -14,9 +14,9 @@
 
             <!-- Page Heading -->
             <div class="d-flex my-3">
-                <h1 class="h3 mb-2 text-gray-800">Yearly Fee</h1>
-                <a href="{{route('admin.createyearlyfee')}}" class="btn btn-info ml-auto">Create New</a>
-                <a href="{{route('admin.importyearlyfee')}}" class="btn btn-success ml-1">Import Bulk <i class="fa fa-file-excel-o"></i></a>
+                <h1 class="h3 mb-2 text-gray-800">All Beneficiary Yearly Fee</h1>
+                <!-- <a href="{{route('admin.createyearlyfee')}}" class="btn btn-info ml-auto">Create New</a> -->
+                <a href="{{route('admin.importyearlyfee')}}" class="btn btn-success  ml-auto">Import Bulk <i class="fa fa-file-excel-o"></i></a>
             </div>
 
 

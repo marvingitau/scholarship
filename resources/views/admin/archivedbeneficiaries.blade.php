@@ -51,7 +51,7 @@
                                     <td>{{$item->gender}}</td>
                                     <td>{{$item->age}}</td>
                                     <td>{{$item->SecondaryAdmitted}}</td>
-                                    <td>{{$item->TelephoneGuardian}}</td>
+                                    <td>{{$item->MobileActive}}</td>
                                     <td><a class="btn btn-info" href="{{route('admin.selectbeneficiary',$item->id)}}">View <i class="fa fa-eye"></i></a> <a class="btn btn-danger" href="{{route('admin.unarchivebeneficiary',$item->id)}}" onclick="return confirm('Are you sure want to UnArchive?')">UnArchive <i class="fa fa-archive"></i></a></td>
                                 </tr>
                                 @endforeach

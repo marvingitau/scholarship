@@ -59,50 +59,254 @@ class BeneficiaryformController extends Controller
     public function applicationlist()
     {
         $data = DB::table('beneficiaryforms')->where('ClerkStatus', 'OPEN')->where('AdminStatus', 'PENDING')->get()->toArray();
-        // dd($data);
+
         return view('clerk.applications', compact('data'));
     }
 
 
     public function editapplication($id)
     {
-        $personalInfo = Beneficiaryform::where('id',$id)->first();
-        $academicInfo =AcademicInfo::where('beneficiary_id',$id)->get();
-        if($personalInfo->Type=="THEOLOGY"){
-            return view('clerk.edittheologybeneficiaryform',compact('personalInfo','academicInfo'));
+        $personalInfo = Beneficiaryform::where('id', $id)->first();
+        $academicInfo = AcademicInfo::where('beneficiary_id', $id)->get();
+        $famDetails = FamilyDetail::where('beneficiary_id', $id)->first();
+        $siblingsDetails = Sibling::where('beneficiary_id', $id)->get();
+        $stateOfNeed = StatementNeed::where('beneficiary_id', $id)->first();
+        $emergence = EmergencyContact::where('beneficiary_id', $id)->first();
 
-        }elseif($personalInfo->Type=="TERTIARY"){
+        if ($personalInfo->Type == "THEOLOGY") {
+            return view('clerk.edittheologybeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence'));
+        } elseif ($personalInfo->Type == "TERTIARY") {
+            return view('clerk.edittertiarybeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence'));
+        } elseif ($personalInfo->Type == "SPECIAL") {
+            return view('clerk.editspecialbeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence'));
 
-        }elseif($personalInfo->Type=="SPECIAL"){
+        } else {
 
-        }else{
-
-            return view('clerk.editbeneficiaryform',compact('personalInfo','academicInfo'));
+            return view('clerk.editbeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence'));
         }
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function updatetheologyform(Request $request)
     {
-        //
+        //Check whether father mother or guardian emails are available
+        if (is_null($request->MobileActive)) {
+            toast('Active Phone Number is Required !!', 'warning')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            $request->validate(
+                [
+                    'MobileActive' => ['required', 'unique:beneficiaryforms'],
+                ]
+            );
+            return back()->withInput();
+        }
+
+        $activeNo = ($request->MobileActive != null) ? $request->MobileActive : '';
+
+        $data = $request->all();
+
+        $benObj = Beneficiaryform::where('MobileActive', $data['MobileActive'])->where('firstname', $data['firstname'])->where('lastname', $data['lastname'])->first();
+
+
+
+        // dd($benObj);
+        if ($benObj != null) {
+
+            $bday = new DateTime($request->DOB);
+            $today = new DateTime(date('y-m-d'));
+            $dff = $today->diff($bday);
+
+            $benObj->firstname = $request->firstname;
+            $benObj->middlename = $request->middlename;
+            $benObj->lastname = $request->lastname;
+            $benObj->gender = $request->gender;
+            $benObj->age = $dff->y;
+            $benObj->DOB = $request->DOB;
+            $benObj->KCPEIndex = $request->KCPEIndex;
+            $benObj->SecondaryAdmitted = $request->SecondaryAdmitted;
+            $benObj->CurrentForm = $request->CurrentForm;
+            $benObj->FormJoining = $request->FormJoining;
+            $benObj->CurrentAddress = $request->CurrentAddress;
+            $benObj->PoBox = $request->PoBox;
+            $benObj->PostalCode = $request->PostalCode;
+            $benObj->CityTown = $request->CityTown;
+            $benObj->County = $request->County;
+            $benObj->pastortelephone = $request->pastortelephone;
+            $benObj->pastorname = $request->pastorname;
+            $benObj->churchname = $request->churchname;
+            $benObj->SchoolFees = $request->SchoolFees;
+            // $benObj->TelephoneGuardian = $request->TelephoneGuardian;
+            // $benObj->EmailGuardian = $request->EmailGuardian;
+            $benObj->AnotherSponsorship = $request->AnotherSponsorship;
+            $benObj->AnotherSponsorshipRemark = $request->AnotherSponsorshipRemark;
+            $benObj->save();
+
+            AcademicInfo::where('beneficiary_id', $benObj->id)->delete();
+            foreach ($data['Subject1'] as $key => $value) {
+                AcademicInfo::create(['beneficiary_id' => $benObj->id, 'Subject1' => $value, 'Marks1' => $data['Marks1'][$key], 'TotalMarks' => $data['TotalMarks']]);
+            }
+
+
+            $famDetails = FamilyDetail::where('beneficiary_id', $benObj->id)->first();
+            $famDetails->Father = $request->Father;
+            $famDetails->FatherID = $request->FatherID;
+            $famDetails->FatherMobile = $request->FatherMobile;
+            $famDetails->FatherOccupation = $request->FatherOccupation;
+            $famDetails->Mother = $request->Mother;
+            $famDetails->MotherID = $request->MotherID;
+            $famDetails->MotherMobile = $request->MotherMobile;
+            $famDetails->MotherOccupation = $request->MotherOccupation;
+            $famDetails->Guardian = $request->Guardian;
+            $famDetails->GuardianID = $request->GuardianID;
+            $famDetails->GuardianMobile = $request->GuardianMobile;
+            $famDetails->GuardianOccupation = $request->GuardianOccupation;
+            $famDetails->SpouseName = $request->SpouseName;
+            $famDetails->SpouseID = $request->SpouseID;
+            $famDetails->SpouseMobile = $request->SpouseMobile;
+            $famDetails->SpouseOccupation = $request->SpouseOccupation;
+            $famDetails->save();
+
+            $stateOfNeed = StatementNeed::where('beneficiary_id', $benObj->id)->first();
+            $stateOfNeed->StatementofNeed = $request->StatementofNeed;
+            $stateOfNeed->save();
+
+            Sibling::where('beneficiary_id', $benObj->id)->delete();
+            foreach ($data['SiblingName1'] as $key => $value) {
+                Sibling::create(['beneficiary_id' => $benObj->id, 'SiblingName1' => $value, 'SiblingRelation1' => $data['SiblingRelation1'][$key], 'SiblingAge1' => $data['SiblingAge1'][$key], 'SiblingOccupation1' => $data['SiblingOccupation1'][$key]]);
+            }
+
+
+            $emergence = EmergencyContact::where('beneficiary_id', $benObj->id)->first();
+            $emergence->EmergencyName = $request->EmergencyName;
+            $emergence->EmergencyRelationship = $request->EmergencyRelationship;
+            $emergence->EmergencyPhysicalAddress = $request->EmergencyPhysicalAddress;
+            $emergence->EmergencyPoBox = $request->EmergencyPoBox;
+            $emergence->EmergencyTelephone = $request->EmergencyTelephone;
+            $emergence->EmergencyMobile = $request->EmergencyMobile;
+            $emergence->EmergencyEmail = $request->EmergencyEmail;
+            $emergence->save();
+
+
+            // FamilyProperty::where('beneficiary_id', $benObj->id)->delete();
+            // foreach ($data['Type1'] as $key => $value) {
+            //     FamilyProperty::create(['beneficiary_id' => $benObj->id, 'Type1' => $value, 'Size1' => $data['Size1'][$key], 'Location1' => $data['Location1'][$key]]);
+            // }
+
+
+            activity()->log('Beneficiary record updated:' . $request->firstname . " " . $request->middlename);
+            alert('UPDATED', 'Beneficiary Update was a Success', 'success')->autoClose(10000);
+            return back();
+        } else {
+            toast('Beneficiary Record not Found!!', 'warning')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back();
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreBeneficiaryformRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function updatespecialform(Request $request)
     {
-        //Makes sure on completing the upload u forget the this session value
-        //$request->session()->forget('name')
+        //Check whether father mother or guardian emails are available
+        if (is_null($request->FatherMobile) && is_null($request->MotherMobile) && is_null($request->GuardianMobile)) {
 
+            toast('Father Mobile, Mother Mobile or Guardian Mobile is Required !!', 'warning')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back()->withInput();
+        }
+
+        $activeNo = ($request->FatherMobile != null) ? $request->FatherMobile : (($request->MotherMobile != null) ? $request->MotherMobile : ($request->GuardianMobile));
+
+        $data = $request->all();
+
+        $benObj = Beneficiaryform::where('MobileActive', $data['FatherMobile'])->orWhere('MobileActive', $data['MotherMobile'])->orWhere('MobileActive', $data['GuardianMobile'])->where('firstname', $data['firstname'])->where('lastname', $data['lastname'])->first();
+
+
+
+        // dd($benObj);
+        if ($benObj != null) {
+
+            $bday = new DateTime($request->DOB);
+            $today = new DateTime(date('y-m-d'));
+            $dff = $today->diff($bday);
+
+            $benObj->firstname = $request->firstname;
+            $benObj->middlename = $request->middlename;
+            $benObj->lastname = $request->lastname;
+            $benObj->gender = $request->gender;
+            $benObj->age = $dff->y;
+            $benObj->DOB = $request->DOB;
+            $benObj->KCPEIndex = $request->KCPEIndex;
+            $benObj->SecondaryAdmitted = $request->SecondaryAdmitted;
+            $benObj->CurrentForm = $request->CurrentForm;
+            $benObj->FormJoining = $request->FormJoining;
+            $benObj->CurrentAddress = $request->CurrentAddress;
+            $benObj->PoBox = $request->PoBox;
+            $benObj->PostalCode = $request->PostalCode;
+            $benObj->CityTown = $request->CityTown;
+            $benObj->County = $request->County;
+
+            $benObj->TypeofDisability = $request->TypeofDisability;
+            $benObj->ExtentofDisability = $request->ExtentofDisability;
+            // $benObj->TelephoneGuardian = $request->TelephoneGuardian;
+            // $benObj->EmailActive = $request->EmailActive;
+
+            $benObj->AnotherSponsorship = $request->AnotherSponsorship;
+            $benObj->AnotherSponsorshipRemark = $request->AnotherSponsorshipRemark;
+            $benObj->save();
+
+            AcademicInfo::where('beneficiary_id', $benObj->id)->delete();
+            foreach ($data['Subject1'] as $key => $value) {
+                AcademicInfo::create(['beneficiary_id' => $benObj->id, 'Subject1' => $value, 'Marks1' => $data['Marks1'][$key], 'TotalMarks' => $data['TotalMarks']]);
+            }
+
+
+            $famDetails = FamilyDetail::where('beneficiary_id', $benObj->id)->first();
+            $famDetails->Father = $request->Father;
+            $famDetails->FatherID = $request->FatherID;
+            $famDetails->FatherMobile = $request->FatherMobile;
+            $famDetails->FatherOccupation = $request->FatherOccupation;
+            $famDetails->Mother = $request->Mother;
+            $famDetails->MotherID = $request->MotherID;
+            $famDetails->MotherMobile = $request->MotherMobile;
+            $famDetails->MotherOccupation = $request->MotherOccupation;
+            $famDetails->Guardian = $request->Guardian;
+            $famDetails->GuardianID = $request->GuardianID;
+            $famDetails->GuardianMobile = $request->GuardianMobile;
+            $famDetails->GuardianOccupation = $request->GuardianOccupation;
+
+
+            $famDetails->save();
+
+            $stateOfNeed = StatementNeed::where('beneficiary_id', $benObj->id)->first();
+            $stateOfNeed->StatementofNeed = $request->StatementofNeed;
+            $stateOfNeed->save();
+
+            Sibling::where('beneficiary_id', $benObj->id)->delete();
+            foreach ($data['SiblingName1'] as $key => $value) {
+                Sibling::create(['beneficiary_id' => $benObj->id, 'SiblingName1' => $value, 'SiblingRelation1' => $data['SiblingRelation1'][$key], 'SiblingAge1' => $data['SiblingAge1'][$key], 'SiblingOccupation1' => $data['SiblingOccupation1'][$key]]);
+            }
+
+
+            $emergence = EmergencyContact::where('beneficiary_id', $benObj->id)->first();
+            $emergence->EmergencyName = $request->EmergencyName;
+            $emergence->EmergencyRelationship = $request->EmergencyRelationship;
+            $emergence->EmergencyPhysicalAddress = $request->EmergencyPhysicalAddress;
+            $emergence->EmergencyPoBox = $request->EmergencyPoBox;
+            $emergence->EmergencyTelephone = $request->EmergencyTelephone;
+            $emergence->EmergencyMobile = $request->EmergencyMobile;
+            $emergence->EmergencyEmail = $request->EmergencyEmail;
+            $emergence->save();
+
+
+
+
+            activity()->log('Beneficiary record updated:' . $request->firstname . " " . $request->middlename);
+            alert('UPDATED', 'Beneficiary Update was a Success', 'success')->autoClose(10000);
+            return back();
+        } else {
+            toast('Beneficiary Record not Found!!', 'warning')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back();
+        }
+    }
+
+    public function updatetertiaryform(Request $request)
+    {
+        //Check whether father mother or guardian emails are available
         //Check whether father mother or guardian emails are available
         if (is_null($request->FatherMobile) && is_null($request->MotherMobile) && is_null($request->GuardianMobile)) {
             toast('Father Mobile, Mother Mobile or Guardian Mobile is Required !!', 'warning')->timerProgressBar()->autoClose(30000)->showCloseButton();
@@ -113,7 +317,129 @@ class BeneficiaryformController extends Controller
 
         $data = $request->all();
 
-        $benObj = Beneficiaryform::where('MobileActive', $data['FatherMobile'])->orWhere('MobileActive', $data['MotherMobile'])->orWhere('MobileActive', $data['GuardianMobile'])->where('firstname',$data['firstname'])->where('lastname',$data['lastname'])->first();
+        $benObj = Beneficiaryform::where('MobileActive', $data['FatherMobile'])->orWhere('MobileActive', $data['MotherMobile'])->orWhere('MobileActive', $data['GuardianMobile'])->where('firstname', $data['firstname'])->where('lastname', $data['lastname'])->first();
+
+
+
+        // dd($benObj);
+        if ($benObj != null) {
+
+            $bday = new DateTime($request->DOB);
+            $today = new DateTime(date('y-m-d'));
+            $dff = $today->diff($bday);
+
+            $benObj->firstname = $request->firstname;
+            $benObj->middlename = $request->middlename;
+            $benObj->lastname = $request->lastname;
+            $benObj->gender = $request->gender;
+            $benObj->age = $dff->y;
+            $benObj->DOB = $request->DOB;
+            $benObj->EmailActive = $request->EmailActive;
+            $benObj->KCPEIndex = $request->KCPEIndex;
+            $benObj->SecondaryAdmitted = $request->SecondaryAdmitted;
+            $benObj->SchoolFees = $request->SchoolFees;
+            $benObj->CurrentForm = $request->CurrentForm;
+            $benObj->FormJoining = $request->FormJoining;
+            $benObj->CurrentAddress = $request->CurrentAddress;
+            $benObj->PoBox = $request->PoBox;
+            $benObj->PostalCode = $request->PostalCode;
+            $benObj->CityTown = $request->CityTown;
+            $benObj->County = $request->County;
+            $benObj->churchname = $request->churchname;
+            $benObj->pastorname = $request->pastorname;
+            $benObj->pastortelephone = $request->pastortelephone;
+            // $benObj->EmailGuardian = $request->EmailGuardian; 
+            $benObj->AnotherSponsorship = $request->AnotherSponsorship;
+            $benObj->AnotherSponsorshipRemark = $request->AnotherSponsorshipRemark;
+            $benObj->save();
+
+            AcademicInfo::where('beneficiary_id', $benObj->id)->delete();
+            foreach ($data['Subject1'] as $key => $value) {
+                AcademicInfo::create(['beneficiary_id' => $benObj->id, 'Subject1' => $value, 'Marks1' => $data['Marks1'][$key], 'TotalMarks' => $data['TotalMarks']]);
+            }
+
+
+            $famDetails = FamilyDetail::where('beneficiary_id', $benObj->id)->first();
+            $famDetails->Father = $request->Father;
+            $famDetails->FatherID = $request->FatherID;
+            $famDetails->FatherMobile = $request->FatherMobile;
+            $famDetails->FatherOccupation = $request->FatherOccupation;
+            $famDetails->Mother = $request->Mother;
+            $famDetails->MotherID = $request->MotherID;
+            $famDetails->MotherMobile = $request->MotherMobile;
+            $famDetails->MotherOccupation = $request->MotherOccupation;
+            $famDetails->Guardian = $request->Guardian;
+            $famDetails->GuardianID = $request->GuardianID;
+            $famDetails->GuardianMobile = $request->GuardianMobile;
+            $famDetails->GuardianOccupation = $request->GuardianOccupation;
+
+
+            // $famDetails->FatherAlive = $request->FatherAlive;
+            // $famDetails->MotherAlive = $request->MotherAlive;
+            // $famDetails->FatherAge = $request->FatherAge;
+            // $famDetails->MotherAge = $request->MotherAge;
+            // $famDetails->FatherOtherSourceIncome = $request->FatherOtherSourceIncome;
+            // $famDetails->MotherOtherSourceIncome = $request->MotherOtherSourceIncome;
+            // $famDetails->FatherTelephone = $request->FatherTelephone;
+            // $famDetails->MotherTelephone = $request->MotherTelephone;
+            // $famDetails->FatherEmail = $request->FatherEmail;
+            // $famDetails->MotherEmail = $request->MotherEmail;
+            // $famDetails->ActivePhoneNumber = $request->ActivePhoneNumber;
+            // $famDetails->LiveWithName = $request->LiveWithName;
+            // $famDetails->LiveWitRelation = $request->LiveWitRelation;
+
+            $famDetails->save();
+
+            $stateOfNeed = StatementNeed::where('beneficiary_id', $benObj->id)->first();
+            $stateOfNeed->StatementofNeed = $request->StatementofNeed;
+            $stateOfNeed->save();
+
+            Sibling::where('beneficiary_id', $benObj->id)->delete();
+            foreach ($data['SiblingName1'] as $key => $value) {
+                Sibling::create(['beneficiary_id' => $benObj->id, 'SiblingName1' => $value, 'SiblingRelation1' => $data['SiblingRelation1'][$key], 'SiblingAge1' => $data['SiblingAge1'][$key], 'SiblingOccupation1' => $data['SiblingOccupation1'][$key]]);
+            }
+
+
+            $emergence = EmergencyContact::where('beneficiary_id', $benObj->id)->first();
+            $emergence->EmergencyName = $request->EmergencyName;
+            $emergence->EmergencyRelationship = $request->EmergencyRelationship;
+            $emergence->EmergencyPhysicalAddress = $request->EmergencyPhysicalAddress;
+            $emergence->EmergencyPoBox = $request->EmergencyPoBox;
+            $emergence->EmergencyTelephone = $request->EmergencyTelephone;
+            $emergence->EmergencyMobile = $request->EmergencyMobile;
+            $emergence->EmergencyEmail = $request->EmergencyEmail;
+            $emergence->save();
+
+            $communication = Communication::where('beneficiary_id', $benObj->id)->first();
+            $communication->email = $activeNo;
+            $communication->phone = $request->EmailActive;
+            $communication->save();
+
+            // FamilyProperty::where('beneficiary_id', $benObj->id)->delete();
+            // foreach ($data['Type1'] as $key => $value) {
+            //     FamilyProperty::create(['beneficiary_id' => $benObj->id, 'Type1' => $value, 'Size1' => $data['Size1'][$key], 'Location1' => $data['Location1'][$key]]);
+            // }
+
+            activity()->log('Beneficiary record updated:' . $request->firstname . " " . $request->middlename);
+            alert('UPDATED', 'Beneficiary Updated was a Success', 'success')->autoClose(10000);
+            return back();
+        } else {
+            toast('Beneficiary Record not Found!!', 'warning')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back();
+        }
+    }
+
+    public function updatehighschoolform(Request $request)
+    {
+        //Check whether father mother or guardian emails are available
+        if (is_null($request->FatherMobile) && is_null($request->MotherMobile) && is_null($request->GuardianMobile)) {
+            toast('Father Mobile, Mother Mobile or Guardian Mobile is Required !!', 'warning')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back()->withInput();
+        }
+
+        $activeNo = ($request->FatherMobile != null) ? $request->FatherMobile : (($request->MotherMobile != null) ? $request->MotherMobile : ($request->GuardianMobile));
+        $data = $request->all();
+        $benObj = Beneficiaryform::where('MobileActive', $data['FatherMobile'])->orWhere('MobileActive', $data['MotherMobile'])->orWhere('MobileActive', $data['GuardianMobile'])->where('firstname', $data['firstname'])->where('lastname', $data['lastname'])->first();
 
 
 
@@ -216,15 +542,156 @@ class BeneficiaryformController extends Controller
             activity()->log('Beneficiary record updated:' . $request->firstname . " " . $request->middlename);
             alert('UPDATED', 'Beneficiary Updated was a Success', 'success')->autoClose(10000);
             return back();
-        } else { 
+        } else {
+            toast('Beneficiary Record not Found!!', 'warning')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back();
+        }
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\StoreBeneficiaryformRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //Makes sure on completing the upload u forget the this session value
+        //$request->session()->forget('name')
+
+        //Check whether father mother or guardian emails are available
+        if (is_null($request->FatherMobile) && is_null($request->MotherMobile) && is_null($request->GuardianMobile)) {
+            toast('Father Mobile, Mother Mobile or Guardian Mobile is Required !!', 'warning')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back()->withInput();
+        }
+
+        $activeNo = ($request->FatherMobile != null) ? $request->FatherMobile : (($request->MotherMobile != null) ? $request->MotherMobile : ($request->GuardianMobile));
+
+        $data = $request->all();
+
+        $benObj = Beneficiaryform::where('MobileActive', $data['FatherMobile'])->orWhere('MobileActive', $data['MotherMobile'])->orWhere('MobileActive', $data['GuardianMobile'])->where('firstname', $data['firstname'])->where('lastname', $data['lastname'])->first();
+
+
+
+        // dd($benObj);
+        if ($benObj != null) {
+
+            $bday = new DateTime($request->DOB);
+            $today = new DateTime(date('y-m-d'));
+            $dff = $today->diff($bday);
+
+            $benObj->firstname = $request->firstname;
+            $benObj->middlename = $request->middlename;
+            $benObj->lastname = $request->lastname;
+            $benObj->gender = $request->gender;
+            $benObj->age = $dff->y;
+            $benObj->DOB = $request->DOB;
+            $benObj->EmailActive = $request->EmailActive;
+            $benObj->KCPEIndex = $request->KCPEIndex;
+            $benObj->SecondaryAdmitted = $request->SecondaryAdmitted;
+            $benObj->CurrentForm = $request->CurrentForm;
+            $benObj->FormJoining = $request->FormJoining;
+            $benObj->CurrentAddress = $request->CurrentAddress;
+            $benObj->PoBox = $request->PoBox;
+            $benObj->PostalCode = $request->PostalCode;
+            $benObj->CityTown = $request->CityTown;
+            $benObj->County = $request->County;
+            // $benObj->TelephoneGuardian = $request->TelephoneGuardian;
+            // $benObj->EmailGuardian = $request->EmailGuardian;
+            // $benObj->EmailActive = $request->EmailActive;
+            $benObj->AnotherSponsorship = $request->AnotherSponsorship;
+            $benObj->AnotherSponsorshipRemark = $request->AnotherSponsorshipRemark;
+            $benObj->save();
+
+            AcademicInfo::where('beneficiary_id', $benObj->id)->delete();
+            foreach ($data['Subject1'] as $key => $value) {
+                AcademicInfo::create(['beneficiary_id' => $benObj->id, 'Subject1' => $value, 'Marks1' => $data['Marks1'][$key], 'TotalMarks' => $data['TotalMarks']]);
+            }
+
+
+            $famDetails = FamilyDetail::where('beneficiary_id', $benObj->id)->first();
+            $famDetails->Father = $request->Father;
+            $famDetails->FatherID = $request->FatherID;
+            $famDetails->FatherMobile = $request->FatherMobile;
+            $famDetails->FatherOccupation = $request->FatherOccupation;
+            $famDetails->Mother = $request->Mother;
+            $famDetails->MotherID = $request->MotherID;
+            $famDetails->MotherMobile = $request->MotherMobile;
+            $famDetails->MotherOccupation = $request->MotherOccupation;
+            $famDetails->Guardian = $request->Guardian;
+            $famDetails->GuardianID = $request->GuardianID;
+            $famDetails->GuardianMobile = $request->GuardianMobile;
+            $famDetails->GuardianOccupation = $request->GuardianOccupation;
+
+
+            // $famDetails->FatherAlive = $request->FatherAlive;
+            // $famDetails->MotherAlive = $request->MotherAlive;
+            // $famDetails->FatherAge = $request->FatherAge;
+            // $famDetails->MotherAge = $request->MotherAge;
+            // $famDetails->FatherOtherSourceIncome = $request->FatherOtherSourceIncome;
+            // $famDetails->MotherOtherSourceIncome = $request->MotherOtherSourceIncome;
+            // $famDetails->FatherTelephone = $request->FatherTelephone;
+            // $famDetails->MotherTelephone = $request->MotherTelephone;
+            // $famDetails->FatherEmail = $request->FatherEmail;
+            // $famDetails->MotherEmail = $request->MotherEmail;
+            // $famDetails->ActivePhoneNumber = $request->ActivePhoneNumber;
+            // $famDetails->LiveWithName = $request->LiveWithName;
+            // $famDetails->LiveWitRelation = $request->LiveWitRelation;
+
+            $famDetails->save();
+
+            $stateOfNeed = StatementNeed::where('beneficiary_id', $benObj->id)->first();
+            $stateOfNeed->StatementofNeed = $request->StatementofNeed;
+            $stateOfNeed->save();
+
+            Sibling::where('beneficiary_id', $benObj->id)->delete();
+            foreach ($data['SiblingName1'] as $key => $value) {
+                Sibling::create(['beneficiary_id' => $benObj->id, 'SiblingName1' => $value, 'SiblingRelation1' => $data['SiblingRelation1'][$key], 'SiblingAge1' => $data['SiblingAge1'][$key], 'SiblingOccupation1' => $data['SiblingOccupation1'][$key]]);
+            }
+
+
+            $emergence = EmergencyContact::where('beneficiary_id', $benObj->id)->first();
+            $emergence->EmergencyName = $request->EmergencyName;
+            $emergence->EmergencyRelationship = $request->EmergencyRelationship;
+            $emergence->EmergencyPhysicalAddress = $request->EmergencyPhysicalAddress;
+            $emergence->EmergencyPoBox = $request->EmergencyPoBox;
+            $emergence->EmergencyTelephone = $request->EmergencyTelephone;
+            $emergence->EmergencyMobile = $request->EmergencyMobile;
+            $emergence->EmergencyEmail = $request->EmergencyEmail;
+            $emergence->save();
+
+            $communication = Communication::where('beneficiary_id', $benObj->id)->first();
+            $communication->email =is_null($request->EmailActive)?'NA':$request->EmailActive;
+            $communication->phone =  $activeNo;
+            $communication->save();
+
+            // FamilyProperty::where('beneficiary_id', $benObj->id)->delete();
+            // foreach ($data['Type1'] as $key => $value) {
+            //     FamilyProperty::create(['beneficiary_id' => $benObj->id, 'Type1' => $value, 'Size1' => $data['Size1'][$key], 'Location1' => $data['Location1'][$key]]);
+            // }
+
+            activity()->log('Beneficiary record updated:' . $request->firstname . " " . $request->middlename);
+            alert('UPDATED', 'Beneficiary Updated was a Success', 'success')->autoClose(10000);
+            return back();
+        } else {
             $request->validate(
                 [
-                    // 'TelephoneGuardian'=>['required'],
+                    'email'=>['required', 'unique:communications'],
                     'AnotherSponsorship' => ['required'],
                     'gender' => ['required'],
                     // 'MobileActive' => ['required', 'unique:beneficiaryforms'],
-                    'firstname'=>['required'],
-                    'lastname'=>['required'], 
+                    'firstname' => ['required'],
+                    'lastname' => ['required'],
                     // 'EmailGuardian'=>['required', 'string', 'email', 'max:255','unique:beneficiaryforms']  //
                 ]
             );
@@ -234,7 +701,7 @@ class BeneficiaryformController extends Controller
             $dff = $today->diff($bday);
 
 
-            $resp = Beneficiaryform::create($data + ['MobileActive' => $activeNo, 'age' => $dff->y,'CreatedBy'=>auth()->user()->id]);
+            $resp = Beneficiaryform::create($data + ['MobileActive' => $activeNo, 'age' => $dff->y, 'CreatedBy' => auth()->user()->id,'EmailActive'=>$request->email]);
 
             if ($resp->id) {
                 Session::forget('personal_status');
@@ -261,8 +728,8 @@ class BeneficiaryformController extends Controller
                 $academicYear = AcademicYear::where('status', 1)->first();
                 $name = $request->firstname . " " . $request->lastname;
                 // Fees::updateOrCreate(['beneficiary_id' => $resp->id, 'year' => $academicYear->year], ['beneficiary' => $name, 'yearlyfee' => $request->SchoolFees, 'yearlyfeebal' => $request->SchoolFees, 'school' => $request->SecondaryAdmitted]);
-                
-                Communication::create(['beneficiary_id' => $resp->id,'phone'=>$activeNo,'email'=>$request->EmailActive]);
+
+                Communication::create(['beneficiary_id' => $resp->id, 'phone' => $activeNo, 'email' => $request->email]);
 
                 activity()->log('Beneficiary record uploaded:' . $request->firstname . " " . $request->middlename);
                 alert('UPLOAD', 'Beneficiary Uploaded was a Success', 'success')->autoClose(10000);
@@ -292,7 +759,7 @@ class BeneficiaryformController extends Controller
 
         $data = $request->all();
 
-        $benObj = Beneficiaryform::where('MobileActive', $data['FatherMobile'])->orWhere('MobileActive', $data['MotherMobile'])->orWhere('MobileActive', $data['GuardianMobile'])->where('firstname',$data['firstname'])->where('lastname',$data['lastname'])->first();
+        $benObj = Beneficiaryform::where('MobileActive', $data['FatherMobile'])->orWhere('MobileActive', $data['MotherMobile'])->orWhere('MobileActive', $data['GuardianMobile'])->where('firstname', $data['firstname'])->where('lastname', $data['lastname'])->first();
 
 
 
@@ -398,12 +865,12 @@ class BeneficiaryformController extends Controller
         } else {
             $request->validate(
                 [
-                    'DOB'=>['required'],
+                    'DOB' => ['required'],
                     'AnotherSponsorship' => ['required'],
                     'gender' => ['required'],
                     // 'MobileActive' => ['required', 'unique:beneficiaryforms'],
-                    'firstname'=>['required'],
-                    'lastname'=>['required'], 
+                    'firstname' => ['required'],
+                    'lastname' => ['required'],
                     // 'EmailGuardian'=>['required', 'string', 'email', 'max:255','unique:beneficiaryforms']  //
                 ]
             );
@@ -413,7 +880,7 @@ class BeneficiaryformController extends Controller
             $dff = $today->diff($bday);
 
 
-            $resp = Beneficiaryform::create($data + ['MobileActive' => $activeNo, 'age' => $dff->y,'CreatedBy'=>auth()->user()->id]);
+            $resp = Beneficiaryform::create($data + ['MobileActive' => $activeNo, 'age' => $dff->y, 'CreatedBy' => auth()->user()->id]);
 
             if ($resp->id) {
                 Session::forget('personal_status');
@@ -472,7 +939,7 @@ class BeneficiaryformController extends Controller
 
         $data = $request->all();
 
-        $benObj = Beneficiaryform::where('MobileActive', $data['MobileActive'])->where('firstname',$data['firstname'])->where('lastname',$data['lastname'])->first();
+        $benObj = Beneficiaryform::where('MobileActive', $data['MobileActive'])->where('firstname', $data['firstname'])->where('lastname', $data['lastname'])->first();
 
 
 
@@ -582,8 +1049,8 @@ class BeneficiaryformController extends Controller
                     'AnotherSponsorship' => ['required'],
                     'gender' => ['required'],
                     'MobileActive' => ['required', 'unique:beneficiaryforms'],
-                    'firstname'=>['required'],
-                    'lastname'=>['required'], 
+                    'firstname' => ['required'],
+                    'lastname' => ['required'],
                     // 'Marks4'=>['required'],
                     // 'Marks5'=>['required'],
                     // 'Marks6'=>['required'],
@@ -598,7 +1065,7 @@ class BeneficiaryformController extends Controller
             $dff = $today->diff($bday);
 
 
-            $resp = Beneficiaryform::create($data + ['MobileActive' => $activeNo, 'age' => $dff->y,'CreatedBy'=>auth()->user()->id]);
+            $resp = Beneficiaryform::create($data + ['MobileActive' => $activeNo, 'age' => $dff->y, 'CreatedBy' => auth()->user()->id]);
 
             if ($resp->id) {
                 Session::forget('personal_status');

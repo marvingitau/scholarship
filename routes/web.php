@@ -154,8 +154,11 @@ Route::group(['middleware'=>'role:clerk','prefix'=>'clerk'],function(){
         Route::get('/new-application',[BeneficiaryformController::class,'index'])->name('clerk.newapplication');
         Route::get('/application-list',[BeneficiaryformController::class,'applicationlist'])->name('clerk.applicationlist');
         Route::get('/edit/application/{id}',[BeneficiaryformController::class,'editapplication'])->name('clerk.editapplication');
+        Route::post('/update/application',[BeneficiaryformController::class,'updatetheologyform'])->name('clerk.updatetheologyform');
+        Route::post('/update/specialapplication',[BeneficiaryformController::class,'updatespecialform'])->name('clerk.updatespecialform');
+        Route::post('/update/tertiaryapplication',[BeneficiaryformController::class,'updatetertiaryform'])->name('clerk.updatetertiaryform');
         //Post Beneficiary form :- Personal Details
-        Route::post('/personal-details',[BeneficiaryformController::class,'store'])->name('clerk.storepersonaldetail');
+        Route::post('/personal-details',[BeneficiaryformController::class,'store'])->name('clerk.storepersonaldetail'); //Secondary and tertiary
         Route::post('/special-personal-details',[BeneficiaryformController::class,'storeSpecial'])->name('clerk.storespecialdetail');
         Route::post('/theology-personal-details',[BeneficiaryformController::class,'storeTheology'])->name('clerk.theostorepersonaldetail');
         // Route::post('/academic-details',[AcademicInfoController::class,'store'])->name('clerk.storeacademicdetail');

@@ -19,25 +19,16 @@
             <div class="row justify-content-center">
                 <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 text-center p-0 mt-3 mb-2">
                     <div class="card px-2 pt-4 pb-0 mt-3 mb-3">
-                        <h2 id="heading">Edit High school Application Form</h2>
+                        <h2 id="heading">Edit Secondary Application Form</h2>
                         <!-- <p>Fill all form field to go to next step</p> -->
                         <section id="msform">
-                            <!-- progressbar -->
-                            <!-- <ul id="progressbar">
-                                <li class="active" id="account"><strong>Personal Information</strong></li>
-                                <li id="personal"><strong>Academic Information</strong></li>
-                                <li id="payment"><strong>Family Details</strong></li>
-                                <li id="confirm"><strong>Statement Of Need</strong></li>
-                                <li id="confirm"><strong>Sibling</strong></li>
-                                <li id="confirm"><strong>Emergency Contact</strong></li>
-                                <li id="confirm"><strong>Family Property</strong></li>
-                            </ul>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>  -->
+
                             <br> <!-- fieldsets -->
 
-                            <form method="POST" action="{{ route('clerk.storepersonaldetail') }}" class="form-input">
+                            <form method="POST" action="{{ route('clerk.updatetertiaryform') }}" class="form-input">
+                                <input type="hidden" name="Type" value="SECONDARY">
+                                <input type="hidden" name="id" value="{{$id}}">
+
                                 @csrf
                                 <fieldset>
                                     <div class="form-card">
@@ -50,13 +41,13 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-12">
-                                                <!-- @if (session('personal_status'))
+                                            <!-- <div class="col-12">
+                                                @if (session('personal_status'))
                                                 <div class="alert alert-success">
                                                     {{ session('personal_status') }}
                                                 </div>
-                                                @endif -->
-                                            </div>
+                                                @endif
+                                            </div> -->
                                             <div class="col-12">
                                                 @if ($errors->any())
                                                 <div class="alert alert-danger">
@@ -70,28 +61,34 @@
                                             </div>
 
                                         </div>
-                                        <!-- <form method="POST" action="{{ route('clerk.storepersonaldetail') }}" class="form-input">
-                                        @csrf -->
+
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">First Name: *</label>
-                                                <input type="text" name="firstname" value="{{ old('firstname') }}" placeholder="First Name" />
+                                                <!-- {{var_dump($academicInfo)}} -->
+                                                <input type="text" name="firstname" value="{{$personalInfo->firstname}}" placeholder="First Name" required />
+                                                @error('firstname')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Middle Name: </label>
-                                                <input type="text" name="middlename" value="{{ old('middlename') }}" placeholder="Middle Name" />
+                                                <input type="text" name="middlename" value="{{$personalInfo->middlename}}" placeholder="Middle Name" />
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Last Name: *</label>
-                                                <input type="text" name="lastname" value="{{ old('lastname') }}" placeholder="Last Name" />
+                                                <input type="text" name="lastname" value="{{$personalInfo->lastname}}" placeholder="Last Name" required />
+                                                @error('lastname')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Gender: </label>
                                                 <select name="gender" value="">
 
                                                     <option value="">Choose</option>
-                                                    <option value="MALE" <?php echo old('gender') == "MALE" ? 'selected' : "" ?>>MALE</option>
-                                                    <option value="FEMALE" <?php echo old('gender') == "FEMALE" ? 'selected' : "" ?>>FEMALE</option>
+                                                    <option value="MALE" <?php echo $personalInfo->gender == "MALE" ? 'selected' : "" ?>>MALE</option>
+                                                    <option value="FEMALE" <?php echo $personalInfo->gender == "FEMALE" ? 'selected' : "" ?>>FEMALE</option>
                                                 </select>
                                                 @error('gender')
                                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -99,64 +96,82 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Date of Birth: </label>
-                                                <input type="date" name="DOB" value="{{ old('DOB') }}" placeholder="Age" />
+                                                <input type="date" name="DOB" value="{{$personalInfo->DOB}}" placeholder="Age" required />
                                             </div>
+                                            <div class="col-md-4">
+                                                <label class="fieldlabels">Active Email: </label>
+                                                <input type="email" name="EmailActive" value="{{$personalInfo->EmailActive}}" placeholder="Email" required />
+                                            </div>
+
                                             <!-- <div class="col-md-4"></div> -->
                                         </div>
 
                                         <!-- <label class="fieldlabels">Age: </label>
-                                        <input type="text" name="age" value="{{ old('age') }}" placeholder="Age" /> -->
+                                        <input type="text" name="age" value="{{$personalInfo->age }}" placeholder="Age" /> -->
 
 
                                         <div class="row">
-                                            <div class="col-md-3">
+                                            <!-- <div class="col-md-3">
                                                 <label class="fieldlabels">KCPE Index: </label>
-                                                <input type="text" name="KCPEIndex" value="{{ old('KCPEIndex') }}" placeholder="KCPE Index" />
+                                                <input type="text" name="KCPEIndex" value="{{$personalInfo->KCPEIndex }}" placeholder="KCPE Index" />
+                                            </div> -->
+
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Institute Admitted: </label>
+                                                <input type="text" name="SecondaryAdmitted" value="{{$personalInfo->SecondaryAdmitted}}" placeholder="Institute Admitted" />
                                             </div>
 
                                             <div class="col-md-3">
-                                                <label class="fieldlabels">Secondary Admitted: </label>
-                                                <input type="text" name="SecondaryAdmitted" value="{{ old('SecondaryAdmitted') }}" placeholder="Secondary Admitted" />
+                                                <label class="fieldlabels">Current Year: </label>
+                                                <input type="text" name="CurrentForm" value="{{$personalInfo->CurrentForm}}" placeholder="Current Year" />
                                             </div>
 
                                             <div class="col-md-3">
-                                                <label class="fieldlabels">Current Form: </label>
-                                                <input type="text" name="CurrentForm" value="{{ old('CurrentForm') }}" placeholder="Current Form" />
+                                                <label class="fieldlabels">Year Joining: </label>
+                                                <input type="text" name="FormJoining" value="{{$personalInfo->FormJoining}}" placeholder="Year Joining" />
                                             </div>
 
                                             <div class="col-md-3">
-                                                <label class="fieldlabels">Form Joining: </label>
-                                                <input type="text" name="FormJoining" value="{{ old('FormJoining') }}" placeholder="Form Joining" />
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <label class="fieldlabels">School Fees: </label>
-                                                <input type="number" name="SchoolFees" value="{{ old('SchoolFees') }}" placeholder="School Fees" />
+                                                <label class="fieldlabels">Annual Fees: </label>
+                                                <input type="number" name="SchoolFees" value="{{$personalInfo->SchoolFees}}" placeholder="Annual Fees" />
                                             </div>
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Current Address: </label>
-                                                <input type="text" name="CurrentAddress" value="{{ old('CurrentAddress') }}" placeholder="Current Address" />
+                                                <input type="text" name="CurrentAddress" value="{{$personalInfo->CurrentAddress}}" placeholder="Current Address" />
                                             </div>
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">P.O. Box: </label>
-                                                <input type="text" name="PoBox" value="{{ old('PoBox') }}" placeholder="P.O. Box" />
+                                                <input type="text" name="PoBox" value="{{$personalInfo->PoBox}}" placeholder="P.O. Box" />
                                             </div>
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Postal Code: </label>
-                                                <input type="text" name="PostalCode" value="{{ old('PostalCode') }}" placeholder="Postal Code" />
+                                                <input type="text" name="PostalCode" value="{{$personalInfo->PostalCode}}" placeholder="Postal Code" />
                                             </div>
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">City/Town: </label>
-                                                <input type="text" name="CityTown" value="{{ old('CityTown') }}" placeholder="City/Town" />
+                                                <input type="text" name="CityTown" value="{{$personalInfo->CityTown}}" placeholder="City/Town" />
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Church Name: </label>
+                                                <input type="text" name="churchname" value="{{$personalInfo->churchname}}" placeholder="Church Name" />
                                             </div>
 
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Pastor Name: </label>
+                                                <input type="text" name="pastorname" value="{{$personalInfo->pastorname}}" placeholder="Pastor Name" />
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Pastor/Church Mobile: </label>
+                                                <input type="text" name="pastortelephone" value="{{$personalInfo->pastortelephone}}" placeholder="Pastor/Church Mobile" />
+                                            </div>
                                             <!-- <div class="col-3">
                                                 <label class="fieldlabels">Guardian Telephone: </label>
-                                                <input type="text" name="TelephoneGuardian" value="{{ old('TelephoneGuardian') }}" class="@error('TelephoneGuardian') is-invalid @enderror" value="{{ old('TelephoneGuardian') }}" placeholder="Guardian Telephone" />
+                                                <input type="text" name="TelephoneGuardian" value="{{$personalInfo->TelephoneGuardian }}" class="@error('TelephoneGuardian') is-invalid @enderror" value="{{$personalInfo->TelephoneGuardian }}" placeholder="Guardian Telephone" />
                                                 @error('TelephoneGuardian')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                 @enderror
@@ -164,33 +179,18 @@
 
                                             <div class="col-3">
                                                 <label class="fieldlabels">Guardian Email: </label>
-                                                <input type="text" name="EmailGuardian" class="@error('EmailGuardian') is-invalid @enderror" value="{{ old('EmailGuardian') }}" placeholder="Guardian Guardian" />
+                                                <input type="text" name="EmailGuardian" class="@error('EmailGuardian') is-invalid @enderror" value="{{$personalInfo->EmailGuardian }}" placeholder="Guardian Guardian" />
                                                 @error('EmailGuardian')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                 @enderror
                                             </div> -->
 
                                             <div class="col-md-3">
-                                                <label class="fieldlabels">Church Name: </label>
-                                                <input type="text" name="churchname" value="{{ old('churchname') }}" placeholder="Church Name" />
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <label class="fieldlabels">Pastor Name: </label>
-                                                <input type="text" name="pastorname" value="{{ old('pastorname') }}" placeholder="Pastor Name" />
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <label class="fieldlabels">Pastor/Church Mobile: </label>
-                                                <input type="text" name="pastortelephone" value="{{ old('pastortelephone') }}" placeholder="Pastor/Church Mobile" />
-                                            </div>
-
-                                            <div class="col-md-3">
                                                 <label class="fieldlabels">Have another Sponsor: </label>
                                                 <select name="AnotherSponsorship">
                                                     <option value="">Choose</option>
-                                                    <option value="YES" <?php echo old('AnotherSponsorship') == "YES" ? 'selected' : "" ?>>YES</option>
-                                                    <option value="NO" <?php echo old('AnotherSponsorship') == "NO" ? 'selected' : "" ?>>NO</option>
+                                                    <option value="YES" <?php echo $personalInfo->AnotherSponsorship == "YES" ? 'selected' : "" ?>>YES</option>
+                                                    <option value="NO" <?php echo $personalInfo->AnotherSponsorship == "NO" ? 'selected' : "" ?>>NO</option>
                                                 </select>
                                                 @error('AnotherSponsorship')
                                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -199,8 +199,10 @@
 
                                             <div class="col-12">
                                                 <label class="fieldlabels">Have another Sponsor Remark: </label>
-                                                <textarea name="AnotherSponsorshipRemark" id="" cols="30" rows="3">{{ old('AnotherSponsorshipRemark') }}</textarea>
+                                                <textarea name="AnotherSponsorshipRemark" id="" cols="30" rows="3">{{$personalInfo->AnotherSponsorshipRemark }}</textarea>
                                             </div>
+
+                                          
 
 
                                         </div>
@@ -228,11 +230,11 @@
                                             <div class="row">
                                                 <div class="col-md-5">
                                                     <label class="fieldlabels">Subject : </label>
-                                                    <input type="text" name="Subject1[]" placeholder="Subject"  />
+                                                    <input type="text" name="Subject1[]" value="<?php echo count($academicInfo) == 0 ? "" : $academicInfo[0]->Subject1 ?>" placeholder="Subject" />
                                                 </div>
                                                 <div class="col-md-5">
                                                     <label class="fieldlabels">Marks/Grade : </label>
-                                                    <input type="number" name="Marks1[]" placeholder="Marks"  />
+                                                    <input type="text" name="Marks1[]" value="<?php echo count($academicInfo) == 0 ? "" : $academicInfo[0]->Marks1 ?>" placeholder="Marks" />
 
                                                 </div>
                                                 <div class="col-md-2">
@@ -240,6 +242,19 @@
                                                     <button class="add_academic_button btn btn-outline-success" style="font-weight: 500;margin:0px">Add Subject</button>
                                                 </div>
                                             </div>
+                                            @foreach($academicInfo as $key=>$value)
+                                            @if($key == 0)
+                                           
+                                            @else
+                                            <div class="row">
+                                                <div class="col-md-5"><label class="fieldlabels">Subject : </label><input type="text" name="Subject1[]" placeholder="Subject" value="{{$value->Subject1}}" required />
+                                                </div>
+                                                <div class="col-md-5"><label class="fieldlabels">Marks/Grade : </label><input type="number" name="Marks1[]" placeholder="Marks" value="{{$value->Marks1}}" required />
+                                                </div>
+                                                <div class="col-md-2"> <label class="fieldlabels">Action </label><button class="btn btn-outline-danger remove_field" type="button">Remove</button></div>
+                                            </div>
+                                            @endif
+                                            @endforeach
 
 
 
@@ -248,7 +263,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <label class="fieldlabels">Total Marks/Grade</label>
-                                                <input type="text" name="TotalMarks" value="{{ old('TotalMarks') }}" placeholder="Total Marks" />
+                                                <input type="text" name="TotalMarks" value="<?php echo count($academicInfo) == 0 ? "" : $academicInfo[0]->TotalMarks ?>" placeholder="Total Marks" />
                                             </div>
                                             <!-- @error('Marks1')
                                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -260,6 +275,7 @@
                                 <input type="button" name="previous" class="previous action-button-previous" value="Previous" /> -->
                                 </fieldset>
 
+                               
                                 <fieldset>
                                     <div class="form-card">
                                         <div class="row">
@@ -273,38 +289,38 @@
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Father: *</label>
-                                                <input type="text" name="Father" value="{{ old('Father') }}" placeholder="Father" />
+                                                <input type="text" name="Father" value="{{ $famDetails->Father }}" placeholder="Father" />
                                             </div>
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Fathe ID: *</label>
-                                                <input type="text" name="FatherID" value="{{ old('FatherID') }}" placeholder="Father ID" />
+                                                <input type="text" name="FatherID" value="{{ $famDetails->FatherID }}" placeholder="Father ID" />
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Father Mobile: *</label>
-                                                <input type="text" name="FatherMobile" value="{{ old('FatherMobile') }}" placeholder="Father Mobile" />
+                                                <input type="text" name="FatherMobile" value="{{ $famDetails->FatherMobile }}" placeholder="Father Mobile" />
                                             </div>
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Father Occupation: *</label>
-                                                <input type="text" name="FatherOccupation" value="{{ old('FatherOccupation') }}" placeholder="Father Occupation" />
+                                                <input type="text" name="FatherOccupation" value="{{ $famDetails->FatherOccupation }}" placeholder="Father Occupation" />
                                             </div>
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Mother: *</label>
-                                                <input type="text" name="Mother" value="{{ old('Mother') }}" placeholder="Mother" />
+                                                <input type="text" name="Mother" value="{{ $famDetails->Mother }}" placeholder="Mother" />
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Mother ID: *</label>
-                                                <input type="text" name="MotherID" value="{{ old('MotherID') }}" placeholder="Mother ID" />
+                                                <input type="text" name="MotherID" value="{{ $famDetails->MotherID }}" placeholder="Mother ID" />
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Mother Mobile: *</label>
-                                                <input type="text" name="MotherMobile" value="{{ old('MotherMobile') }}" placeholder="Mother Mobile" />
+                                                <input type="text" name="MotherMobile" value="{{ $famDetails->MotherMobile }}" placeholder="Mother Mobile" />
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Mother Occupation: *</label>
-                                                <input type="text" name="MotherOccupation" value="{{ old('MotherOccupation') }}" placeholder="Mother Occupation" />
+                                                <input type="text" name="MotherOccupation" value="{{ $famDetails->MotherOccupation }}" placeholder="Mother Occupation" />
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="fieldlabels">If Applicable</label>
@@ -312,19 +328,19 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Guardian Name: *</label>
-                                                <input type="text" name="Guardian" value="{{ old('Guardian') }}" placeholder="Guardian" />
+                                                <input type="text" name="Guardian" value="{{ $famDetails->Guardian }}" placeholder="Guardian" />
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Guardian ID: *</label>
-                                                <input type="text" name="GuardianID" value="{{ old('GuardianID') }}" placeholder="Guardian ID" />
+                                                <input type="text" name="GuardianID" value="{{ $famDetails->GuardianID }}" placeholder="Guardian ID" />
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Guardian Mobile: *</label>
-                                                <input type="text" name="GuardianMobile" value="{{ old('GuardianMobile') }}" placeholder="Guardian Mobile" />
+                                                <input type="text" name="GuardianMobile" value="{{ $famDetails->GuardianMobile }}" placeholder="Guardian Mobile" />
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Guardian Occupation:*</label>
-                                                <input type="text" name="GuardianOccupation" value="{{ old('GuardianOccupation') }}" placeholder="Guardian Occupation" />
+                                                <input type="text" name="GuardianOccupation" value="{{ $famDetails->GuardianOccupation }}" placeholder="Guardian Occupation" />
                                             </div>
 
                                         </div>
@@ -335,6 +351,7 @@
                                 <input type="button" name="previous" class="previous action-button-previous" value="Previous" /> -->
                                 </fieldset>
 
+
                                 <fieldset>
                                     <div class="form-card">
                                         <div class="row">
@@ -342,13 +359,13 @@
                                                 <h2 class="fs-title">Statement of Need Information:</h2>
                                             </div>
                                             <div class="col-5">
-                                                <h2 class="steps">Step 4 - 7</h2>
+                                                <h2 class="steps">Step 5 - 7</h2>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
                                                 <label class="fieldlabels">Statement of Need: *</label>
-                                                <textarea name="StatementofNeed" cols="30" rows="5">{{ old('StatementofNeed') }}</textarea>
+                                                <textarea name="StatementofNeed" cols="30" rows="5">{{ $stateOfNeed->StatementofNeed}}</textarea>
                                             </div>
                                         </div>
 
@@ -364,61 +381,60 @@
                                                 <h2 class="fs-title">Siblings Information:</h2>
                                             </div>
                                             <div class="col-5">
-                                                <h2 class="steps">Step 5 - 7</h2>
+                                                <h2 class="steps">Step 4 - 7</h2>
                                             </div>
-                                        </div>
-                                        <!-- <div class="row">
-                                        <div class="col-12">
-                                            @if (session('academic_status'))
-                                            <div class="alert alert-success">
-                                                {{ session('academic_status') }}
-                                            </div>
-                                            @endif
-                                        </div>
-                                        <div class="col-12">
-                                            @if ($errors->any())
-                                            <div class="alert alert-danger">
-                                                <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                            @endif
                                         </div>
 
-                                    </div> -->
 
                                         <div class="sibling_repeater">
+
                                             <div class="row">
 
                                                 <div class="col-md-3">
-                                                    <label class="fieldlabels">Sibling Name</label>
-                                                    <input type="text" name="SiblingName1[]" placeholder="Sibling Name" />
+                                                    <label class="fieldlabels">Name</label>
+                                                    <input type="text" name="SiblingName1[]" placeholder="Name" value="<?php echo count($siblingsDetails) == 0 ? "" : $siblingsDetails[0]->SiblingName1 ?>" />
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <label class="fieldlabels">Sibling Relation</label>
-                                                    <input type="text" name="SiblingRelation1[]" placeholder="Sibling Relation" />
+                                                    <label class="fieldlabels">Relation</label>
+                                                    <input type="text" name="SiblingRelation1[]" placeholder="Relation" value="<?php echo count($siblingsDetails) == 0 ? "" : $siblingsDetails[0]->SiblingRelation1 ?>" />
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <label class="fieldlabels">Sibling Age</label>
-                                                    <input type="text" name="SiblingAge1[]" placeholder="Sibling Age" />
+                                                    <label class="fieldlabels">Age</label>
+                                                    <input type="text" name="SiblingAge1[]" placeholder="Age" value="<?php echo count($siblingsDetails) == 0 ? "" : $siblingsDetails[0]->SiblingAge1 ?>" />
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <label class="fieldlabels">Sibling Occupation</label>
-                                                    <input type="text" name="SiblingOccupation1[]" placeholder="Sibling Occupation" />
+                                                    <label class="fieldlabels">Occupation</label>
+                                                    <input type="text" name="SiblingOccupation1[]" placeholder="Occupation" value="<?php echo count($siblingsDetails) == 0 ? "" : $siblingsDetails[0]->SiblingOccupation1 ?>" />
                                                 </div>
-                                                <!-- <div class="col-md-10">
-                                                    <label class="fieldlabels">Sibling Mobile</label>
-                                                    <input type="text" name="SiblingMobile1[]" placeholder="Sibling Mobile" />
-                                                </div> -->
+
                                                 <div class="col-md-2">
                                                     <label class="fieldlabels">Action</label>
-                                                    <button class="add_sibling_button btn btn-outline-success" style="font-weight: 500;margin:0px">Add Sibling </button>
+                                                    <button class="add_sibling_button btn btn-outline-success" style="font-weight: 500;margin:0px">Add Sibling</button>
                                                 </div>
 
 
                                             </div>
+
+                                            @foreach($siblingsDetails as $key=>$value)
+                                            @if($key ==0 )
+                                            
+                                            @else
+                                            <div class="row">
+                                                <div class="col-md-3"><label class="fieldlabels">Name</label><input type="text" name="SiblingName1[]" value="{{$value->SiblingName1}}" placeholder="Name" />
+                                                </div>
+                                                <div class="col-md-3"><label class="fieldlabels">Relation</label><input type="text" name="SiblingRelation1[]" value="{{$value->SiblingRelation1}}" placeholder="Relation" />
+                                                </div>
+                                                <div class="col-md-3"><label class="fieldlabels">Sibling Age</label><input type="text" name="SiblingAge1[]" value="{{$value->SiblingAge1}}" placeholder="Age" />
+                                                </div>
+                                                <div class="col-md-3"><label class="fieldlabels">Occupation</label><input type="text" name="SiblingOccupation1[]" value="{{$value->SiblingOccupation1}}" placeholder="Occupation" />
+                                                </div>
+                                                <div class="col-md-2"> <label class="fieldlabels">Action </label><button class="btn btn-outline-danger remove_sibling_field" type="button">Remove</button>
+                                                </div>
+                                            </div>
+                                            @endif
+                                            @endforeach
+
+
                                         </div>
 
 
@@ -444,31 +460,31 @@
 
                                             <div class="col-3">
                                                 <label class="fieldlabels">Emergency Name: *</label>
-                                                <input type="text" name="EmergencyName" value="{{ old('EmergencyName') }}" placeholder="Emergency Name" />
+                                                <input type="text" name="EmergencyName" value="{{ $emergence->EmergencyName }}" placeholder="Emergency Name" />
                                             </div>
                                             <div class="col-3">
                                                 <label class="fieldlabels">Emergency Relationship: *</label>
-                                                <input type="text" name="EmergencyRelationship" value="{{ old('EmergencyRelationship') }}" placeholder="Emergency Relationship" />
+                                                <input type="text" name="EmergencyRelationship" value="{{ $emergence->EmergencyRelationship }}" placeholder="Emergency Relationship" />
                                             </div>
                                             <div class="col-6">
                                                 <label class="fieldlabels">Emergency Physical Address: *</label>
-                                                <input type="text" name="EmergencyPhysicalAddress" value="{{ old('EmergencyPhysicalAddress') }}" placeholder="Emergency Physical Address" />
+                                                <input type="text" name="EmergencyPhysicalAddress" value="{{ $emergence->EmergencyPhysicalAddress }}" placeholder="Emergency Physical Address" />
                                             </div>
                                             <div class="col-3">
                                                 <label class="fieldlabels">Emergency P.O.Box : *</label>
-                                                <input type="text" name="EmergencyPoBox" value="{{ old('EmergencyPoBox') }}" placeholder="Emergency P.O.Box" />
+                                                <input type="text" name="EmergencyPoBox" value="{{ $emergence->EmergencyPoBox }}" placeholder="Emergency P.O.Box" />
                                             </div>
                                             <div class="col-3">
                                                 <label class="fieldlabels">Emergency Telephone: *</label>
-                                                <input type="text" name="EmergencyTelephone" value="{{ old('EmergencyTelephone') }}" placeholder="Emergency Telephone" />
+                                                <input type="text" name="EmergencyTelephone" value="{{ $emergence->EmergencyTelephone }}" placeholder="Emergency Telephone" />
                                             </div>
                                             <div class="col-3">
                                                 <label class="fieldlabels">Emergency Mobile: *</label>
-                                                <input type="text" name="EmergencyMobile" value="{{ old('EmergencyMobile') }}" placeholder="Emergency Mobile" />
+                                                <input type="text" name="EmergencyMobile" value="{{ $emergence->EmergencyMobile }}" placeholder="Emergency Mobile" />
                                             </div>
                                             <div class="col-3">
                                                 <label class="fieldlabels">Emergency Email: *</label>
-                                                <input type="text" name="EmergencyEmail" value="{{ old('EmergencyEmail') }}" placeholder="Emergency Email" />
+                                                <input type="text" name="EmergencyEmail" value="{{ $emergence->EmergencyEmail }}" placeholder="Emergency Email" />
                                             </div>
 
 
@@ -896,7 +912,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row"><div class="col-md-5"><label class="fieldlabels">Subject : </label><input type="text" name="Subject1[]"  placeholder="Subject" required /></div><div class="col-md-5"><label class="fieldlabels">Marks : </label><input type="number" name="Marks1[]"  placeholder="Marks" required /></div><div class="col-md-2"> <label class="fieldlabels">Action </label><button class="btn btn-outline-danger remove_field" type="button">Remove</button></div></div>'); //add input box
+                $(wrapper).append('<div class="row"><div class="col-md-5"><label class="fieldlabels">Subject : </label><input type="text" name="Subject1[]"  placeholder="Subject" required /></div><div class="col-md-5"><label class="fieldlabels">Marks/Grade : </label><input type="number" name="Marks1[]"  placeholder="Marks" required /></div><div class="col-md-2"> <label class="fieldlabels">Action </label><button class="btn btn-outline-danger remove_field" type="button">Remove</button></div></div>'); //add input box
             }
         })
 
@@ -916,7 +932,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper2).append('<div class="row"><div class="col-md-3"><label class="fieldlabels">Sibling Name</label><input type="text" name="SiblingName1[]"placeholder="Sibling Name" /></div><div class="col-md-3"><label class="fieldlabels">Sibling Relation</label><input type="text" name="SiblingRelation1[]"  placeholder="Sibling Relation" /></div><div class="col-md-3"><label class="fieldlabels">Sibling Age</label><input type="text" name="SiblingAge1[]"  placeholder="Sibling Age" /></div><div class="col-md-3"><label class="fieldlabels">Sibling Occupation</label><input type="text" name="SiblingOccupation1[]"  placeholder="Sibling Occupation" /></div><div class="col-md-2"> <label class="fieldlabels">Action </label><button class="btn btn-outline-danger remove_sibling_field" type="button">Remove</button></div></div>'); //add input box
+                $(wrapper2).append('<div class="row"><div class="col-md-3"><label class="fieldlabels">Name</label><input type="text" name="SiblingName1[]"placeholder="Name" /></div><div class="col-md-3"><label class="fieldlabels">Relation</label><input type="text" name="SiblingRelation1[]"  placeholder="Relation" /></div><div class="col-md-3"><label class="fieldlabels">Sibling Age</label><input type="text" name="SiblingAge1[]"  placeholder="Age" /></div><div class="col-md-3"><label class="fieldlabels">Occupation</label><input type="text" name="SiblingOccupation1[]"  placeholder="Occupation" /></div><div class="col-md-2"> <label class="fieldlabels">Action </label><button class="btn btn-outline-danger remove_sibling_field" type="button">Remove</button></div></div>'); //add input box
             }
         })
 
