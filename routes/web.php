@@ -100,6 +100,9 @@ Route::group(['middleware'=>'role:admin'],function () {
         Route::get('/report',[ReportController::class,'index'])->name('admin.selectreport');
         Route::get('/report/get',[ReportController::class,'viewreport'])->name('admin.postviewreport');
         Route::get('/report/excel',[ReportController::class,'excelreport'])->name('admin.getexcelreport');
+        Route::get('/active/beneficiaries',[ReportController::class,'filteractivebene'])->name('admin.filteractivebeneficiaries');
+        Route::get('/active/beneficiaries/get',[ReportController::class,'filteractiveget'])->name('admin.getactivebeneficiaries');
+
 
         //Additional Information
         Route::get('/additionalinfo/{id}',[AdminDashboardController::class,'additionalinfo'])->name('admin.additionalinfo');
@@ -128,8 +131,11 @@ Route::group(['middleware'=>'role:admin'],function () {
         Route::get('/mailstudymaterials/{id}',[StudyMaterialController::class,'mailmaterials'])->name('admin.mailmaterials');
 
         //Fee Payment
-        Route::get('/feepayment',[FeeSectionController::class,'index'])->name('admin.feepayment');
-        Route::get('get/feepayment',[FeeSectionController::class,'getfeeexcel'])->name('admin.getfeepayment');
+        Route::get('/bankstatement',[FeeSectionController::class,'index'])->name('admin.bankstatement');
+        Route::get('get/bankstatement',[FeeSectionController::class,'getfeeexcel'])->name('admin.getbankstatement');
+        Route::get('feepayment',[FeeSectionController::class,'feepaymentview'])->name('admin.feepayment');
+        Route::post('import/feepayment',[FeeSectionController::class,'importfeepayment'])->name('admin.importfeepayment');
+
 
         //Communications
         Route::get('/contacts',[ReportController::class,'contacts'])->name('admin.contacts');

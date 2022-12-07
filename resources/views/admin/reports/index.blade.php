@@ -100,7 +100,7 @@
                                     <option value="1st Term/Semester">1st Term/Semester</option>
                                     <option value="2nd Term/Semester">2nd Term/Semester</option>
                                     <option value="3rd Term/Semester">3rd Term/Semester</option>
-                                    <option value="Yearly Report">Yearly Report</option>
+                                    <!-- <option value="Yearly Report">Yearly Report</option> -->
                                 </select>
                                 <!-- <input type="text" name="term"  placeholder="Term" required> -->
                             </div>

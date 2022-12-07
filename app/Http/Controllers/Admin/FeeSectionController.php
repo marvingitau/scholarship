@@ -7,8 +7,10 @@ use App\Exports\FeePayment;
 use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use App\Models\Admin\FeeSection;
+use App\Imports\FeePaymentImport;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Admin\FeePaymentEntry;
 use App\Http\Requests\StoreFeeSectionRequest;
 use App\Http\Requests\UpdateFeeSectionRequest;
 
@@ -28,12 +30,25 @@ class FeeSectionController extends Controller
     public function getfeeexcel(Request $request)
     {
 
-        $data = Fees::join('school_infos','fees.beneficiary_id','=','school_infos.beneficiary_id')->join('fee_sections','school_infos.beneficiary_id','=','fee_sections.beneficiary_id')->where('fee_sections.year',$request->year)->select(['term1'])->get()->toArray();
+        // $data = Fees::join('school_infos','fees.beneficiary_id','=','school_infos.beneficiary_id')->join('fee_sections','school_infos.beneficiary_id','=','fee_sections.beneficiary_id')->where('fee_sections.year',$request->year)->select(['term1'])->get()->toArray();
         // 
     
-        // return Excel::download(new FeePayment($request->year), 'feepayment-'.date('h.i.s.a').'.xlsx');
-        dd($data);
+        return Excel::download(new FeePayment($request->year,$request->term), 'feepayment-'.date('h.i.s.a').'.xlsx');
+        // dd($data);
         // return view('admin.feepayment.index',compact('years'));
+    }
+
+    public function feepaymentview()
+    {
+        return view('admin.feepayment.feepaymentform');
+    }
+
+    public function importfeepayment(Request $request)
+    {
+        Excel::import(new FeePaymentImport, $request->file('feedata')->store('temp'));
+        activity()->log("Fee Payment Uploaded");
+        alert('IMPORTED', 'File Uploaded', 'success')->autoClose(10000);
+        return back();
     }
 
     /**

@@ -17,8 +17,8 @@ class CreateFeesTable extends Migration
             $table->id();
             $table->bigInteger('beneficiary_id');
             $table->string('beneficiary');
-            $table->integer('yearlyfee')->nullable();
-            $table->integer('yearlyfeebal')->nullable();
+            $table->integer('yearlyfee')->default(0);
+            $table->integer('yearlyfeebal')->default(0);
             $table->integer('year')->nullable();
             $table->string('school')->nullable();
             $table->integer('expectedterm1')->nullable();//School expected value

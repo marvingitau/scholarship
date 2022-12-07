@@ -35,7 +35,7 @@
                 <div class="col-6">
                             <div class="form-group">
                                 <label for="">Pending Yearly Required Fee</label>
-                                <input type="text" class="form-control"  name="yearlyfee" value="{{number_format($dis->yearlyfee, 2, '.', ',') }}" disabled>
+                                <input type="text" class="form-control"  name="yearlyfee" value="{{number_format($pendingfee, 2, '.', ',') }}" disabled>
                             </div>
                         </div>
                     <div class="col-6">

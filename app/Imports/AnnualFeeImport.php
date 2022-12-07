@@ -16,36 +16,44 @@ class AnnualFeeImport implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $activeYear = AcademicYear::where('status',1)->first()->year;
+        
+        $activeYear = AcademicYear::where('status', 1)->first()->year;
         $usr = auth()->user();
-        foreach ($rows as $row) 
-        {
-            if($row[3] !== $activeYear){
+        foreach ($rows as $row) {
+            // dd(gettype($row[2]));
+            // Check datatype.
+            
+            if ($row[1] !== $activeYear) {
                 continue;
             }
-            $beneficiary=Beneficiaryform::where('id',$row[0])->first();
-            $beneficiaryName = $beneficiary->firstname." ".$beneficiary->lastname;
-            $feemodel =Fees::create([
-                'beneficiary_id'     => $row[0],
-                'beneficiary'    => $beneficiaryName,
-                'yearlyfee'    => $row[1],
-                'yearlyfeebal'    => $row[2],
-                'year'    => $row[3],
-                'school'    => $beneficiary->SecondaryAdmitted,
-                'expectedterm1'    => $row[4],
-                'expectedterm2'    => $row[5],
-                'expectedterm3'    => $row[6],
-            ]);
-            FeeSection::create([
-                'beneficiary_id'  => $row[0],
-                'user_id' =>$usr->id,
-                'fees_id' => $feemodel->id,
-                'year' =>$row[3],
-                'yearlyfee'=>$row[2],
-                'term1'=>$row[7],
-                'term2'=>$row[8],
-                'term3'=>$row[9],
-            ]);
+            $beneficiary = Beneficiaryform::where('id', $row[0])->first();
+            $beneficiaryName = $beneficiary->firstname . " " . $beneficiary->lastname;
+            $feemodel = Fees::updateOrCreate(
+                [
+                    'beneficiary_id'     => $row[0],
+                    // 'yearlyfee'    => $row[1],
+                    'year'    => $row[1],
+                ],
+                [
+                    'beneficiary'    => $beneficiaryName,
+                    'yearlyfeebal'    => $row[2]+$row[3]+$row[4],
+                    'school'    => $beneficiary->SecondaryAdmitted,
+                    'expectedterm1'    => $row[2],
+                    'expectedterm2'    => $row[3],
+                    'expectedterm3'    => $row[4],
+                ]
+            );
+            // dd($feemodel);
+            // FeeSection::create([
+            //     'beneficiary_id'  => $row[0],
+            //     'user_id' =>$usr->id,
+            //     'fees_id' => $feemodel->id,
+            //     'year' =>$row[3],
+            //     'yearlyfee'=>$row[2],
+            //     'term1'=>$row[7],
+            //     'term2'=>$row[8],
+            //     'term3'=>$row[9],
+            // ]);
 
         }
     }
@@ -71,5 +79,5 @@ class AnnualFeeImport implements ToCollection
     //     ]);
     // }
 
-  
+
 }

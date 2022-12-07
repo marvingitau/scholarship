@@ -54,9 +54,21 @@
                 <a class="collapse-item" href="{{route('clerk.specialapplication')}}">Special Application</a>
                 <!-- <a class="collapse-item" href="cards.html">Pending Form Entries</a>
                 <a class="collapse-item" href="cards.html">Approved Form Entries</a> -->
-            </div> 
+            </div>
         </div>
     </li>
+
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Nav Item - Charts -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('clerk.applicationlist')}}">
+            <i class="fa fa-child"></i>
+            <span>Ongoing beneficiaries</span></a>
+    </li>
+
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

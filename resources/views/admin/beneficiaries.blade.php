@@ -13,10 +13,10 @@
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <div class="d-flex">
+            <div class="d-flex m-2">
 
                 <h1 class="h3 mb-2 text-gray-800">Active Scholarships</h1>
-                <!-- <a href="#" class="btn btn-danger ml-auto">Active Scholarship School Fees</a> -->
+                <a href="{{route('admin.filteractivebeneficiaries')}}" class="btn btn-success ml-auto">Active Beneficiaries Report</a>
             </div>
 
             <!-- DataTales Example -->

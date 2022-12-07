@@ -34,7 +34,7 @@
                                     <th>Term 1</th>
                                     <th>Term 2</th>
                                     <th>Term 3</th>
-                                    <th>Balance</th>
+                                    <th>Allocated Fee</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -44,7 +44,7 @@
                                     <th>Term 1</th>
                                     <th>Term 2</th>
                                     <th>Term 3</th>
-                                    <th>Balance</th>
+                                    <th>Allocated Fee</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\BeneficiariesList;
 use App\Exports\CommunicationList;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -9,6 +10,7 @@ use App\Exports\SchoolResultExport;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Communication;
 use App\Models\Admin\SchoolReportHeader;
+use App\Models\Clerk\Beneficiaryform;
 
 class ReportController extends Controller
 {
@@ -45,7 +47,7 @@ class ReportController extends Controller
 
     public function contacts()
     {
-        $contacts = Communication::join('beneficiaryforms','communications.beneficiary_id','=','beneficiaryforms.id')->get();
+        $contacts = Communication::join('beneficiaryforms', 'communications.beneficiary_id', '=', 'beneficiaryforms.id')->get();
         // dd($contacts);
         return view('admin.reports.contacts', compact('contacts'));
     }
@@ -53,5 +55,16 @@ class ReportController extends Controller
     public function contactxcel()
     {
         return Excel::download(new CommunicationList, 'contacts-' . date('h.i.s.a') . '.xlsx');
+    }
+
+    public function filteractivebene()
+    {
+
+        return view('admin.reports.activebeneficiaryreport');
+    }
+
+    public function filteractiveget(Request $request)
+    {
+        return Excel::download(new BeneficiariesList( $request->institution,$request->gender), 'beneficiaries-' . date('h.i.s.a') . '.xlsx');
     }
 }

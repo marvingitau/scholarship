@@ -13,7 +13,7 @@
         <div class="container-fluid">
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">Bank Statement</h1>
+                <h1 class="h3 mb-0 text-gray-800">{{ __('Beneficiaries Fee Payment') }}</h1>
                 <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
             </div>
 
@@ -42,37 +42,22 @@
 
             <div class="card">
                 <div class="form-body p-2">
-                    <form action="{{route('admin.getbankstatement')}}" method="get">
-
+                    <form action="{{route('admin.importfeepayment')}}" method="post" enctype="multipart/form-data">
+                    @csrf
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="" for="">Select Year</label>
-                                    <select name="year" id="" class="form-control">
-                                        @if($years)
-                                        @foreach($years as $year)
-                                        <option value="{{$year->year}}">{{$year->year}}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="" for="">Select Term</label>
-                                    <select name="term" id="" class="form-control">
-                                      
-                                        <option value="term1">Term 1</option>
-                                        <option value="term2">Term 2</option>
-                                        <option value="term3">Term 3</option>
-                                       
+                                    <label for="">Select the excel file</label>
+                                    <input type="file" name="feedata" class="form-control" required>
+
                                     </select>
                                 </div>
                             </div>
 
+
                             <div class="col-md-12">
                                 <button type="submit" name="submit" class="btn btn-primary p-1">
-                                    Get Bank Statement
+                                    Upload the File
                                 </button>
                             </div>
                         </div>

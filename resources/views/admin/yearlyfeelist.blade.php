@@ -41,7 +41,7 @@
                             <tr>
                                 <th> No</th>
                                 <th>Beneficiary Name</th>
-                                <th>Yearly Fee</th>
+                                <th>Allocated Fee</th>
                                 <th>Year</th>
                                 <th>Action</th>
 

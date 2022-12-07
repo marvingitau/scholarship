@@ -469,7 +469,11 @@ class AdminDashboardController extends Controller
     {
         $dis = FeeSection::where('id', $id)->first();
         $yearfee = Fees::where('beneficiary_id', $dis->beneficiary_id)->first();
-        return view('admin.feeview', compact('dis','yearfee'));
+        $expectedarr = Fees::where('beneficiary_id', $dis->beneficiary_id)->select('expectedterm1','expectedterm2','expectedterm3')->first()->toArray();
+        $expectedfee = array_sum($expectedarr);
+        $pendingfee = $expectedfee - $yearfee->yearlyfee;
+    //    dd($pendingfee);
+        return view('admin.feeview', compact('dis','yearfee','pendingfee'));
     }
 
 
