@@ -18,6 +18,7 @@ class CreateAcademicInfosTable extends Migration
             // Academic Information
             $table->bigInteger('beneficiary_id');
             $table->string('Subject1')->nullable();
+            $table->integer('Marks1')->nullable();
             $table->string('Grade')->nullable();
             $table->integer('schoolreportheader_id')->nullable();
             // $table->string('Subject2')->nullable();

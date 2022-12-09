@@ -135,12 +135,24 @@
                                                 <label class="fieldlabels">Form Joining: </label>
                                                 <input type="text" name="FormJoining" value="{{ old('FormJoining') }}" placeholder="Form Joining" />
                                             </div>
-
+                                           
                                             <div class="col-md-3">
-                                                <label class="fieldlabels">School Fees: </label>
+                                                <label class="fieldlabels">Expected Term1 Fees: </label>
+                                                <input type="number" name="TermOneFee" value="{{ old('TermOneFee') }}" placeholder="Term1 Fees" required/>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Expected Term2 Fees: </label>
+                                                <input type="number" name="TermTwoFee" value="{{ old('TermTwoFee') }}" placeholder="Term2 Fees" required/>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Expected Term3 Fees: </label>
+                                                <input type="number" name="TermThreeFee" value="{{ old('TermThreeFee') }}" placeholder="Term3 Fees" required/>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="fieldlabels">Expected Annual Fees: </label>
                                                 <input type="number" name="SchoolFees" value="{{ old('SchoolFees') }}" placeholder="School Fees" />
                                             </div>
-
+                                            
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Current Address: </label>
                                                 <input type="text" name="CurrentAddress" value="{{ old('CurrentAddress') }}" placeholder="Current Address" />

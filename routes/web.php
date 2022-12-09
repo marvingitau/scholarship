@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\StudyMaterialController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Clerk\ClerkDashboardController;
 use App\Http\Controllers\Clerk\BeneficiaryformController;
+use App\Http\Controllers\Finance\FinanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -142,6 +143,10 @@ Route::group(['middleware'=>'role:admin'],function () {
         Route::get('/excelcontacts',[ReportController::class,'contactxcel'])->name('admin.excelcontacts');
 
 
+        //Ongoing Beneficiaries
+        Route::get('/ongoing-beneficiary',[AdminDashboardController::class,'ongoingbeneficiary'])->name('admin.ongoingbeneficiary');
+        Route::get('/beneficiary-fee/{id}',[AdminDashboardController::class,'ongoingfeeview'])->name('admin.ongoingfeeview');
+        Route::post('/post/beneficiary-fee',[AdminDashboardController::class,'postongoingfeeview'])->name('admin.postongoingfeeview');
 
 
 
@@ -172,7 +177,27 @@ Route::group(['middleware'=>'role:clerk','prefix'=>'clerk'],function(){
         Route::get('/theology-application',[BeneficiaryformController::class,'theology'])->name('clerk.theologyapplication');
         Route::get('/special-application',[BeneficiaryformController::class,'special'])->name('clerk.specialapplication');
 
+        //Ongoing Beneficiaries
+        Route::get('/ongoing-beneficiary',[BeneficiaryformController::class,'ongoingbeneficiary'])->name('clerk.ongoingbeneficiary');
+        Route::get('/beneficiary-fee/{id}',[BeneficiaryformController::class,'ongoingfeeview'])->name('clerk.ongoingfeeview');
+        Route::post('/post/beneficiary-fee',[BeneficiaryformController::class,'postongoingfeeview'])->name('clerk.postongoingfeeview');
+
 
     });
 });
 
+// Paymaster
+Route::group(['middleware'=>'role:finance','prefix'=>'finance'],function(){
+
+    Route::group(['namespace'=>'Finance'],function(){
+        Route::get('/', [FinanceController::class,'index'])->name('finance.dashboard');
+        Route::get('/feestatement', [FinanceController::class,'yearlyfees'])->name('finance.pendingfee');
+        Route::get('/feepayment',[FinanceController::class,'feepaymentview'])->name('finance.feepayment');
+        Route::post('/import/feepayment',[FinanceController::class,'importfeepayment'])->name('finance.importfeepayment');
+
+        Route::get('/bankstatement',[FinanceController::class,'bankstatementview'])->name('finance.bankstatement');
+        Route::get('get/bankstatement',[FinanceController::class,'getfeeexcel'])->name('finance.getbankstatement');
+
+        Route::get('/viewfeestatement/{id}', [FinanceController::class,'viewstatement'])->name('finance.viewpendingfee');
+    });
+});

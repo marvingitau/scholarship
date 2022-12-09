@@ -27,6 +27,10 @@
                     <a class="nav-link border bg-danger text-white" href="{{route('admin.schoolreport',$personalSection['id'])}}">School Result</a>
                 </li>
 
+                <li class="nav-item px-2">
+                    <a class="nav-link border bg-danger text-white" href="{{route('admin.additionalinfo',$personalSection['id'])}}">Additional Information</a>
+                </li>
+
             </ul>
             <!-- </div> -->
 
@@ -153,19 +157,19 @@
                                             <input type="text" name="CityTown" value="{{ $personalSection['CityTown']}}" placeholder="City/Town" disabled />
                                         </div>
                                         <div class="col-md-3">
-                                                <label class="fieldlabels">Church Name: </label>
-                                                <input type="text" name="churchname" value="{{ $personalSection['churchname']}}" placeholder="Church Name" disabled/>
-                                            </div>
+                                            <label class="fieldlabels">Church Name: </label>
+                                            <input type="text" name="churchname" value="{{ $personalSection['churchname']}}" placeholder="Church Name" disabled />
+                                        </div>
 
-                                            <div class="col-md-3">
-                                                <label class="fieldlabels">Pastor Name: </label>
-                                                <input type="text" name="pastorname" value="{{ $personalSection['pastorname']}}" placeholder="Pastor Name" disabled/>
-                                            </div>
+                                        <div class="col-md-3">
+                                            <label class="fieldlabels">Pastor Name: </label>
+                                            <input type="text" name="pastorname" value="{{ $personalSection['pastorname']}}" placeholder="Pastor Name" disabled />
+                                        </div>
 
-                                            <div class="col-md-3">
-                                                <label class="fieldlabels">Pastor/Church Mobile: </label>
-                                                <input type="text" name="pastortelephone" value="{{ $personalSection['pastortelephone']}}" placeholder="Pastor/Church Mobile" disabled/>
-                                            </div>
+                                        <div class="col-md-3">
+                                            <label class="fieldlabels">Pastor/Church Mobile: </label>
+                                            <input type="text" name="pastortelephone" value="{{ $personalSection['pastortelephone']}}" placeholder="Pastor/Church Mobile" disabled />
+                                        </div>
                                         <div class="col-md-3">
                                             <label class="fieldlabels">Have another Sponsor: </label>
                                             <select name="AnotherSponsorship" disabled>
@@ -253,27 +257,27 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                    <div class="col-md-3">
-                                                <label class="fieldlabels">Name: *</label>
-                                                <input type="text" name="Father" value="{{ $familySection['SpouseName'] }}" placeholder="Name" />
-                                            </div>
+                                        <div class="col-md-3">
+                                            <label class="fieldlabels">Name: *</label>
+                                            <input type="text" name="Father" value="{{ $familySection['SpouseName'] }}" placeholder="Name" />
+                                        </div>
 
-                                            <div class="col-md-3">
-                                                <label class="fieldlabels">ID: *</label>
-                                                <input type="text" name="FatherID" value="{{ $familySection['SpouseID'] }}" placeholder="Spouse ID" />
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label class="fieldlabels"> Mobile: *</label>
-                                                <input type="text" name="SpouseMobile" value="{{ $familySection['SpouseMobile'] }}" placeholder="Spouse Mobile" />
-                                            </div>
+                                        <div class="col-md-3">
+                                            <label class="fieldlabels">ID: *</label>
+                                            <input type="text" name="FatherID" value="{{ $familySection['SpouseID'] }}" placeholder="Spouse ID" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="fieldlabels"> Mobile: *</label>
+                                            <input type="text" name="SpouseMobile" value="{{ $familySection['SpouseMobile'] }}" placeholder="Spouse Mobile" />
+                                        </div>
 
-                                            <div class="col-md-3">
-                                                <label class="fieldlabels"> Occupation: *</label>
-                                                <input type="text" name="SpouseOccupation" value="{{ $familySection['SpouseOccupation'] }}" placeholder="Spouse Occupation" />
-                                            </div>
+                                        <div class="col-md-3">
+                                            <label class="fieldlabels"> Occupation: *</label>
+                                            <input type="text" name="SpouseOccupation" value="{{ $familySection['SpouseOccupation'] }}" placeholder="Spouse Occupation" />
+                                        </div>
 
-                                           
-                                            
+
+
 
                                     </div>
 
@@ -344,7 +348,7 @@
                                             <label class="fieldlabels"> Occupation : *</label>
                                             <input type="text" name="SiblingOccupation1" value="{{ $itm->SiblingOccupation1 }}" placeholder="Sibling Occupation 1" disabled />
                                         </div>
-                                       
+
                                         @endforeach
                                         @endif
 
@@ -416,7 +420,7 @@
                                 <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
                             </fieldset>
 
-                          
+
 
                             <fieldset>
                                 @if($reasonSection)
@@ -431,6 +435,10 @@
                                     </div>
 
                                     <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="fieldlabels">Allocated Amount: *</label>
+                                            <input type="text" value="{{$personalSection['AllocatedYealyFee']}}" disabled>
+                                        </div>
                                         <div class="col-12">
 
                                             <label class="fieldlabels">Reason: *</label>

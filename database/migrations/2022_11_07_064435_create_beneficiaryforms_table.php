@@ -28,6 +28,7 @@ class CreateBeneficiaryformsTable extends Migration
             $table->string('CurrentForm')->nullable();
             $table->string('FormJoining')->nullable();
             $table->string('SchoolFees')->nullable();
+            $table->string('AllocatedYealyFee')->nullable();
             $table->string('CurrentAddress')->nullable();
             $table->string('PoBox')->nullable();
             $table->string('PostalCode')->nullable();

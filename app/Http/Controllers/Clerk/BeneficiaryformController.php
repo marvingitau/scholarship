@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Requests\StoreBeneficiaryformRequest;
 use App\Http\Requests\UpdateBeneficiaryformRequest;
 use App\Models\Admin\Communication;
+use App\Models\Clerk\ExpectedTermFee;
 
 // use GuzzleHttp\Psr7\Request;
 
@@ -72,22 +73,28 @@ class BeneficiaryformController extends Controller
         $siblingsDetails = Sibling::where('beneficiary_id', $id)->get();
         $stateOfNeed = StatementNeed::where('beneficiary_id', $id)->first();
         $emergence = EmergencyContact::where('beneficiary_id', $id)->first();
+        $expectedfee = ExpectedTermFee::where('beneficiary_id', $id)->first();
 
         if ($personalInfo->Type == "THEOLOGY") {
-            return view('clerk.edittheologybeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence'));
+            return view('clerk.edittheologybeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence','expectedfee'));
         } elseif ($personalInfo->Type == "TERTIARY") {
-            return view('clerk.edittertiarybeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence'));
+            return view('clerk.edittertiarybeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence','expectedfee'));
         } elseif ($personalInfo->Type == "SPECIAL") {
-            return view('clerk.editspecialbeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence'));
-
+            return view('clerk.editspecialbeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence','expectedfee'));
         } else {
 
-            return view('clerk.editbeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence'));
+            return view('clerk.editbeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence','expectedfee'));
         }
     }
 
     public function updatetheologyform(Request $request)
     {
+        $activeYear = AcademicYear::where('status', 1)->first();
+        if (is_null($activeYear)) {
+            activity()->log('Active Year is Null:' . $request->firstname . " " . $request->middlename);
+            toast('Active Year is Required !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back()->withInput();
+        }
         //Check whether father mother or guardian emails are available
         if (is_null($request->MobileActive)) {
             toast('Active Phone Number is Required !!', 'warning')->timerProgressBar()->autoClose(30000)->showCloseButton();
@@ -189,7 +196,27 @@ class BeneficiaryformController extends Controller
             // foreach ($data['Type1'] as $key => $value) {
             //     FamilyProperty::create(['beneficiary_id' => $benObj->id, 'Type1' => $value, 'Size1' => $data['Size1'][$key], 'Location1' => $data['Location1'][$key]]);
             // }
+            ExpectedTermFee::updateOrCreate(
+                ['beneficiary_id' =>$benObj->id, 'year' => $activeYear->year],
+                [
+                    'TermOneFee' => $request->TermOneFee,
+                    'TermTwoFee' => $request->TermTwoFee,
+                    'TermThreeFee' => $request->TermThreeFee,
+                    'beneficiary' =>$request->lastname." ".$request->firstname,
+                ]
+            );
 
+            Fees::updateOrCreate(
+                ['beneficiary_id' =>$benObj->id, 'year' => $activeYear->year],
+                [
+                    'expectedterm1' => $request->TermOneFee,
+                    'expectedterm2' => $request->TermTwoFee,
+                    'expectedterm3' => $request->TermThreeFee,
+                    'beneficiary' =>$request->lastname." ".$request->firstname,
+                    'yearlyfee'=>$benObj->SchoolFees,
+                    'school'=>$benObj->SecondaryAdmitted,
+                ]
+            );
 
             activity()->log('Beneficiary record updated:' . $request->firstname . " " . $request->middlename);
             alert('UPDATED', 'Beneficiary Update was a Success', 'success')->autoClose(10000);
@@ -202,6 +229,13 @@ class BeneficiaryformController extends Controller
 
     public function updatespecialform(Request $request)
     {
+        $activeYear = AcademicYear::where('status', 1)->first();
+        if (is_null($activeYear)) {
+            activity()->log('Active Year is Null');
+            toast('Active Year is Required !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back()->withInput();
+        }
+        
         //Check whether father mother or guardian emails are available
         if (is_null($request->FatherMobile) && is_null($request->MotherMobile) && is_null($request->GuardianMobile)) {
 
@@ -293,8 +327,26 @@ class BeneficiaryformController extends Controller
             $emergence->save();
 
 
-
-
+            ExpectedTermFee::updateOrCreate(
+                ['beneficiary_id' =>$benObj->id, 'year' => $activeYear->year],
+                [
+                    'TermOneFee' => $request->TermOneFee,
+                    'TermTwoFee' => $request->TermTwoFee,
+                    'TermThreeFee' => $request->TermThreeFee,
+                    'beneficiary' =>$request->lastname." ".$request->firstname,
+                ]
+            );
+            Fees::updateOrCreate(
+                ['beneficiary_id' =>$benObj->id, 'year' => $activeYear->year],
+                [
+                    'expectedterm1' => $request->TermOneFee,
+                    'expectedterm2' => $request->TermTwoFee,
+                    'expectedterm3' => $request->TermThreeFee,
+                    'beneficiary' =>$request->lastname." ".$request->firstname,
+                    'yearlyfee'=>$benObj->SchoolFees,
+                    'school'=>$benObj->SecondaryAdmitted,
+                ]
+            );
             activity()->log('Beneficiary record updated:' . $request->firstname . " " . $request->middlename);
             alert('UPDATED', 'Beneficiary Update was a Success', 'success')->autoClose(10000);
             return back();
@@ -306,8 +358,13 @@ class BeneficiaryformController extends Controller
 
     public function updatetertiaryform(Request $request)
     {
-        //Check whether father mother or guardian emails are available
-        //Check whether father mother or guardian emails are available
+        $activeYear = AcademicYear::where('status', 1)->first();
+        if (is_null($activeYear)) {
+            activity()->log('Active Year is Null:' . $request->firstname . " " . $request->middlename);
+            toast('Active Year is Required !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back()->withInput();
+        }
+
         if (is_null($request->FatherMobile) && is_null($request->MotherMobile) && is_null($request->GuardianMobile)) {
             toast('Father Mobile, Mother Mobile or Guardian Mobile is Required !!', 'warning')->timerProgressBar()->autoClose(30000)->showCloseButton();
             return back()->withInput();
@@ -419,6 +476,26 @@ class BeneficiaryformController extends Controller
             // foreach ($data['Type1'] as $key => $value) {
             //     FamilyProperty::create(['beneficiary_id' => $benObj->id, 'Type1' => $value, 'Size1' => $data['Size1'][$key], 'Location1' => $data['Location1'][$key]]);
             // }
+            ExpectedTermFee::updateOrCreate(
+                ['beneficiary_id' =>$benObj->id, 'year' => $activeYear->year],
+                [
+                    'TermOneFee' => $request->TermOneFee,
+                    'TermTwoFee' => $request->TermTwoFee,
+                    'TermThreeFee' => $request->TermThreeFee,
+                    'beneficiary' =>$request->lastname." ".$request->firstname,
+                ]
+            );
+            Fees::updateOrCreate(
+                ['beneficiary_id' =>$benObj->id, 'year' => $activeYear->year],
+                [
+                    'expectedterm1' => $request->TermOneFee,
+                    'expectedterm2' => $request->TermTwoFee,
+                    'expectedterm3' => $request->TermThreeFee,
+                    'beneficiary' =>$request->lastname." ".$request->firstname,
+                    'yearlyfee'=>$benObj->SchoolFees,
+                    'school'=>$benObj->SecondaryAdmitted,
+                ]
+                );
 
             activity()->log('Beneficiary record updated:' . $request->firstname . " " . $request->middlename);
             alert('UPDATED', 'Beneficiary Updated was a Success', 'success')->autoClose(10000);
@@ -431,6 +508,13 @@ class BeneficiaryformController extends Controller
 
     public function updatehighschoolform(Request $request)
     {
+        $activeYear = AcademicYear::where('status', 1)->first();
+        if (is_null($activeYear)) {
+            activity()->log('Active Year is Null:' . $request->firstname . " " . $request->middlename);
+            toast('Active Year is Required !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back()->withInput();
+        }
+
         //Check whether father mother or guardian emails are available
         if (is_null($request->FatherMobile) && is_null($request->MotherMobile) && is_null($request->GuardianMobile)) {
             toast('Father Mobile, Mother Mobile or Guardian Mobile is Required !!', 'warning')->timerProgressBar()->autoClose(30000)->showCloseButton();
@@ -538,7 +622,26 @@ class BeneficiaryformController extends Controller
             // foreach ($data['Type1'] as $key => $value) {
             //     FamilyProperty::create(['beneficiary_id' => $benObj->id, 'Type1' => $value, 'Size1' => $data['Size1'][$key], 'Location1' => $data['Location1'][$key]]);
             // }
-
+            ExpectedTermFee::updateOrCreate(
+                ['beneficiary_id' =>$benObj->id, 'year' => $activeYear->year],
+                [
+                    'TermOneFee' => $request->TermOneFee,
+                    'TermTwoFee' => $request->TermTwoFee,
+                    'TermThreeFee' => $request->TermThreeFee,
+                    'beneficiary' =>$request->lastname." ".$request->firstname,
+                ]
+            );
+            Fees::updateOrCreate(
+                ['beneficiary_id' =>$benObj->id, 'year' => $activeYear->year],
+                [
+                    'expectedterm1' => $request->TermOneFee,
+                    'expectedterm2' => $request->TermTwoFee,
+                    'expectedterm3' => $request->TermThreeFee,
+                    'beneficiary' =>$request->lastname." ".$request->firstname,
+                    'yearlyfee'=>$benObj->SchoolFees,
+                    'school'=>$benObj->SecondaryAdmitted,
+                ]
+                );
             activity()->log('Beneficiary record updated:' . $request->firstname . " " . $request->middlename);
             alert('UPDATED', 'Beneficiary Updated was a Success', 'success')->autoClose(10000);
             return back();
@@ -549,16 +652,6 @@ class BeneficiaryformController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreBeneficiaryformRequest  $request
@@ -566,9 +659,13 @@ class BeneficiaryformController extends Controller
      */
     public function store(Request $request)
     {
-        //Makes sure on completing the upload u forget the this session value
-        //$request->session()->forget('name')
-
+        //check existence of an active year
+        $activeYear = AcademicYear::where('status', 1)->first();
+        if (is_null($activeYear)) {
+            activity()->log('Active Year is Null:' . $request->firstname . " " . $request->middlename);
+            toast('Active Year is Required !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back()->withInput();
+        }
         //Check whether father mother or guardian emails are available
         if (is_null($request->FatherMobile) && is_null($request->MotherMobile) && is_null($request->GuardianMobile)) {
             toast('Father Mobile, Mother Mobile or Guardian Mobile is Required !!', 'warning')->timerProgressBar()->autoClose(30000)->showCloseButton();
@@ -577,6 +674,12 @@ class BeneficiaryformController extends Controller
 
         $activeNo = ($request->FatherMobile != null) ? $request->FatherMobile : (($request->MotherMobile != null) ? $request->MotherMobile : ($request->GuardianMobile));
 
+        $phoneexists = Communication::where('phone',$activeNo)->count();
+        if($phoneexists){
+            activity()->log('Active Year is Null:' . $request->firstname . " " . $request->middlename);
+            toast('Phone Number Already Exist !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back()->withInput();
+        }
         $data = $request->all();
 
         $benObj = Beneficiaryform::where('MobileActive', $data['FatherMobile'])->orWhere('MobileActive', $data['MotherMobile'])->orWhere('MobileActive', $data['GuardianMobile'])->where('firstname', $data['firstname'])->where('lastname', $data['lastname'])->first();
@@ -584,7 +687,8 @@ class BeneficiaryformController extends Controller
 
 
         // dd($benObj);
-        if ($benObj != null) {
+        //$benObj != null
+        if (false) {
 
             $bday = new DateTime($request->DOB);
             $today = new DateTime(date('y-m-d'));
@@ -671,7 +775,7 @@ class BeneficiaryformController extends Controller
             $emergence->save();
 
             $communication = Communication::where('beneficiary_id', $benObj->id)->first();
-            $communication->email =is_null($request->EmailActive)?'NA':$request->EmailActive;
+            $communication->email = is_null($request->EmailActive) ? 'NA' : $request->EmailActive;
             $communication->phone =  $activeNo;
             $communication->save();
 
@@ -686,12 +790,13 @@ class BeneficiaryformController extends Controller
         } else {
             $request->validate(
                 [
-                    'email'=>['required', 'unique:communications'],
+                    'email' => ['required', 'unique:communications'],
                     'AnotherSponsorship' => ['required'],
                     'gender' => ['required'],
                     // 'MobileActive' => ['required', 'unique:beneficiaryforms'],
                     'firstname' => ['required'],
                     'lastname' => ['required'],
+                    'phone' =>['unique:communications']
                     // 'EmailGuardian'=>['required', 'string', 'email', 'max:255','unique:beneficiaryforms']  //
                 ]
             );
@@ -701,7 +806,7 @@ class BeneficiaryformController extends Controller
             $dff = $today->diff($bday);
 
 
-            $resp = Beneficiaryform::create($data + ['MobileActive' => $activeNo, 'age' => $dff->y, 'CreatedBy' => auth()->user()->id,'EmailActive'=>$request->email]);
+            $resp = Beneficiaryform::create($data + ['MobileActive' => $activeNo, 'age' => $dff->y, 'CreatedBy' => auth()->user()->id, 'EmailActive' => $request->email]);
 
             if ($resp->id) {
                 Session::forget('personal_status');
@@ -730,6 +835,27 @@ class BeneficiaryformController extends Controller
                 // Fees::updateOrCreate(['beneficiary_id' => $resp->id, 'year' => $academicYear->year], ['beneficiary' => $name, 'yearlyfee' => $request->SchoolFees, 'yearlyfeebal' => $request->SchoolFees, 'school' => $request->SecondaryAdmitted]);
 
                 Communication::create(['beneficiary_id' => $resp->id, 'phone' => $activeNo, 'email' => $request->email]);
+                ExpectedTermFee::updateOrCreate(
+                    ['beneficiary_id' => $resp->id, 'year' => $activeYear->year],
+                    [
+                        'TermOneFee' => $request->TermOneFee,
+                        'TermTwoFee' => $request->TermTwoFee,
+                        'TermThreeFee' => $request->TermThreeFee,
+                        'beneficiary' =>$request->lastname." ".$request->firstname,
+                    ]
+                );
+                Fees::updateOrCreate(
+                    ['beneficiary_id' =>$resp->id, 'year' => $activeYear->year],
+                    [
+                        'expectedterm1' => $request->TermOneFee,
+                        'expectedterm2' => $request->TermTwoFee,
+                        'expectedterm3' => $request->TermThreeFee,
+                        'beneficiary' =>$request->lastname." ".$request->firstname,
+                        'yearlyfee'=>$resp->SchoolFees,
+                        'school'=>$resp->SecondaryAdmitted,
+                    ]
+                    );
+
 
                 activity()->log('Beneficiary record uploaded:' . $request->firstname . " " . $request->middlename);
                 alert('UPLOAD', 'Beneficiary Uploaded was a Success', 'success')->autoClose(10000);
@@ -745,8 +871,13 @@ class BeneficiaryformController extends Controller
 
     public function storeSpecial(Request $request)
     {
-        //Makes sure on completing the upload u forget the this session value
-        //$request->session()->forget('name')
+         //check existence of an active year
+         $activeYear = AcademicYear::where('status', 1)->first();
+         if (is_null($activeYear)) {
+             activity()->log('Active Year is Null:' . $request->firstname . " " . $request->middlename);
+             toast('Active Year is Required !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
+             return back()->withInput();
+         }
 
         //Check whether father mother or guardian emails are available
         if (is_null($request->FatherMobile) && is_null($request->MotherMobile) && is_null($request->GuardianMobile)) {
@@ -764,7 +895,7 @@ class BeneficiaryformController extends Controller
 
 
         // dd($benObj);
-        if ($benObj != null) {
+        if (false) {
 
             $bday = new DateTime($request->DOB);
             $today = new DateTime(date('y-m-d'));
@@ -908,6 +1039,26 @@ class BeneficiaryformController extends Controller
                 $name = $request->firstname ." ".$request->lastname;
                  Fees::updateOrCreate(['beneficiary_id' => $resp->id, 'year' => $academicYear->year], ['beneficiary' => $name, 'yearlyfee' => $request->SchoolFees, 'yearlyfeebal' => $request->SchoolFees, 'school' => $request->SecondaryAdmitted]);*/
 
+                 ExpectedTermFee::updateOrCreate(
+                    ['beneficiary_id' => $resp->id, 'year' => $activeYear->year],
+                    [
+                        'TermOneFee' => $request->TermOneFee,
+                        'TermTwoFee' => $request->TermTwoFee,
+                        'TermThreeFee' => $request->TermThreeFee,
+                        'beneficiary' =>$request->lastname." ".$request->firstname,
+                    ]
+                );
+                Fees::updateOrCreate(
+                    ['beneficiary_id' =>$resp->id, 'year' => $activeYear->year],
+                    [
+                        'expectedterm1' => $request->TermOneFee,
+                        'expectedterm2' => $request->TermTwoFee,
+                        'expectedterm3' => $request->TermThreeFee,
+                        'beneficiary' =>$request->lastname." ".$request->firstname,
+                        'yearlyfee'=>$resp->SchoolFees,
+                        'school'=>$resp->SecondaryAdmitted,
+                    ]
+                    );
                 activity()->log('Beneficiary record uploaded:' . $request->firstname . " " . $request->middlename);
                 alert('UPLOAD', 'Beneficiary Upload was a Success', 'success')->autoClose(10000);
                 return back();
@@ -921,8 +1072,13 @@ class BeneficiaryformController extends Controller
 
     public function storeTheology(Request $request)
     {
-        //Makes sure on completing the upload u forget the this session value
-        //$request->session()->forget('name')
+         //check existence of an active year
+         $activeYear = AcademicYear::where('status', 1)->first();
+         if (is_null($activeYear)) {
+             activity()->log('Active Year is Null:' . $request->firstname . " " . $request->middlename);
+             toast('Active Year is Required !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
+             return back()->withInput();
+         }
 
         //Check whether father mother or guardian emails are available
         if (is_null($request->MobileActive)) {
@@ -944,7 +1100,7 @@ class BeneficiaryformController extends Controller
 
 
         // dd($benObj);
-        if ($benObj != null) {
+        if (false) {
 
             $bday = new DateTime($request->DOB);
             $today = new DateTime(date('y-m-d'));
@@ -1089,9 +1245,31 @@ class BeneficiaryformController extends Controller
                 // }
 
                 //Populate Annual Fee on approval
-                $academicYear = AcademicYear::where('status', 1)->first();
-                $name = $request->firstname . " " . $request->lastname;
+                // $academicYear = AcademicYear::where('status', 1)->first();
+                // $name = $request->firstname . " " . $request->lastname;
                 // Fees::updateOrCreate(['beneficiary_id' => $resp->id, 'year' => $academicYear->year], ['beneficiary' => $name, 'yearlyfee' => $request->SchoolFees, 'yearlyfeebal' => $request->SchoolFees, 'school' => $request->SecondaryAdmitted]);
+
+                ExpectedTermFee::updateOrCreate(
+                    ['beneficiary_id' => $resp->id, 'year' => $activeYear->year],
+                    [
+                        'TermOneFee' => $request->TermOneFee,
+                        'TermTwoFee' => $request->TermTwoFee,
+                        'TermThreeFee' => $request->TermThreeFee,
+                        'beneficiary' =>$request->lastname." ".$request->firstname,
+                    ]
+                );
+
+                Fees::updateOrCreate(
+                    ['beneficiary_id' =>$resp->id, 'year' => $activeYear->year],
+                    [
+                        'expectedterm1' => $request->TermOneFee,
+                        'expectedterm2' => $request->TermTwoFee,
+                        'expectedterm3' => $request->TermThreeFee,
+                        'beneficiary' =>$request->lastname." ".$request->firstname,
+                        'yearlyfee'=>$resp->SchoolFees,
+                        'school'=>$resp->SecondaryAdmitted,
+                    ]
+                    );
 
                 activity()->log('Beneficiary record uploaded:' . $request->firstname . " " . $request->middlename);
                 alert('UPLOAD', 'Beneficiary Upload was a Success', 'success')->autoClose(10000);
@@ -1105,14 +1283,63 @@ class BeneficiaryformController extends Controller
     }
 
     /**
+     * Show the form for ongoingbeneficiary.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function ongoingbeneficiary()
+    {
+        $activeYear = AcademicYear::where('status', 1)->first();
+        if (is_null($activeYear)) {
+            activity()->log('Active Year is Null');
+            toast('Active Year is Required !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back()->withInput();
+        }
+
+        $continuing = Fees::join('beneficiaryforms','fees.beneficiary_id','=','beneficiaryforms.id')->where('fees.year','!=',$activeYear->year)->where('fees.status',1)->get();
+        return view('clerk.continuingbeneficiaries',compact('continuing'));
+
+    }
+
+    public function ongoingfeeview($id)
+    {
+        $activeYear = AcademicYear::where('status', 1)->first();
+        $beneficiary = Fees::where('beneficiary_id',$id)->first();
+
+        return view('clerk.continuingfees',compact('activeYear','beneficiary','id'));
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Clerk\Beneficiaryform  $beneficiaryform
      * @return \Illuminate\Http\Response
      */
-    public function show(Beneficiaryform $beneficiaryform)
+    public function postongoingfeeview(Request $request)
     {
-        //
+        $request->validate([
+            'ExpectedTermOne'=>'required'
+        ]);
+        $activeYear = AcademicYear::where('status', 1)->first();
+        $beneficiary = Beneficiaryform::where('id',$request->id)->first();
+
+        Fees::updateOrCreate(
+            ['beneficiary_id' =>$request->id, 'year' => $activeYear->year],
+            [
+                'expectedterm1' => $request->ExpectedTermOne,
+                'expectedterm2' => $request->ExpectedTermTwo,
+                'expectedterm3' => $request->ExpectedTermThree,
+                'beneficiary' =>$beneficiary->lastname." ".$beneficiary->firstname,
+                'yearlyfee'=>$request->ExpectedYearly,
+                'school'=>$beneficiary->SecondaryAdmitted,
+                'status'=>1,
+            ]
+        );
+        Fees::where('beneficiary_id',$request->id)->where('year','!=', $activeYear->year)->update(['status'=>0]);
+
+        activity()->log('Beneficiary fee record creared:' . $request->firstname . " " . $request->lastname);
+        alert('CREATED', 'Beneficiary fee Creation was a Success', 'success')->autoClose(10000);
+        return back();
     }
 
     /**

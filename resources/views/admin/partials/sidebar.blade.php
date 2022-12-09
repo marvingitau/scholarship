@@ -1,14 +1,14 @@
 <?php
 $current = url()->current();
 $query = explode(env('ADMIN_URL_DELIMETER_VALUE'), $current);
-$aux = isset($query[1])?$query[1]:"";
+$aux = isset($query[1]) ? $query[1] : "";
 $tag = "";
-$advanceList = ['yearlyfee','feepayment','bankstatement','academicyears','new/user','user/list'];
+$advanceList = ['yearlyfee', 'feepayment', 'bankstatement', 'academicyears', 'new/user', 'user/list'];
 $flag = in_array($aux, $advanceList);
 $tag = $flag != 'true' ? '' : 'show';
 
 
-$scholarshipsList = ['approved/applicants','archived/applicants','rejected/applicants'];
+$scholarshipsList = ['approved/applicants', 'archived/applicants', 'rejected/applicants'];
 $flag = in_array($aux, $scholarshipsList);
 $tag2 = $flag != 'true' ? '' : 'show';
 
@@ -49,9 +49,15 @@ $tag2 = $flag != 'true' ? '' : 'show';
     <li class="nav-item">
         <a class="nav-link" href="{{route('admin.applicationlist')}}">
             <i class="fas fa-list"></i>
-            <span>Applications</span></a>
+            <span>Pending Applications</span></a>
     </li>
-
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('admin.ongoingbeneficiary')}}">
+            <i class="fas fa-user-tie"></i>
+            <span>Ongoing Beneficiaries</span></a>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
@@ -122,8 +128,8 @@ $tag2 = $flag != 'true' ? '' : 'show';
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Advance Operations:</h6>
                 <a class="collapse-item" href="{{route('admin.yearlyfee')}}">Yearly Fee Statement</a>
-                <a class="collapse-item" href="{{route('admin.feepayment')}}">Fee Payment</a>
-                <a class="collapse-item" href="{{route('admin.bankstatement')}}">Bank Statement</a>
+                <!-- <a class="collapse-item" href="{{route('admin.feepayment')}}">Fee Payment</a>
+                <a class="collapse-item" href="{{route('admin.bankstatement')}}">Bank Statement</a> -->
                 <a class="collapse-item" href="{{route('admin.academicyears')}}">Academic Years</a>
                 <a class="collapse-item" href="{{route('admin.newuser')}}">Create User</a>
                 <a class="collapse-item" href="{{route('admin.userlist')}}">User List</a>

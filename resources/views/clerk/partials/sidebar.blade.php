@@ -34,7 +34,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{route('clerk.applicationlist')}}">
             <i class="fas fa-list"></i>
-            <span>Applications</span></a>
+            <span>Pending Applications</span></a>
     </li>
 
     <!-- Divider -->
@@ -64,7 +64,7 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="{{route('clerk.applicationlist')}}">
+        <a class="nav-link" href="{{route('clerk.ongoingbeneficiary')}}">
             <i class="fa fa-child"></i>
             <span>Ongoing beneficiaries</span></a>
     </li>

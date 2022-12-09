@@ -14,9 +14,9 @@
 
             <!-- Page Heading -->
             <div class="d-flex my-3">
-                <h1 class="h3 mb-2 text-gray-800">All Beneficiary Yearly Fee</h1>
+                <h1 class="h3 mb-2 text-gray-800">Beneficiaries  Fee Report</h1>
                 <!-- <a href="{{route('admin.createyearlyfee')}}" class="btn btn-info ml-auto">Create New</a> -->
-                <a href="{{route('admin.importyearlyfee')}}" class="btn btn-success  ml-auto">Import Bulk <i class="fa fa-file-excel-o"></i></a>
+                <!-- <a href="{{route('admin.importyearlyfee')}}" class="btn btn-success  ml-auto">Import Bulk <i class="fa fa-file-excel-o"></i></a> -->
             </div>
 
 
@@ -39,8 +39,11 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th> No</th>
+                                <th>No</th>
                                 <th>Beneficiary Name</th>
+                                <th>Expected Term1</th>
+                                <th>Expected Term2</th>
+                                <th>Expected Term3</th>
                                 <th>Allocated Fee</th>
                                 <th>Year</th>
                                 <th>Action</th>
@@ -61,7 +64,7 @@
                             </div>
                         </div>
                     </form> -->
-                    <a  href="{{route('admin.downloadyearlyfee')}}" class="btn btn-danger ">Download CSV &nbsp; <i class="far fa-file-excel"></i></a>
+                    <a  href="{{route('admin.downloadyearlyfee')}}" class="btn btn-danger ">Download Fee Report CSV &nbsp; <i class="far fa-file-excel"></i></a>
                 </div>
             </div>
 
@@ -91,11 +94,23 @@
                 },
                 {
                     data: 'beneficiary',
-                    name: 'beneficiary'
+                    name: 'beneficiary',
                 },
                 {
-                    data: 'yearlyfee',
-                    name: 'yearlyfee'
+                    data: 'expectedterm1',
+                    name: 'expectedterm1'
+                },
+                {
+                    data: 'expectedterm2',
+                    name: 'expectedterm2'
+                },
+                {
+                    data: 'expectedterm3',
+                    name: 'expectedterm3'
+                },
+                {
+                    data: 'AllocatedYealyFee',
+                    name: 'AllocatedYealyFee'
                 },
                 {
                     data: 'year',

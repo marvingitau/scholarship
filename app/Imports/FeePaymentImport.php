@@ -34,10 +34,9 @@ class FeePaymentImport implements ToCollection
                     'comment'=> isset($row[4])?$row[4]:''
                 ]
             );
-
+ 
             $fee = Fees::where('beneficiary_id', $row[0])->where('year', $row[1])->first();
-            $fee->increment('yearlyfee', $row[3]);
-            $fee->decrement('yearlyfeebal', $row[3]);
+            /* $fee->increment('yearlyfee', $row[3]);$fee->decrement('yearlyfeebal', $row[3]);*/
             // $fee->yearlyfee= $fee->yearlyfee+$row[3];
             // $fee->yearlyfeebal =  (($fee->expectedterm1+$fee->expectedterm2+$fee->expectedterm3)-$row[3])+$fee->yearlyfeebal;
             // $fee->save();

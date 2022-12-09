@@ -120,7 +120,7 @@
                                                 <input type="text" name="KCPEIndex" value="{{ old('KCPEIndex') }}" placeholder="KCPE Index" />
                                             </div> -->
 
-                                            <div class="col-md-3">
+                                            <div class="col-md-6">
                                                 <label class="fieldlabels">Institute Admitted: </label>
                                                 <input type="text" name="SecondaryAdmitted" value="{{ old('SecondaryAdmitted') }}" placeholder="Institute Admitted" />
                                             </div>
@@ -134,12 +134,23 @@
                                                 <label class="fieldlabels">Class Joining: </label>
                                                 <input type="text" name="FormJoining" value="{{ old('FormJoining') }}" placeholder="Class Joining" />
                                             </div>
-
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
+                                                <label class="fieldlabels">Expected Term1/Semester1 Fees: </label>
+                                                <input type="number" name="TermOneFee" value="{{ old('TermOneFee') }}" placeholder="Term1/Semester1 Fees" required/>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="fieldlabels">Expected Term2/Semester2 Fees: </label>
+                                                <input type="number" name="TermTwoFee" value="{{ old('TermTwoFee') }}" placeholder="Term2/Semester2 Fees" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="fieldlabels">Expected Term3/Semester3 Fees: </label>
+                                                <input type="number" name="TermThreeFee" value="{{ old('TermThreeFee') }}" placeholder="Term3/Semester3 Fees" >
+                                            </div>
+                                            <div class="col-md-12">
                                                 <label class="fieldlabels">Annual Fees: </label>
                                                 <input type="number" name="SchoolFees" value="{{ old('SchoolFees') }}" placeholder="Annual Fees" />
                                             </div>
-
+ 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Current Address: </label>
                                                 <input type="text" name="CurrentAddress" value="{{ old('CurrentAddress') }}" placeholder="Current Address" />

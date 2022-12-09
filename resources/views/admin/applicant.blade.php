@@ -18,7 +18,7 @@
             <div class="row justify-content-center">
                 <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 text-center p-0 mt-3 mb-2">
                     <div class="card px-2 pt-4 pb-0 mt-3 mb-3">
-                        <h2 id="heading"> Applicant Form</h2>
+                        <h2 id="heading">{{$personalSection['Type']}} Applicant Form</h2>
                         <!-- <p>Fill all form field to go to next step</p> -->
                         <section id="msform">
                             <!-- progressbar -->
@@ -141,19 +141,19 @@
                                             <input type="text" name="CityTown" value="{{ $personalSection['CityTown']}}" placeholder="City/Town" disabled />
                                         </div>
                                         <div class="col-md-3">
-                                                <label class="fieldlabels">Church Name: </label>
-                                                <input type="text" name="churchname" value="{{ $personalSection['churchname']}}" placeholder="Church Name" disabled/>
-                                            </div>
+                                            <label class="fieldlabels">Church Name: </label>
+                                            <input type="text" name="churchname" value="{{ $personalSection['churchname']}}" placeholder="Church Name" disabled />
+                                        </div>
 
-                                            <div class="col-md-3">
-                                                <label class="fieldlabels">Pastor Name: </label>
-                                                <input type="text" name="pastorname" value="{{ $personalSection['pastorname']}}" placeholder="Pastor Name" disabled/>
-                                            </div>
+                                        <div class="col-md-3">
+                                            <label class="fieldlabels">Pastor Name: </label>
+                                            <input type="text" name="pastorname" value="{{ $personalSection['pastorname']}}" placeholder="Pastor Name" disabled />
+                                        </div>
 
-                                            <div class="col-md-3">
-                                                <label class="fieldlabels">Pastor/Church Mobile: </label>
-                                                <input type="text" name="pastortelephone" value="{{ $personalSection['pastortelephone']}}" placeholder="Pastor/Church Mobile" disabled/>
-                                            </div>
+                                        <div class="col-md-3">
+                                            <label class="fieldlabels">Pastor/Church Mobile: </label>
+                                            <input type="text" name="pastortelephone" value="{{ $personalSection['pastortelephone']}}" placeholder="Pastor/Church Mobile" disabled />
+                                        </div>
 
                                         <div class="col-md-3">
                                             <label class="fieldlabels">Have another Sponsor: </label>
@@ -442,27 +442,61 @@
                             </fieldset>
 
 
-
-                            <div class="row">
-                                <div class="col-6">
-                                    <form method="POST" action="{{ route('admin.approveapplicant') }}" class="form-input">
-                                        @csrf
-                                        <input type="hidden" name="applicant" value="{{ $personalSection['id']}}">
-                                        <textarea name="applicantactionreason" id="" cols="30" rows="10" placeholder="Approve Reason" value="{{ old('applicantactionreason') }}" required></textarea>
-                                        <button class="btn btn-success w-100 rounded-0" type="submit">Approve</button>
-
-                                    </form>
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Approval:</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        <h2 class="steps">Step 7 - 7</h2>
+                                    </div>
                                 </div>
-                                <div class="col-6">
-                                    <form method="POST" action="{{ route('admin.rejectapplicant') }}" class="form-input">
-                                        @csrf
-                                        <input type="hidden" name="applicant" value="{{ $personalSection['id']}}">
-                                        <textarea name="applicantactionreason" id="" cols="30" rows="10" placeholder="Reject Reason" value="{{old('applicantactionreason')}}" required></textarea>
-                                        <button class="btn btn-danger w-100 rounded-0" type="submit">Reject</button>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="fieldlabels">Expected Term1/Semester1: </label>
+                                        <input type="text" value="{{ $expectedFee['TermOneFee'] }}" placeholder="Expected Term1/Semester1" disabled />
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="fieldlabels">Expected Term2/Semester2: </label>
+                                        <input type="text" value="{{ $expectedFee['TermTwoFee'] }}" placeholder="Expected Term2/Semester2" disabled />
+                                    </div>
 
-                                    </form>
+                                    <div class="col-3">
+                                        <label class="fieldlabels">Expected Term3/Semester3: </label>
+                                        <input type="text" value="{{ $expectedFee['TermThreeFee'] }}" placeholder="Expected Term3/Semester3" disabled />
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="fieldlabels">Expected Annual Fee:</label>
+                                        <input type="text" value="{{$personalSection['SchoolFees']}}" placeholder="Expected Annual Fee" disabled />
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="row">
+
+                                    <div class="col-6">
+                                        <form method="POST" action="{{ route('admin.approveapplicant') }}" class="form-input">
+                                            @csrf
+                                            <input type="hidden" name="applicant" value="{{ $personalSection['id']}}">
+                                            <div class="form-group">
+                                                <!-- <label style="margin:0rem !important;">Allocated Amount : *</label> -->
+                                                <input type="number" class="form-control" name="AllocatedYealyFee" value="{{ old('AllocatedYealyFee') }}" placeholder="Allocated Amount" required />
+                                            </div>
+                                            <textarea name="applicantactionreason" id="" cols="30" rows="10" placeholder="Approve Reason" value="{{ old('applicantactionreason') }}" required></textarea>
+                                            <button class="btn btn-success w-100 rounded-0" type="submit">Approve</button>
+
+                                        </form>
+                                    </div>
+                                    <div class="col-6">
+                                        <form method="POST" action="{{ route('admin.rejectapplicant') }}" class="form-input">
+                                            @csrf
+                                            <input type="hidden" name="applicant" value="{{ $personalSection['id']}}">
+                                            <textarea name="applicantactionreason" id="" cols="30" rows="10" placeholder="Reject Reason" value="{{old('applicantactionreason')}}" required></textarea>
+                                            <button class="btn btn-danger w-100 rounded-0" type="submit">Reject</button>
+
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </fieldset>
 
 
 

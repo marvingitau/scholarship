@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.finance')
 @section('content')
 
 
@@ -7,18 +7,13 @@
     <!-- Main Content -->
     <div id="content">
         <!--  Topbar -->
-        @include('admin.partials.topnav')
+        @include('finance.partials.topnav')
         <!-- End of Topbar -->
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <div class="d-flex my-1">
-
-                <h1 class="h3 mb-2 text-gray-800"> <b>{{is_null($personalSection)?'':$personalSection['firstname']}}</b>'s  Fee Ledger</h1>
-                <a href="{{route('admin.newfee',$id)}}" class="btn btn-success ml-auto d-none "><i class="fa fa-book mr-1"></i> Create New</a>
-            </div>
-
+            <h1 class="h3 mb-2 text-gray-800">Fee Statement</h1>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -27,46 +22,45 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-bordered" id="dataTable3" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
+                                    <th>No</th>
+                                    <th>Beneficiary</th>
+                                    <th>Expected Term1</th>
+                                    <th>Expected Term2</th>
+                                    <th>Expected Term3</th>
+                                    <th>Allocated Fee</th>
                                     <th>Year</th>
-                                    <th>Term 1</th>
-                                    <th>Term 2</th>
-                                    <th>Term 3</th>
-                                    <th>Expected Fee</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
+                                    <th>No</th>
+                                    <th>Beneficiary</th>
+                                    <th>Expected Term1</th>
+                                    <th>Expected Term2</th>
+                                    <th>Expected Term3</th>
+                                    <th>Allocated Fee</th>
                                     <th>Year</th>
-                                    <th>Term 1</th>
-                                    <th>Term 2</th>
-                                    <th>Term 3</th>
-                                    <th>Expected Fee</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @if($data)
-                                @foreach ($data as $item)
+                                @if($fee)
+                                @foreach ($fee as $item)
                                 <tr>
+                                    <td>{{$item->beneficiary_id}}</td>
+                                    <td>{{$item->beneficiary}}</td>
+                                    <td>{{$item->expectedterm1}}</td>
+                                    <td>{{$item->expectedterm2}}</td>
+                                    <td>{{$item->expectedterm3}}</td>
+                                    <td>{{$item->AllocatedYealyFee}}</td>
                                     <td>{{$item->year}}</td>
-                                    <td>{{$item->term1}}</td>
-                                    <td>{{$item->term2}}</td>
-                                    <td>{{$item->term3}}</td>
-                                    <td>{{$item->yearlyfee}}</td>
-                                    <td><a class="btn btn-info" href="{{route('admin.viewfee',$item->id)}}">View <i class="fa fa-eye"></i></a></td>
+                                    <td> <a href="{{route('finance.viewpendingfee',$item->id)}}" class="btn btn-dark"> View <i class="fas fa-eye ml-2 "></i></a></td>
                                 </tr>
                                 @endforeach
-                                @else
-                                <tr>
-                                    <td>..</td>
-                                    <td>.</td>
-                                    <td>..</td>
-                                    <td>.</td>
-                                </tr>
                                 @endif
 
 

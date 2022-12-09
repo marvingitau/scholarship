@@ -20,9 +20,9 @@ class CreateFeeSectionsTable extends Migration
             $table->integer('fees_id');
             $table->string('year');
             $table->integer('yearlyfee');
-            $table->string('term1')->dafault(0);
-            $table->string('term2')->dafault(0);
-            $table->string('term3')->dafault(0);
+            $table->integer('term1')->dafault(0);
+            $table->integer('term2')->dafault(0);
+            $table->integer('term3')->dafault(0);
             $table->string('amount')->nullable();
             $table->timestamps();
         });

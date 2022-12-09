@@ -43,7 +43,7 @@
                 <form action="{{route('admin.postnewfee')}}" method="POST">
                     @csrf
                     <input type="hidden" name="id" value="{{$id}}">
-                    <input type="hidden" name="yearlyfee" value="<?php echo is_null($annualFee) != true ? $annualFee->yearlyfeebal: "" ?>">
+                    <input type="hidden" name="yearlyfee" value="<?php echo is_null($annualFee) != true ? $annualFee->yearlyfee: "" ?>">
                     <input type="hidden" name="year" value="{{$activeYear->year}}">
                     <div class="row p-2">
                         <!-- <div class="col-12">
@@ -55,7 +55,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="">Yearly Allocated Fund</label>
-                                <input type="text" class="form-control" name="yearlyfee" value="<?php echo is_null($annualFee) != true ? number_format($annualFee->yearlyfeebal, 2, '.', ',') : "N/A" ?>" disabled>
+                                <input type="text" class="form-control" name="yearlyfee" value="<?php echo is_null($annualFee) != true ? number_format($annualFee->yearlyfee, 2, '.', ',') : "N/A" ?>" disabled>
                             </div>
                         </div>
                         <div class="col-md-4">

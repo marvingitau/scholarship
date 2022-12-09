@@ -20,7 +20,7 @@ class FeeExport implements FromCollection,WithHeadings,ShouldAutoSize, WithEvent
     {
         return DB::table('fees')
         ->join('fee_sections','fees.id','=','fee_sections.fees_id')
-        ->select('fees.beneficiary_id', 'fees.beneficiary','fees.school', 'fees.yearlyfee','fees.year',
+        ->select('fees.beneficiary_id', 'fees.beneficiary','fees.school', 'fees.yearlyfee', 'fees.AllocatedYealyFee','fees.year',
         'fees.expectedterm1','fees.expectedterm2','fees.expectedterm3',
         'fee_sections.term1','fee_sections.term2','fee_sections.term3','fees.yearlyfeebal'
         )
@@ -35,7 +35,8 @@ class FeeExport implements FromCollection,WithHeadings,ShouldAutoSize, WithEvent
             'Beneficiary No',
             'Beneficiary Name',
             'School',
-            'Allocation',
+            'Expected Yearly Fee',
+            'Allocated Fee',
             'Year',
             'Expected Term 1',
             'Expected Term 2',

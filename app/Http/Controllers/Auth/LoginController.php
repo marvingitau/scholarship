@@ -65,6 +65,14 @@ class LoginController extends Controller
                 }
                 return '/admin';
                 break;
+            case 'finance':
+                $finance_session_id = Session::get('finance_session_id');
+                if (empty($finance_session_id)) {
+                    $finance_session_id = Str::random(40);
+                    Session::put('finance_session_id', $finance_session_id);
+                }
+                return '/finance';
+                break;
             case 'clerk':
                 $clerk_session_id = Session::get('clerk_session_id');
                 if (empty($clerk_session_id)) {

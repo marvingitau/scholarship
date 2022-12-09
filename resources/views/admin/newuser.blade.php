@@ -50,6 +50,7 @@
                                 <label for="">Role</label>
                                 <select name="role" id="" class="form-control" required>
                                     <option value="clerk">Clerk</option>
+                                    <option value="finance">Paymaster</option>
                                     <option value="admin">Committee Admin</option>
                                 </select>
                             </div>

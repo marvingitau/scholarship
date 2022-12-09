@@ -479,6 +479,10 @@
                                     </div>
 
                                     <div class="row">
+                                    <div class="col-md-12">
+                                            <label class="fieldlabels">Allocated Amount: *</label>
+                                            <input type="text" value="{{$personalSection['AllocatedYealyFee']}}" disabled>
+                                        </div>
                                         <div class="col-12">
 
                                             <label class="fieldlabels">Reason: *</label>
