@@ -70,8 +70,9 @@ class FinanceController extends Controller
     {
         $activeYear = AcademicYear::where('status', true)->first();
         $fee = Fees::select(['id','beneficiary_id', 'beneficiary','expectedterm1','expectedterm2','expectedterm3', 'AllocatedYealyFee', 'year'])->get();
-       
-        return view('finance.yearlyfeelist', compact('activeYear','fee'));
+        $feesection = Feesection::select('fees_id')->get()->pluck('fees_id')->toArray();
+        // dd($feesection);
+        return view('finance.yearlyfeelist', compact('activeYear','fee','feesection'));
     }
 
     public function yearlyfeesdata()

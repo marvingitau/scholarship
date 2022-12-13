@@ -887,7 +887,12 @@ class BeneficiaryformController extends Controller
         }
 
         $activeNo = ($request->FatherMobile != null) ? $request->FatherMobile : (($request->MotherMobile != null) ? $request->MotherMobile : ($request->GuardianMobile));
-
+        $phoneexists = Communication::where('phone',$activeNo)->count();
+        if($phoneexists){
+            activity()->log('Active Year is Null:' . $request->firstname . " " . $request->middlename);
+            toast('Phone Number Already Exist !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back()->withInput();
+        }
         $data = $request->all();
 
         $benObj = Beneficiaryform::where('MobileActive', $data['FatherMobile'])->orWhere('MobileActive', $data['MotherMobile'])->orWhere('MobileActive', $data['GuardianMobile'])->where('firstname', $data['firstname'])->where('lastname', $data['lastname'])->first();
@@ -1092,7 +1097,12 @@ class BeneficiaryformController extends Controller
         }
 
         $activeNo = ($request->MobileActive != null) ? $request->MobileActive : '';
-
+        $phoneexists = Communication::where('phone',$activeNo)->count();
+        if($phoneexists){
+            activity()->log('Active Year is Null:' . $request->firstname . " " . $request->middlename);
+            toast('Phone Number Already Exist !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back()->withInput();
+        }
         $data = $request->all();
 
         $benObj = Beneficiaryform::where('MobileActive', $data['MobileActive'])->where('firstname', $data['firstname'])->where('lastname', $data['lastname'])->first();

@@ -1,6 +1,7 @@
 @extends('layouts.finance')
 @section('content')
-
+<?php
+?>
 
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
@@ -32,6 +33,7 @@
                                     <th>Expected Term3</th>
                                     <th>Allocated Fee</th>
                                     <th>Year</th>
+                                    <th></th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -44,6 +46,7 @@
                                     <th>Expected Term3</th>
                                     <th>Allocated Fee</th>
                                     <th>Year</th>
+                                    <th></th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
@@ -58,7 +61,14 @@
                                     <td>{{$item->expectedterm3}}</td>
                                     <td>{{$item->AllocatedYealyFee}}</td>
                                     <td>{{$item->year}}</td>
-                                    <td> <a href="{{route('finance.viewpendingfee',$item->id)}}" class="btn btn-dark"> View <i class="fas fa-eye ml-2 "></i></a></td>
+                                    <td>
+                                        <span class="<?php echo in_array($item->id, $feesection) ? "payment_indicator green" : "payment_indicator" ?>"></span>
+                                    </td>
+                                    <td><a href="{{route('finance.viewpendingfee',$item->id)}}" class="btn btn-dark"> 
+                                        View 
+                                        <!-- <i class="fas fa-eye ml-2 "></i> -->
+                                    </a></td>
+
                                 </tr>
                                 @endforeach
                                 @endif
@@ -86,6 +96,19 @@
 
 @endsection
 @section('style')
+<style>
+    span.payment_indicator {
+        width: 1rem;
+        height: 1rem;
+        display: block;
+        background: red;
+        border-radius: 50%;
+    }
+
+    span.payment_indicator.green {
+        background: green !important;
+    }
+</style>
 <!-- Custom styles for this page -->
 <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endsection
