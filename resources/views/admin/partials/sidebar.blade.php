@@ -122,11 +122,11 @@ $tag2 = $flag != 'true' ? '' : 'show';
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThres" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-cog "></i>
-            <span>Advance</span>
+            <span>Advanced</span>
         </a>
         <div id="collapseThres" class="collapse {{$tag}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Advance Operations:</h6>
+                <h6 class="collapse-header">Advanced Operations:</h6>
                 <a class="collapse-item" href="{{route('admin.yearlyfee')}}">Yearly Fee Statement</a>
                 <!-- <a class="collapse-item" href="{{route('admin.feepayment')}}">Fee Payment</a>
                 <a class="collapse-item" href="{{route('admin.bankstatement')}}">Bank Statement</a> -->

@@ -12,6 +12,7 @@ use Yajra\Datatables\Datatables;
 use App\Imports\FeePaymentImport;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Admin\FeePaymentEntry;
 use App\Models\Clerk\Beneficiaryform;
 
 class FinanceController extends Controller
@@ -31,7 +32,7 @@ class FinanceController extends Controller
         $approvedApp = Beneficiaryform::where('ClerkStatus', 'OPEN')->where('AdminStatus', 'APPROVED')->get()->count();
         $expiredApp = Beneficiaryform::where('ClerkStatus', 'CLOSED')->where('AdminStatus', 'APPROVED')->get()->count();
 
-        return view('finance.index', compact('totalApp','pendingApp','approvedApp','expiredApp'));
+        return view('finance.index', compact('totalApp', 'pendingApp', 'approvedApp', 'expiredApp'));
     }
 
     /**
@@ -69,16 +70,17 @@ class FinanceController extends Controller
     public function yearlyfees()
     {
         $activeYear = AcademicYear::where('status', true)->first();
-        $fee = Fees::select(['id','beneficiary_id', 'beneficiary','expectedterm1','expectedterm2','expectedterm3', 'AllocatedYealyFee', 'year'])->get();
+        // $fee = Fees::select(['id','beneficiary_id', 'beneficiary','expectedterm1','expectedterm2','expectedterm3', 'AllocatedYealyFee', 'year'])->get();
+        $fee = Fees::leftJoin('fee_sections', 'fees.id', '=', 'fee_sections.fees_id')->where('fees.year', $activeYear->year)->select(['fees.id', 'fees.beneficiary_id', 'fees.beneficiary', 'fees.expectedterm1', 'fees.expectedterm2', 'fees.expectedterm3', 'fees.AllocatedYealyFee', 'fees.year', 'fee_sections.term1', 'fee_sections.term2', 'fee_sections.term3'])->get();
         $feesection = Feesection::select('fees_id')->get()->pluck('fees_id')->toArray();
-        // dd($feesection);
-        return view('finance.yearlyfeelist', compact('activeYear','fee','feesection'));
+        // dd($fee);
+        return view('finance.yearlyfeelist', compact('activeYear', 'fee', 'feesection'));
     }
 
     public function yearlyfeesdata()
     {
-        $feeyear = Fees::select(['id','beneficiary_id', 'beneficiary','expectedterm1','expectedterm2','expectedterm3', 'AllocatedYealyFee', 'year']);
-        
+        $feeyear = Fees::select(['id', 'beneficiary_id', 'beneficiary', 'expectedterm1', 'expectedterm2', 'expectedterm3', 'AllocatedYealyFee', 'year']);
+
         return Datatables::of($feeyear)
             ->addColumn('action', function ($feeyear) {
                 return '
@@ -88,16 +90,105 @@ class FinanceController extends Controller
             })
             ->make(true);
     }
-    
+
 
 
     public function viewstatement($id)
     {
-        $feestruture = Fees::where('id',$id)->first();
-        $feepayment = FeeSection::where('fees_id',$id)->first();
-        return view('finance.viewstatement',compact('id','feestruture','feepayment'));
+        $feestruture = Fees::where('id', $id)->first();
+        $feepayment = FeeSection::where('fees_id', $id)->first();
+        return view('finance.viewstatement', compact('id', 'feestruture', 'feepayment'));
     }
 
+    public function updatefeeledger(Request $request)
+    {
+
+        // $feestruture = Fees::where('id', $request->id)->first();
+        // $admin = auth()->user();
+        // $terms = ['term1', 'term2', 'term3'];
+        // for ($i=0; $i < 3; $i++) { 
+        // dump($i);
+        // FeePaymentEntry::create(
+        //     [
+        //         'beneficiary_id' => $feestruture->beneficiary_id,
+        //         'year'    => $feestruture->year,
+        //         'term'    => 1,
+        //         'amount'    => $request->term1,
+        //         'creator'    => $admin->id,
+        //         'comment' => ""
+        //     ]
+        // );
+        // FeePaymentEntry::create(
+        //     [
+        //         'beneficiary_id' => $feestruture->beneficiary_id,
+        //         'year'    => $feestruture->year,
+        //         'term'    => 2,
+        //         'amount'    => $request->term2,
+        //         'creator'    => $admin->id,
+        //         'comment' => ""
+        //     ]
+        // );
+        // FeePaymentEntry::create(
+        //     [
+        //         'beneficiary_id' => $feestruture->beneficiary_id,
+        //         'year'    => $feestruture->year,
+        //         'term'    => 3,
+        //         'amount'    => $request->term3,
+        //         'creator'    => $admin->id,
+        //         'comment' => ""
+        //     ]
+        // );
+
+        // }
+        // dd($request->all());
+       
+
+        // $fee = Fees::where('beneficiary_id', $row[0])->where('year', $row[1])->first();
+
+        // if ($row[2] == 1) {
+        //     FeeSection::updateOrCreate(
+        //         [
+        //             'beneficiary_id' => $row[0],
+        //             'year' => $row[1],
+
+        //         ],
+        //         [
+        //             'fees_id' => $fee->id,
+        //             'user_id'    => $usr->id,
+        //             'yearlyfee' => $fee->yearlyfee,
+
+        //         ]
+        //     )->increment('term1', $row[3]);
+        // } elseif ($row[2] == 2) {
+        //     FeeSection::updateOrCreate(
+        //         [
+        //             'beneficiary_id' => $row[0],
+        //             'year' => $row[1]
+        //         ],
+        //         [
+        //             'fees_id' => $fee->id,
+        //             'user_id'    => $usr->id,
+        //             'yearlyfee' => $fee->yearlyfee,
+
+        //         ]
+        //     )->increment('term2', $row[3]);
+        // } elseif ($row[2] == 3) {
+        //     FeeSection::updateOrCreate(
+        //         [
+        //             'beneficiary_id' => $row[0],
+        //             'year' => $row[1]
+        //         ],
+        //         [
+        //             'fees_id' => $fee->id,
+        //             'user_id'    => $usr->id,
+        //             'yearlyfee' => $fee->yearlyfee,
+
+        //         ]
+        //     )->increment('term3', $row[3]);
+        // }
+
+
+    }
     public function feepaymentview()
     {
         return view('finance.feepayment.feepaymentform');
@@ -113,11 +204,11 @@ class FinanceController extends Controller
     public function bankstatementview()
     {
         $years = AcademicYear::all();
-        return view('finance.feepayment.index',compact('years'));
+        return view('finance.feepayment.index', compact('years'));
     }
     public function getfeeexcel(Request $request)
     {
-        return Excel::download(new FeePayment($request->year,$request->term), 'feepayment-'.date('h.i.s.a').'.xlsx');
+        return Excel::download(new FeePayment($request->year, $request->term), 'feepayment-' . date('h.i.s.a') . '.xlsx');
     }
 
     /**

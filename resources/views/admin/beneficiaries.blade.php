@@ -16,7 +16,8 @@
             <div class="d-flex m-2">
 
                 <h1 class="h3 mb-2 text-gray-800">Active Scholarships</h1>
-                <a href="{{route('admin.filteractivebeneficiaries')}}" class="btn btn-success ml-auto">Active Beneficiaries Report</a>
+                <a href="{{route('admin.feeactivebeneficiaries')}}" class="btn btn-warning ml-auto">Active Beneficiaries Fee Report</a>
+                <a href="{{route('admin.filteractivebeneficiaries')}}" class="btn btn-success ml-1">Active Beneficiaries Report</a>
             </div>
 
             <!-- DataTales Example -->

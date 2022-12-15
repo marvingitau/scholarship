@@ -103,6 +103,7 @@ Route::group(['middleware'=>'role:admin'],function () {
         Route::get('/report/excel',[ReportController::class,'excelreport'])->name('admin.getexcelreport');
         Route::get('/active/beneficiaries',[ReportController::class,'filteractivebene'])->name('admin.filteractivebeneficiaries');
         Route::get('/active/beneficiaries/get',[ReportController::class,'filteractiveget'])->name('admin.getactivebeneficiaries');
+        Route::get('/active/beneficiaries/fee',[ReportController::class,'getfeeactive'])->name('admin.feeactivebeneficiaries');
 
 
         //Additional Information
@@ -199,5 +200,6 @@ Route::group(['middleware'=>'role:finance','prefix'=>'finance'],function(){
         Route::get('get/bankstatement',[FinanceController::class,'getfeeexcel'])->name('finance.getbankstatement');
 
         Route::get('/viewfeestatement/{id}', [FinanceController::class,'viewstatement'])->name('finance.viewpendingfee');
+        Route::post('/updatefeeledger', [FinanceController::class,'updatefeeledger'])->name('finance.updatefeeledger');
     });
 });

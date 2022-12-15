@@ -12,7 +12,7 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
-          
+
 
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -26,12 +26,12 @@
             <div class="card">
 
                 <div class="row p-2">
-                <div class="col-6">
-                            <div class="form-group">
-                                <label for="">Allocated</label>
-                                <input type="text" class="form-control"  value="{{number_format($feestruture->AllocatedYealyFee, 2, '.', ',') }}" disabled>
-                            </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">Allocated</label>
+                            <input type="text" class="form-control" value="{{number_format($feestruture->AllocatedYealyFee, 2, '.', ',') }}" disabled>
                         </div>
+                    </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label for="">Year</label>
@@ -62,27 +62,38 @@
                     <div class="col-md-12">
                         <h4>Paid Fee</h4>
                     </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="">Term 1</label>
-                            <input type="text" name="term" class="form-control border-success" value="{{number_format(is_null($feepayment)?0:$feepayment->term1, 2, '.', ',')}} " disabled>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="">Term 2</label>
-                            <input type="text" name="term" class="form-control border-success" value="{{number_format(is_null($feepayment)?0:$feepayment->term2, 2, '.', ',')}} " disabled>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="">Term 3</label>
-                            <input type="text" name="term" class="form-control border-success" value="{{number_format(is_null($feepayment)?0:$feepayment->term3, 2, '.', ',')}} " disabled>
-                        </div>
-                    </div>
-                  
-                   
                 </div>
+            
+                <form action="{{route('finance.updatefeeledger')}}" method="POST" role="form" >
+                    @csrf
+                    <input type="hidden" name="id" value="{{$id}}">
+                    <div class="row p-2">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="">Term 1</label>
+                                <input type="text" name="term1" class="form-control border-success" value="{{number_format(is_null($feepayment)?0:$feepayment->term1, 2, '.', ',')}} " disabled>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="">Term 2</label>
+                                <input type="text" name="term2" class="form-control border-success" value="{{number_format(is_null($feepayment)?0:$feepayment->term2, 2, '.', ',')}} " disabled>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="">Term 3</label>
+                                <input type="text" name="term3" class="form-control border-success" value="{{number_format(is_null($feepayment)?0:$feepayment->term3, 2, '.', ',')}} " disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <!-- <button class="btn btn-info" type="submit">Upload</button> -->
+                        </div>
+
+
+                    </div>
+                </form>
+           
 
             </div>
 

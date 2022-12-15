@@ -30,16 +30,6 @@
     </div>
 
 
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{route('finance.pendingfee')}}">
-            <i class="fas fa-list"></i>
-            <span>Fee Statement</span></a>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-
     <li class="nav-item">
         <a class="nav-link" href="{{route('finance.feepayment')}}">
             <i class="fas fa-list"></i>
@@ -48,6 +38,16 @@
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
+        <!-- Nav Item - Charts -->
+        <li class="nav-item">
+        <a class="nav-link" href="{{route('finance.pendingfee')}}">
+            <i class="fas fa-list"></i>
+            <span>Fee Statement</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+    
     <li class="nav-item">
         <a class="nav-link" href="{{route('finance.bankstatement')}}">
             <i class="fas fa-list"></i>

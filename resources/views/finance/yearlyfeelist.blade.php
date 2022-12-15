@@ -33,6 +33,9 @@
                                     <th>Expected Term3</th>
                                     <th>Allocated Fee</th>
                                     <th>Year</th>
+                                    <th>Paid Term1</th>
+                                    <th>Paid Term2</th>
+                                    <th>Paid Term3</th>
                                     <th></th>
                                     <th>Action</th>
                                 </tr>
@@ -46,6 +49,9 @@
                                     <th>Expected Term3</th>
                                     <th>Allocated Fee</th>
                                     <th>Year</th>
+                                    <th>Paid Term1</th>
+                                    <th>Paid Term2</th>
+                                    <th>Paid Term3</th>
                                     <th></th>
                                     <th>Action</th>
                                 </tr>
@@ -61,6 +67,10 @@
                                     <td>{{$item->expectedterm3}}</td>
                                     <td>{{$item->AllocatedYealyFee}}</td>
                                     <td>{{$item->year}}</td>
+                                    <td>{{$item->term1}}</td>
+                                    <td>{{$item->term2}}</td>
+                                    <td>{{$item->term3}}</td>
+
                                     <td>
                                         <span class="<?php echo in_array($item->id, $feesection) ? "payment_indicator green" : "payment_indicator" ?>"></span>
                                     </td>
