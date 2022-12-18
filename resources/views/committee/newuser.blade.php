@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.committee')
 @section('content')
 
 
@@ -7,7 +7,7 @@
     <!-- Main Content -->
     <div id="content">
         <!--  Topbar -->
-        @include('admin.partials.topnav')
+        @include('committee.partials.topnav')
         <!-- End of Topbar -->
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="card">
-                <form action="{{route('admin.postnewuser')}}" method="POST">
+                <form action="{{route('committee.postnewuser')}}" method="POST">
                     @csrf
 
                     <div class="row p-2">
@@ -51,8 +51,7 @@
                                 <select name="role" id="" class="form-control" required>
                                     <option value="clerk">Clerk</option>
                                     <option value="finance">Paymaster</option>
-                                    <option value="committee">Committee Member</option>
-                                    <option value="admin">Committee Admin</option>
+                                    <option value="committee">Committee committee</option>
                                 </select>
                             </div>
                         </div>
@@ -72,7 +71,7 @@
         </div>
         <!-- /.container-fluid -->
     </div>
-    @include('admin.partials.footer')
+    @include('committee.partials.footer')
 </div>
 
 @endsection

@@ -4,13 +4,17 @@ use App\Models\Admin\FeeSection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Finance\FinanceController;
 use App\Http\Controllers\Admin\FeeSectionController;
+use App\Http\Controllers\Committee\CReportController;
 use App\Http\Controllers\Clerk\AcademicInfoController;
 use App\Http\Controllers\Admin\StudyMaterialController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Clerk\ClerkDashboardController;
 use App\Http\Controllers\Clerk\BeneficiaryformController;
-use App\Http\Controllers\Finance\FinanceController;
+use App\Http\Controllers\Committee\CFeeSectionController;
+use App\Http\Controllers\Committee\CStudyMaterialController;
+use App\Http\Controllers\Committee\CommitteeDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,6 +106,7 @@ Route::group(['middleware'=>'role:admin'],function () {
         Route::get('/report/get',[ReportController::class,'viewreport'])->name('admin.postviewreport');
         Route::get('/report/excel',[ReportController::class,'excelreport'])->name('admin.getexcelreport');
         Route::get('/active/beneficiaries',[ReportController::class,'filteractivebene'])->name('admin.filteractivebeneficiaries');
+        Route::get('/archived/beneficiaries',[ReportController::class,'filterarchived'])->name('admin.filterarchived');
         Route::get('/active/beneficiaries/get',[ReportController::class,'filteractiveget'])->name('admin.getactivebeneficiaries');
         Route::get('/active/beneficiaries/fee',[ReportController::class,'getfeeactive'])->name('admin.feeactivebeneficiaries');
 
@@ -148,6 +153,124 @@ Route::group(['middleware'=>'role:admin'],function () {
         Route::get('/ongoing-beneficiary',[AdminDashboardController::class,'ongoingbeneficiary'])->name('admin.ongoingbeneficiary');
         Route::get('/beneficiary-fee/{id}',[AdminDashboardController::class,'ongoingfeeview'])->name('admin.ongoingfeeview');
         Route::post('/post/beneficiary-fee',[AdminDashboardController::class,'postongoingfeeview'])->name('admin.postongoingfeeview');
+
+
+
+    });
+}); 
+
+//Committee
+Route::group(['middleware'=>'role:committee'],function () {
+    Route::group(['namespace'=>'Committee','prefix'=>'committee'],function () {
+        Route::get('/', [CommitteeDashboardController::class,'index'])->name('committee.dashboard');
+        Route::get('/stats', [ClerkDashboardController::class,'stats'])->name('committee.stats');
+        Route::get('/application-list',[CommitteeDashboardController::class,'applicationlist'])->name('committee.applicationlist');
+        Route::get('/applicant/{id}',[CommitteeDashboardController::class,'applicant'])->name('committee.selectapplicant');
+        Route::post('/approve/applicant',[CommitteeDashboardController::class,'approve'])->name('committee.approveapplicant');
+        Route::post('/reject/applicant',[CommitteeDashboardController::class,'reject'])->name('committee.rejectapplicant');
+        //Beneficiaries
+        Route::get('/approved/applicants',[CommitteeDashboardController::class,'approvedbeneficiaries'])->name('committee.approvedbeneficiaries');
+        Route::get('/archive/applicant/{id}',[CommitteeDashboardController::class,'archivebeneficiaries'])->name('committee.archivebeneficiary');
+        Route::get('/unarchive/applicant/{id}',[CommitteeDashboardController::class,'unarchivebeneficiaries'])->name('committee.unarchivebeneficiary');
+        Route::get('/archived/applicants',[CommitteeDashboardController::class,'archivedbeneficiaries'])->name('committee.archivedbeneficiaries');
+        Route::get('/beneficiary/{id}',[CommitteeDashboardController::class,'selectbeneficiary'])->name('committee.selectbeneficiary');
+        Route::get('/rejected/applicants',[CommitteeDashboardController::class,'rejectedapplicants'])->name('committee.rejectedapplicants');
+        Route::get('/unrejected/applicant/{id}',[CommitteeDashboardController::class,'unrejectedapplicants'])->name('committee.unrejectedapplicants');
+        //Beneficiaries Actions
+        Route::get('/beneficiary/disciplinary/{id}',[CommitteeDashboardController::class,'beneficiarydisciplinary'])->name('committee.beneficiarydisciplinary');
+        Route::get('/beneficiary/fee/{id}',[CommitteeDashboardController::class,'beneficiaryfee'])->name('committee.beneficiaryfee');
+        Route::get('/beneficiary/mentorship/{id}',[CommitteeDashboardController::class,'beneficiarymentorship'])->name('committee.beneficiarymentorship');
+        
+        Route::get('/new/disciplinary/{id}',[CommitteeDashboardController::class,'newdisciplinary'])->name('committee.newdisciplinary');
+        Route::post('/new/disciplinary',[CommitteeDashboardController::class,'postnewdisciplinary'])->name('committee.postnewdisciplinary');
+        Route::get('/view/disciplinary/{id}',[CommitteeDashboardController::class,'viewdisciplinary'])->name('committee.viewdisciplinary');
+
+        Route::get('/new/mentor/{id}',[CommitteeDashboardController::class,'newmentor'])->name('committee.newmentor');
+        Route::post('/new/mentor',[CommitteeDashboardController::class,'postnewmentor'])->name('committee.postnewmentor');
+        Route::get('/view/mentor/{id}',[CommitteeDashboardController::class,'viewmentor'])->name('committee.viewmentor');
+
+        Route::get('/new/fee/{id}',[CommitteeDashboardController::class,'newfee'])->name('committee.newfee');
+        Route::post('/new/fee',[CommitteeDashboardController::class,'postnewfee'])->name('committee.postnewfee');
+        Route::get('/view/fee/{id}',[CommitteeDashboardController::class,'viewfee'])->name('committee.viewfee');
+
+        Route::get('/user/list',[CommitteeDashboardController::class,'userlist'])->name('committee.userlist');
+        Route::get('/new/user',[CommitteeDashboardController::class,'newuser'])->name('committee.newuser');
+        Route::post('/new/user',[CommitteeDashboardController::class,'createnewuser'])->name('committee.postnewuser');
+
+        //Fees
+        Route::get('/academicyears',[CommitteeDashboardController::class,'academicyears'])->name('committee.academicyears');
+        Route::get('/academicyearform',[CommitteeDashboardController::class,'academicyearview'])->name('committee.academicyearform');
+        Route::post('/academicyear',[CommitteeDashboardController::class,'academicyear'])->name('committee.academicyear');
+        Route::get('/academicyearsdata',[CommitteeDashboardController::class,'academicyeardata'])->name('committee.academicyearsdata');
+
+        Route::get('/yearlyfee',[CommitteeDashboardController::class,'yearlyfees'])->name('committee.yearlyfee');
+        Route::get('/yearlyfeedata',[CommitteeDashboardController::class,'yearlyfeesdata'])->name('committee.yearlyfeedata');
+        Route::get('/create/yearlyfee',[CommitteeDashboardController::class,'createyearlyfees'])->name('committee.createyearlyfee');
+        Route::post('/post/yearlyfee',[CommitteeDashboardController::class,'postyearlyfees'])->name('committee.postyearlyfee');
+        Route::get('/view/yearlyfee/{id}',[CommitteeDashboardController::class,'viewyearlyfees'])->name('committee.viewyearlyfee');
+        Route::get('/delete/yearlyfee/{id}',[CommitteeDashboardController::class,'deleteyearlyfees'])->name('committee.deleteyearlyfee');
+        Route::get('/download/yearlyfee',[CommitteeDashboardController::class,'downloadyearlyfees'])->name('committee.downloadyearlyfee');
+        Route::get('/import/yearlyfee',[CommitteeDashboardController::class,'importyearlyfees'])->name('committee.importyearlyfee');
+        Route::post('/import/yearlyfee',[CommitteeDashboardController::class,'fileImport'])->name('committee.saveyearlyfee');
+
+        Route::get('/schoolreport/{id}',[CommitteeDashboardController::class,'schoolreport'])->name('committee.schoolreport');
+        Route::get('/newschoolreport/{id}',[CommitteeDashboardController::class,'newschoolreport'])->name('committee.newschoolreport');
+        Route::post('/postschoolreport',[CommitteeDashboardController::class,'postschoolreport'])->name('committee.postschoolreport');
+        Route::get('/viewschoolreport/{id}',[CommitteeDashboardController::class,'viewschoolreport'])->name('committee.viewschoolreport');
+        Route::get('/dowloadschoolslip/{id}',[CommitteeDashboardController::class,'viewschoolslip'])->name('committee.viewschoolslip');
+
+        // Reports
+        Route::get('/report',[CReportController::class,'index'])->name('committee.selectreport');
+        Route::get('/report/get',[CReportController::class,'viewreport'])->name('committee.postviewreport');
+        Route::get('/report/excel',[CReportController::class,'excelreport'])->name('committee.getexcelreport');
+        Route::get('/active/beneficiaries',[CReportController::class,'filteractivebene'])->name('committee.filteractivebeneficiaries');
+        Route::get('/archived/beneficiaries',[CReportController::class,'filterarchived'])->name('committee.filterarchived');
+        Route::get('/active/beneficiaries/get',[CReportController::class,'filteractiveget'])->name('committee.getactivebeneficiaries');
+        Route::get('/active/beneficiaries/fee',[CReportController::class,'getfeeactive'])->name('committee.feeactivebeneficiaries');
+
+
+        //Additional Information
+        Route::get('/additionalinfo/{id}',[CommitteeDashboardController::class,'additionalinfo'])->name('committee.additionalinfo');
+        Route::post('/updateadditionalinfo/{id}',[CommitteeDashboardController::class,'updateadditionalinfo'])->name('committee.updateadditionalinfo');
+        Route::get('/newschoolinfo/{id}',[CommitteeDashboardController::class,'newschoolinfo'])->name('committee.newschoolinfo');
+        Route::post('/postnewschoolinfo',[CommitteeDashboardController::class,'postnewschoolinfo'])->name('committee.postnewschoolinfo');
+        Route::get('/getschoolinfo/{id}',[CommitteeDashboardController::class,'getschoolinfo'])->name('committee.getschoolinfo');
+        Route::post('/updatenewschoolinfo',[CommitteeDashboardController::class,'updatenewschoolinfo'])->name('committee.updatenewschoolinfo');
+        Route::get('/deleteschoolinfo/{id}',[CommitteeDashboardController::class,'delschoolinfo'])->name('committee.deleteschoolinfo');
+
+        Route::get('/newtransfer/{id}',[CommitteeDashboardController::class,'newtransfer'])->name('committee.newtransfer');
+        Route::post('/postnewtransfer',[CommitteeDashboardController::class,'postnewtransfer'])->name('committee.postnewtransfer');
+        Route::get('/gettransfer/{id}',[CommitteeDashboardController::class,'gettransfer'])->name('committee.gettransfer');
+        Route::post('/updatenewtransfer',[CommitteeDashboardController::class,'updatenewtransfer'])->name('committee.updatenewtransfer');
+        Route::get('/deletetransfer/{id}',[CommitteeDashboardController::class,'deltransfer'])->name('committee.deletetransfer');
+
+
+        //Study Materials
+        Route::get('/studymaterials',[CStudyMaterialController::class,'index'])->name('committee.studymaterials');
+        Route::get('/create/studymaterial',[CStudyMaterialController::class,'create'])->name('committee.createstudymaterial');
+        Route::post('/upload/studymaterial',[CStudyMaterialController::class,'fileUpload'])->name('committee.uploadstudymaterial');
+        Route::get('view/studymaterial/{id}',[CStudyMaterialController::class,'download'])->name('committee.viewstudymaterial');
+        Route::get('delete/studymaterial/{id}',[CStudyMaterialController::class,'deltefile'])->name('committee.deletestudymaterial');
+
+        Route::get('/mailedstudymaterials',[CStudyMaterialController::class,'mailedmaterials'])->name('committee.mailedstudymaterials');
+        Route::get('/mailstudymaterials/{id}',[CStudyMaterialController::class,'mailmaterials'])->name('committee.mailmaterials');
+
+        //Fee Payment
+        Route::get('/bankstatement',[CFeeSectionController::class,'index'])->name('committee.bankstatement');
+        Route::get('get/bankstatement',[CFeeSectionController::class,'getfeeexcel'])->name('committee.getbankstatement');
+        Route::get('feepayment',[CFeeSectionController::class,'feepaymentview'])->name('committee.feepayment');
+        Route::post('import/feepayment',[CFeeSectionController::class,'importfeepayment'])->name('committee.importfeepayment');
+
+
+        //Communications
+        Route::get('/contacts',[CReportController::class,'contacts'])->name('committee.contacts');
+        Route::get('/excelcontacts',[CReportController::class,'contactxcel'])->name('committee.excelcontacts');
+
+
+        //Ongoing Beneficiaries
+        Route::get('/ongoing-beneficiary',[CommitteeDashboardController::class,'ongoingbeneficiary'])->name('committee.ongoingbeneficiary');
+        Route::get('/beneficiary-fee/{id}',[CommitteeDashboardController::class,'ongoingfeeview'])->name('committee.ongoingfeeview');
+        Route::post('/post/beneficiary-fee',[CommitteeDashboardController::class,'postongoingfeeview'])->name('committee.postongoingfeeview');
 
 
 

@@ -8,7 +8,7 @@ use Illuminate\Contracts\View\View;
 use App\Models\Clerk\Beneficiaryform;
 use Maatwebsite\Excel\Concerns\FromView;
 
-class BeneficiariesList implements FromView
+class ArchivedBeneficiariesList implements FromView
 {
 
     // protected $year;
@@ -27,25 +27,25 @@ class BeneficiariesList implements FromView
         // dd(isset($request->age));
         if (isset($this->gender) && isset($this->institution)) {
             $users = Beneficiaryform::query()
-                ->where('ClerkStatus', 'LIKE', "OPEN")
+                ->where('ClerkStatus', 'LIKE', "CLOSED")
                 ->where('gender', 'LIKE', "%{$this->gender}%")
                 ->orWhere('Type', 'LIKE', "%{$this->institution}%")
                 ->get();
         } elseif (!isset($this->gender) && isset($this->institution)) {
             $users = Beneficiaryform::query()
-                ->where('ClerkStatus', 'LIKE', "OPEN")
+                ->where('ClerkStatus', 'LIKE', "CLOSED")
                 ->where('Type', 'LIKE', "%{$this->institution}%")
                 ->get();
         } elseif (isset($this->gender) && !isset($this->institution)) {
             $users = Beneficiaryform::query()
-                ->where('ClerkStatus', 'LIKE', "OPEN")
+                ->where('ClerkStatus', 'LIKE', "CLOSED")
                 ->where('gender', 'LIKE', "%{$this->gender}%")
                 ->get();
         } else {
-            $users = Beneficiaryform::where('ClerkStatus', 'LIKE', "OPEN")->get();
+            $users = Beneficiaryform::where('ClerkStatus', 'LIKE', "CLOSED")->get();
         }
 
-        return view('exports.beneficiarieslist', [
+        return view('exports.archivedbeneficiarieslist', [
             'slip' => $users
         ]);
     }

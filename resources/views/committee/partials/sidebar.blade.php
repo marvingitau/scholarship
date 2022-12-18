@@ -1,6 +1,6 @@
 <?php
 $current = url()->current();
-$query = explode(env('ADMIN_URL_DELIMETER_VALUE'), $current);
+$query = explode(env('COMMITTEE_URL_DELIMETER_VALUE'), $current);
 $aux = isset($query[1]) ? $query[1] : "";
 $tag = "";
 $advanceList = ['yearlyfee', 'feepayment', 'bankstatement', 'academicyears', 'new/user', 'user/list'];
@@ -17,7 +17,7 @@ $tag2 = $flag != 'true' ? '' : 'show';
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('admin.dashboard')}}" style="background: #ffd5d5;">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('committee.dashboard')}}" style="background: #ffd5d5;">
         <div class="sidebar-brand-icon ">
             <!-- <i class="fas fa-laugh-wink"></i> -->
             <img class="img-profile rounded-circle" src="{{asset('images/logo.png')}}" style="width: 65%;">
@@ -31,7 +31,7 @@ $tag2 = $flag != 'true' ? '' : 'show';
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="{{route('admin.dashboard')}}">
+        <a class="nav-link" href="{{route('committee.dashboard')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -47,14 +47,14 @@ $tag2 = $flag != 'true' ? '' : 'show';
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="{{route('admin.applicationlist')}}">
+        <a class="nav-link" href="{{route('committee.applicationlist')}}">
             <i class="fas fa-list"></i>
             <span>Pending Applications</span></a>
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
     <li class="nav-item">
-        <a class="nav-link" href="{{route('admin.ongoingbeneficiary')}}">
+        <a class="nav-link" href="{{route('committee.ongoingbeneficiary')}}">
             <i class="fas fa-user-tie"></i>
             <span>Ongoing Beneficiaries</span></a>
     </li>
@@ -64,14 +64,14 @@ $tag2 = $flag != 'true' ? '' : 'show';
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fab fa-fw fa-wpforms"></i>
-            <span>Scholarships</span>
+            <span>Scholarships </span>
         </a>
         <div id="collapseTwo" class="collapse {{$tag2}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Scholarships Status:</h6>
-                <a class="collapse-item" href="{{route('admin.approvedbeneficiaries')}}">Approved Scholarships</a>
-                <a class="collapse-item" href="{{route('admin.archivedbeneficiaries')}}">Archived Scholarships</a>
-                <a class="collapse-item" href="{{route('admin.rejectedapplicants')}}">Rejected Scholarships</a>
+                <a class="collapse-item" href="{{route('committee.approvedbeneficiaries')}}">Active Scholarships</a>
+                <a class="collapse-item" href="{{route('committee.archivedbeneficiaries')}}">Archived Scholarships</a>
+                <a class="collapse-item" href="{{route('committee.rejectedapplicants')}}">Rejected Scholarships</a>
 
             </div>
         </div>
@@ -87,10 +87,10 @@ $tag2 = $flag != 'true' ? '' : 'show';
         <div id="collapseSMS" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Messaging actions:</h6>
-                <a class="collapse-item" href="{{route('admin.academicyears')}}">Text Alert</a>
-                <a class="collapse-item" href="{{route('admin.yearlyfee')}}">Yearly Fee</a>
-                <a class="collapse-item" href="{{route('admin.newuser')}}">Create User</a>
-                <a class="collapse-item" href="{{route('admin.userlist')}}">User List</a>
+                <a class="collapse-item" href="{{route('committee.academicyears')}}">Text Alert</a>
+                <a class="collapse-item" href="{{route('committee.yearlyfee')}}">Yearly Fee</a>
+                <a class="collapse-item" href="{{route('committee.newuser')}}">Create User</a>
+                <a class="collapse-item" href="{{route('committee.userlist')}}">User List</a>
 
             </div>
         </div>
@@ -106,8 +106,8 @@ $tag2 = $flag != 'true' ? '' : 'show';
         <div id="collapseStudymaterial" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Beneficiaries materials:</h6>
-                <a class="collapse-item" href="{{route('admin.studymaterials')}}">Academic Materials</a>
-                <a class="collapse-item" href="{{route('admin.mailedstudymaterials')}}">Mailed Materials</a>
+                <a class="collapse-item" href="{{route('committee.studymaterials')}}">Academic Materials</a>
+                <a class="collapse-item" href="{{route('committee.mailedstudymaterials')}}">Mailed Materials</a>
 
 
             </div>
@@ -118,7 +118,7 @@ $tag2 = $flag != 'true' ? '' : 'show';
 
 
     <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
+    <!-- <hr class="sidebar-divider d-none d-md-block">
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThres" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-cog "></i>
@@ -127,16 +127,16 @@ $tag2 = $flag != 'true' ? '' : 'show';
         <div id="collapseThres" class="collapse {{$tag}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Advanced Operations:</h6>
-                <a class="collapse-item" href="{{route('admin.yearlyfee')}}">Yearly Fee Statement</a>
-                <!-- <a class="collapse-item" href="{{route('admin.feepayment')}}">Fee Payment</a>
-                <a class="collapse-item" href="{{route('admin.bankstatement')}}">Bank Statement</a> -->
-                <a class="collapse-item" href="{{route('admin.academicyears')}}">Academic Years</a>
-                <a class="collapse-item" href="{{route('admin.newuser')}}">Create User</a>
-                <a class="collapse-item" href="{{route('admin.userlist')}}">User List</a>
+                <a class="collapse-item" href="{{route('committee.yearlyfee')}}">Yearly Fee Statement</a>
+                <a class="collapse-item" href="{{route('committee.feepayment')}}">Fee Payment</a>
+                <a class="collapse-item" href="{{route('committee.bankstatement')}}">Bank Statement</a>
+                <a class="collapse-item" href="{{route('committee.academicyears')}}">Academic Years</a>
+                <a class="collapse-item" href="{{route('committee.newuser')}}">Create User</a>
+                <a class="collapse-item" href="{{route('committee.userlist')}}">User List</a>
 
             </div>
         </div>
-    </li>
+    </li> -->
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
@@ -148,8 +148,8 @@ $tag2 = $flag != 'true' ? '' : 'show';
         <div id="collapseReport" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Beneficiaries Report:</h6>
-                <a class="collapse-item" href="{{route('admin.selectreport')}}">Academic Performance</a>
-                <a class="collapse-item" href="{{route('admin.contacts')}}">Messaging List</a>
+                <a class="collapse-item" href="{{route('committee.selectreport')}}">Academic Performance</a>
+                <a class="collapse-item" href="{{route('committee.contacts')}}">Messaging List</a>
 
 
             </div>

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.committee')
 @section('content')
 
 
@@ -7,7 +7,7 @@
     <!-- Main Content -->
     <div id="content">
         <!--  Topbar -->
-        @include('admin.partials.topnav')
+        @include('committee.partials.topnav')
         <!-- End of Topbar -->
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -16,8 +16,10 @@
             <div class="d-flex my-2">
 
                 <h1 class="h3 mb-2 text-gray-800">Archived Scholarships</h1>
-                <a href="{{route('admin.filterarchived')}}" class="btn btn-warning ml-auto">Archived Report</a>
+                <a href="{{route('committee.filterarchived')}}" class="btn btn-warning ml-auto">Archived Report</a>
             </div>
+            <!-- <h1 class="h3 mb-2 text-gray-800">Archived Scholarships</h1> -->
+
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -55,7 +57,7 @@
                                     <td>{{$item->age}}</td>
                                     <td>{{$item->SecondaryAdmitted}}</td>
                                     <td>{{$item->MobileActive}}</td>
-                                    <td><a class="btn btn-info" href="{{route('admin.selectbeneficiary',$item->id)}}">View <i class="fa fa-eye"></i></a> <a class="btn btn-danger" href="{{route('admin.unarchivebeneficiary',$item->id)}}" onclick="return confirm('Are you sure want to UnArchive?')">UnArchive <i class="fa fa-archive"></i></a></td>
+                                    <td><a class="btn btn-info" href="{{route('committee.selectbeneficiary',$item->id)}}">View <i class="fa fa-eye"></i></a> <a class="btn btn-danger" href="{{route('committee.unarchivebeneficiary',$item->id)}}" onclick="return confirm('Are you sure want to UnArchive?')">UnArchive <i class="fa fa-archive"></i></a></td>
                                 </tr>
                                 @endforeach
                                 @else

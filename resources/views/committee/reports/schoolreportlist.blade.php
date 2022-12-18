@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.committee')
 @section('content')
 
 
@@ -7,16 +7,24 @@
     <!-- Main Content -->
     <div id="content">
         <!--  Topbar -->
-        @include('admin.partials.topnav')
+        @include('committee.partials.topnav')
         <!-- End of Topbar -->
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <div class="d-flex my-2">
+            <div class="d-flex my-1">
 
-                <h1 class="h3 mb-2 text-gray-800">Archived Scholarships</h1>
-                <a href="{{route('admin.filterarchived')}}" class="btn btn-warning ml-auto">Archived Report</a>
+                <h1 class="h3 mb-2 text-gray-800">School Report List</h1>
+                <a href="" class="btn btn-success ml-auto" onclick="event.preventDefault();
+                                                     document.getElementById('getexcelreport-form').submit();"><i class="fas fa-file-excel mr-1"></i> Get Excel</a>
+                <form id="getexcelreport-form" action="{{ route('committee.getexcelreport') }}" method="GET" class="d-none">
+                        <!-- @csrf -->
+                      
+                        @foreach($query as $key=>$value)
+                            <input type="hidden" name="{{$key}}" value="{{$value}}">
+                        @endforeach
+                    </form>
             </div>
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -28,34 +36,41 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Gender</th>
-                                    <th>Age</th>
+                                    <th>Id</th>
                                     <th>School</th>
-                                    <th>Telephone</th>
-                                    <th>Action</th>
+                                    <th>Name</th>
+                                    <th>Year</th>
+                                    <th>Form/Class</th>
+                                    <th>Term</th>
+                                    <th>Mean Grade</th>
+                                    <!-- <th>Action</th> -->
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Gender</th>
-                                    <th>Age</th>
+                                    <th>Id</th>
                                     <th>School</th>
-                                    <th>Telephone</th>
-                                    <th>Action</th>
+                                    <th>Name</th>
+                                    <th>Year</th>
+                                    <th>Form/Class</th>
+                                    <th>Term</th>
+                                    <th>Mean Grade</th>
+                                    <!-- <th>Action</th> -->
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @if($data)
-                                @foreach ($data as $item)
+                                @if($res)
+                                @foreach ($res as $key=>$item)
                                 <tr>
-                                    <td>{{$item->firstname}} {{$item->lastname}}</td>
-                                    <td>{{$item->gender}}</td>
-                                    <td>{{$item->age}}</td>
+                                    <td>{{++$key}}</td>
                                     <td>{{$item->SecondaryAdmitted}}</td>
-                                    <td>{{$item->MobileActive}}</td>
-                                    <td><a class="btn btn-info" href="{{route('admin.selectbeneficiary',$item->id)}}">View <i class="fa fa-eye"></i></a> <a class="btn btn-danger" href="{{route('admin.unarchivebeneficiary',$item->id)}}" onclick="return confirm('Are you sure want to UnArchive?')">UnArchive <i class="fa fa-archive"></i></a></td>
+                                    <td>{{$item->firstname}} {{$item->lastname}}</td>
+                                    <td>{{$item->year}}</td>
+                                    <td>{{$item->form}}</td>
+                                    <td>{{$item->term}}</td>
+                                    <td>{{$item->meangrade}}</td>
+                                
+                                    <!-- <td><a class="btn btn-info" href="{{route('committee.viewschoolreport',$item->id)}}">View <i class="fa fa-eye"></i></a></td> -->
                                 </tr>
                                 @endforeach
                                 @else
@@ -63,9 +78,7 @@
                                     <td>..</td>
                                     <td>.</td>
                                     <td>..</td>
-                                    <td>.</td>
                                     <td>..</td>
-                                    <!-- <td>$320,800</td> -->
                                 </tr>
                                 @endif
 
@@ -78,6 +91,7 @@
 
         </div>
         <!-- /.container-fluid -->
+        
     </div>
 </div>
 

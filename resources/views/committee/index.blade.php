@@ -1,11 +1,11 @@
-@extends('layouts.clerk')
+@extends('layouts.committee')
 @section('content')
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
     <!-- Main Content -->
     <div id="content">
         <!--  Topbar -->
-        @include('clerk.partials.topnav')
+        @include('committee.partials.topnav')
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
@@ -43,7 +43,7 @@
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-success shadow h-100 py-2">
                         <div class="card-body">
-                        <a href="{{route('clerk.applicationlist')}}" class="a-unstyle">
+                            <a href="{{route('committee.applicationlist')}}" class="a-unstyle">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
@@ -54,7 +54,8 @@
                                     <i class="fas fa-user-clock fa-2x text-gray-300"></i>
                                 </div>
                             </div>
-                        </a>
+                            </a>
+                         
                         </div>
                     </div>
                 </div>
@@ -65,6 +66,7 @@
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-warning shadow h-100 py-2">
                         <div class="card-body">
+                        <a href="{{route('committee.approvedbeneficiaries')}}" class="a-unstyle">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
@@ -75,6 +77,7 @@
                                     <i class="fas fa-user-check fa-2x text-gray-300"></i>
                                 </div>
                             </div>
+                        </a>
                         </div>
                     </div>
                 </div>
@@ -83,6 +86,7 @@
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-info shadow h-100 py-2">
                         <div class="card-body">
+                        <a href="{{route('committee.archivedbeneficiaries')}}" class="a-unstyle">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Archived Scholarship
@@ -98,6 +102,7 @@
                                     <i class="fas fa-user-lock fa-2x text-gray-300"></i>
                                 </div>
                             </div>
+                        </a>
                         </div>
                     </div>
                 </div>
@@ -111,7 +116,7 @@
                     <div class="card shadow mb-4">
                         <!-- Card Header - Dropdown -->
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">Application Histroy</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Application History</h6>
                             <div class="dropdown no-arrow">
                                 <!-- <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -141,7 +146,7 @@
                     <div class="card shadow mb-4">
                         <!-- Card Header - Dropdown -->
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">Beneficiaries Gender</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Scholarship Gender</h6>
                             <div class="dropdown no-arrow">
                                 <!-- <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -180,7 +185,7 @@
 
         </div>
     </div>
-    @include('clerk.partials.footer')
+    @include('committee.partials.footer')
 </div>
 @endsection
 @section('script')
@@ -191,7 +196,7 @@
         var id = document.location.pathname
         console.log(id);
         $.ajax({
-            url: '/clerk/stats',
+            url: '/committee/stats',
             type: "GET",
             dataType: 'json',
             cache: false,

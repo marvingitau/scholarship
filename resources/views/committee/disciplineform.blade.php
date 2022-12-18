@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.committee')
 @section('content')
 
 
@@ -7,13 +7,13 @@
     <!-- Main Content -->
     <div id="content">
         <!--  Topbar -->
-        @include('admin.partials.topnav')
+        @include('committee.partials.topnav')
         <!-- End of Topbar -->
         <!-- Begin Page Content -->
         <div class="container-fluid">
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">New User</h1>
+                <h1 class="h3 mb-0 text-gray-800">New Disciplinary Case</h1>
                 <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
             </div>
 
@@ -29,37 +29,25 @@
                 </div>
             </div>
             <div class="card">
-                <form action="{{route('admin.postnewuser')}}" method="POST">
+                <form action="{{route('committee.postnewdisciplinary')}}" method="POST">
                     @csrf
-
+                    <input type="hidden" name="id" value="{{$id}}">
                     <div class="row p-2">
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="form-group">
-                                <label for="">Name</label>
-                                <input type="text" name="name" class="form-control" placeholder="Name" required>
+                                <label for="">Subject</label>
+                                <input type="text" name="subject" class="form-control" placeholder="Case Title">
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="form-group">
-                                <label for="">Email</label>
-                                <input type="email" name="email" class="form-control" placeholder="Email" required>
+                                <label for="">Date</label>
+                                <input type="date" name="date" class="form-control">
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="form-group">
-                                <label for="">Role</label>
-                                <select name="role" id="" class="form-control" required>
-                                    <option value="clerk">Clerk</option>
-                                    <option value="finance">Paymaster</option>
-                                    <option value="committee">Committee Member</option>
-                                    <option value="admin">Committee Admin</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="">Password</label>
-                                <input type="text" name="password" class="form-control" placeholder="Password" required>
+                                <textarea name="recommendation" id="" cols="30" class="form-control" rows="6" placeholder="Recommendation"></textarea>
                             </div>
                         </div>
                         <div class="col-12">
@@ -72,7 +60,7 @@
         </div>
         <!-- /.container-fluid -->
     </div>
-    @include('admin.partials.footer')
+    @include('committee.partials.footer')
 </div>
 
 @endsection

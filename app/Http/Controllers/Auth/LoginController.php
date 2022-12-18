@@ -44,8 +44,8 @@ class LoginController extends Controller
         // $log['agent'] = $request->header('user-agent');
         // $log['user_id'] = auth()->check() ? auth()->user()->id : 1;
         activity()
-        // ->withProperties(['customProperty' => 'customValue'])
-        ->log('User Logged-in:'.$usr->id);
+            // ->withProperties(['customProperty' => 'customValue'])
+            ->log('User Logged-in:' . $usr->id);
 
         // if (is_null($usr->email_verified_at) && $usr->role == 'clerk') {
         //     Auth::logout();
@@ -57,6 +57,14 @@ class LoginController extends Controller
         // }
         $role = $usr->role;
         switch ($role) {
+            case 'committee':
+                $committee_session_id = Session::get('committee_session_id');
+                if (empty($committee_session_id)) {
+                    $committee_session_id = Str::random(40);
+                    Session::put('committee_session_id', $committee_session_id);
+                }
+                return '/committee';
+                break;
             case 'admin':
                 $admin_session_id = Session::get('admin_session_id');
                 if (empty($admin_session_id)) {
@@ -105,7 +113,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    
+
     /**
      * Log the user out of the application.
      *
@@ -123,8 +131,8 @@ class LoginController extends Controller
         // $log['agent'] = $request->header('user-agent');
         // $log['user_id'] = auth()->check() ? auth()->user()->id : 1;
         activity()
-        // ->withProperties(['customProperty' => 'customValue'])
-        ->log('User Logged-out:'.$usr->id);
+            // ->withProperties(['customProperty' => 'customValue'])
+            ->log('User Logged-out:' . $usr->id);
 
 
         Auth::logout();

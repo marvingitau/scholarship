@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.committee')
 @section('content')
 
 
@@ -7,17 +7,18 @@
     <!-- Main Content -->
     <div id="content">
         <!--  Topbar -->
-        @include('admin.partials.topnav')
+        @include('committee.partials.topnav')
         <!-- End of Topbar -->
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <div class="d-flex my-2">
-
-                <h1 class="h3 mb-2 text-gray-800">Archived Scholarships</h1>
-                <a href="{{route('admin.filterarchived')}}" class="btn btn-warning ml-auto">Archived Report</a>
+            <div class="d-flex my-1">
+                <h1 class="h3 mb-2 text-gray-800">Beneficiary Mentorship </h1>
+                <a href="{{route('committee.newmentor',$id)}}" class="btn btn-success ml-auto"><i class="fa fa-book mr-1"></i> Create New</a>
             </div>
+
+
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -29,20 +30,18 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Gender</th>
-                                    <th>Age</th>
-                                    <th>School</th>
-                                    <th>Telephone</th>
+                                    <th>Subject</th>
+                                    <th>Remark</th>
+
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Gender</th>
-                                    <th>Age</th>
-                                    <th>School</th>
-                                    <th>Telephone</th>
+                                    <th>Subject</th>
+                                    <th>Remark</th>
+
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
@@ -50,12 +49,10 @@
                                 @if($data)
                                 @foreach ($data as $item)
                                 <tr>
-                                    <td>{{$item->firstname}} {{$item->lastname}}</td>
-                                    <td>{{$item->gender}}</td>
-                                    <td>{{$item->age}}</td>
-                                    <td>{{$item->SecondaryAdmitted}}</td>
-                                    <td>{{$item->MobileActive}}</td>
-                                    <td><a class="btn btn-info" href="{{route('admin.selectbeneficiary',$item->id)}}">View <i class="fa fa-eye"></i></a> <a class="btn btn-danger" href="{{route('admin.unarchivebeneficiary',$item->id)}}" onclick="return confirm('Are you sure want to UnArchive?')">UnArchive <i class="fa fa-archive"></i></a></td>
+                                    <td>{{$item->name}}</td>
+                                    <td>{{$item->subject}}</td>
+                                    <td><?php echo substr($item->remark, 0, 50) ?></td>
+                                    <td><a class="btn btn-info" href="{{route('committee.viewmentor',$item->id)}}">View <i class="fa fa-eye"></i></a></td>
                                 </tr>
                                 @endforeach
                                 @else
@@ -64,8 +61,7 @@
                                     <td>.</td>
                                     <td>..</td>
                                     <td>.</td>
-                                    <td>..</td>
-                                    <!-- <td>$320,800</td> -->
+
                                 </tr>
                                 @endif
 
