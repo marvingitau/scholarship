@@ -14,7 +14,12 @@
         <div class="container-fluid">
 
             <!-- Page Heading -->
+            <div class="d-flex my-2">
             <h1 class="h3 mb-2 text-gray-800">Fee Statement</h1>
+
+                <a href="{{route('finance.exportfeehistory')}}" class="btn btn-info ml-auto">Get Fee History</a>
+            </div>
+
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">

@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <div class="col-md-12 ">
-                        <h4>Expected By School</h4>
+                        <h4>Expected By School <b>[ {{$feestruture->school}}]</b></h4>
                     </div>
                     <div class="col-4 ">
                         <div class="form-group ">

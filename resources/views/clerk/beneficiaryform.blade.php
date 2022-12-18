@@ -75,7 +75,7 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">First Name: *</label>
-                                                <input type="text" name="firstname" value="{{ old('firstname') }}" placeholder="First Name" />
+                                                <input type="text" name="firstname" value="{{ old('firstname') }}" placeholder="First Name" required/>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Middle Name: </label>
@@ -83,11 +83,11 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Last Name: *</label>
-                                                <input type="text" name="lastname" value="{{ old('lastname') }}" placeholder="Last Name" />
+                                                <input type="text" name="lastname" value="{{ old('lastname') }}" placeholder="Last Name" required/>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Gender: </label>
-                                                <select name="gender" value="">
+                                                <select name="gender" value="" required>
 
                                                     <option value="">Choose</option>
                                                     <option value="MALE" <?php echo old('gender') == "MALE" ? 'selected' : "" ?>>MALE</option>
@@ -99,7 +99,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Date of Birth: </label>
-                                                <input type="date" name="DOB" value="{{ old('DOB') }}" placeholder="Age" />
+                                                <input type="date" name="DOB" value="{{ old('DOB') }}" placeholder="Age"  required/>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Active Email:* </label>
@@ -123,7 +123,7 @@
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Secondary Admitted: </label>
-                                                <input type="text" name="SecondaryAdmitted" value="{{ old('SecondaryAdmitted') }}" placeholder="Secondary Admitted" />
+                                                <input type="text" name="SecondaryAdmitted" value="{{ old('SecondaryAdmitted') }}" placeholder="Secondary Admitted" required/>
                                             </div>
 
                                             <div class="col-md-3">
@@ -150,7 +150,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Expected Annual Fees: </label>
-                                                <input type="number" name="SchoolFees" value="{{ old('SchoolFees') }}" placeholder="School Fees" />
+                                                <input type="number" name="SchoolFees" value="{{ old('SchoolFees') }}" placeholder="School Fees" required/>
                                             </div>
                                             
                                             <div class="col-md-3">
@@ -196,17 +196,17 @@
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Pastor Name: </label>
-                                                <input type="text" name="pastorname" value="{{ old('pastorname') }}" placeholder="Pastor Name" />
+                                                <input type="text" name="pastorname" value="{{ old('pastorname') }}" placeholder="Pastor Name" required/>
                                             </div>
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Pastor/Church Mobile: </label>
-                                                <input type="text" name="pastortelephone" value="{{ old('pastortelephone') }}" placeholder="Pastor/Church Mobile" />
+                                                <input type="text" name="pastortelephone" value="{{ old('pastortelephone') }}" placeholder="Pastor/Church Mobile" required/>
                                             </div>
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Have another Sponsor: </label>
-                                                <select name="AnotherSponsorship">
+                                                <select name="AnotherSponsorship" required>
                                                     <option value="">Choose</option>
                                                     <option value="YES" <?php echo old('AnotherSponsorship') == "YES" ? 'selected' : "" ?>>YES</option>
                                                     <option value="NO" <?php echo old('AnotherSponsorship') == "NO" ? 'selected' : "" ?>>NO</option>

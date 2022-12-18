@@ -823,6 +823,11 @@ class CommitteeDashboardController extends Controller
     public function postnewschoolinfo(Request $request)
     {
         $schrec = SchoolInfo::create($request->all());
+        $current = is_null($request->current) ? 0 : 1;
+        if($current){
+            Beneficiaryform::where('id',$request->beneficiary_id)->update(['SecondaryAdmitted'=>$request->name]);
+        }
+
         activity()->log("School Info Creation for user: " . $request->beneficiary_id . " ,record:" . $schrec->id);
         alert('CREATED', 'School Information Creation was a Success', 'success')->autoClose(10000);
         return back();
@@ -843,6 +848,12 @@ class CommitteeDashboardController extends Controller
         $schrec->admissionno = $request->admissionno;
         $schrec->current = is_null($request->current) ? 0 : 1;
         $schrec->save();
+
+        $current = is_null($request->current) ? 0 : 1;
+     
+        if($current){
+            Beneficiaryform::where('id',$request->beneficiary_id)->update(['SecondaryAdmitted'=>$request->name]);
+        }
 
         activity()->log("School Info Update for user: " . $request->beneficiary_id . " ,record:" . $schrec->id);
         alert('UPDATED', 'School Information Update was a Success', 'success')->autoClose(10000);
@@ -920,7 +931,7 @@ class CommitteeDashboardController extends Controller
             return back()->withInput();
         }
 
-        $continuing = Fees::join('beneficiaryforms','fees.beneficiary_id','=','beneficiaryforms.id')->where('fees.year',$activeYear->year)->where('fees.AllocatedYealyFee',0)->get();
+        $continuing = Fees::join('beneficiaryforms','fees.beneficiary_id','=','beneficiaryforms.id')->where('fees.year',$activeYear->year)->where('fees.AllocatedYealyFee',0)->where('beneficiaryforms.AdminStatus','APPROVED')->get();
         return view('committee.continuingbeneficiaries',compact('continuing'));
 
     }

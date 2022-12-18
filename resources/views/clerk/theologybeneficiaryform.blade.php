@@ -93,7 +93,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Gender: </label>
-                                                <select name="gender" value="">
+                                                <select name="gender"  required>
 
                                                     <option value="">Choose</option>
                                                     <option value="MALE" <?php echo old('gender') == "MALE" ? 'selected' : "" ?>>MALE</option>
@@ -109,7 +109,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Active Phone Number: *</label>
-                                                <input type="text" name="MobileActive" class="@error('MobileActive') is-invalid @enderror" value="{{ old('MobileActive') }}" placeholder="Active Mobile" />
+                                                <input type="text" name="MobileActive" class="@error('MobileActive') is-invalid @enderror" value="{{ old('MobileActive') }}" placeholder="Active Mobile" required/>
                                                 @error('MobileActive')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                 @enderror
@@ -129,7 +129,7 @@
 
                                             <div class="col-md-6">
                                                 <label class="fieldlabels">Institute Admitted: </label>
-                                                <input type="text" name="SecondaryAdmitted" value="{{ old('SecondaryAdmitted') }}" placeholder="Institute Admitted" />
+                                                <input type="text" name="SecondaryAdmitted" value="{{ old('SecondaryAdmitted') }}" placeholder="Institute Admitted" required/>
                                             </div>
 
                                             <div class="col-md-3">
@@ -158,7 +158,7 @@
 
                                             <div class="col-md-12">
                                                 <label class="fieldlabels">Annual Fees: </label>
-                                                <input type="number" name="SchoolFees" value="{{ old('SchoolFees') }}" placeholder="Annual Fees" />
+                                                <input type="number" name="SchoolFees" value="{{ old('SchoolFees') }}" placeholder="Annual Fees" required/>
                                             </div>
 
                                             <div class="col-md-3">
@@ -187,12 +187,12 @@
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Pastor Name: </label>
-                                                <input type="text" name="pastorname" value="{{ old('pastorname') }}" placeholder="Pastor Name" />
+                                                <input type="text" name="pastorname" value="{{ old('pastorname') }}" placeholder="Pastor Name" required/>
                                             </div>
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Pastor/Church Mobile: </label>
-                                                <input type="text" name="pastortelephone" value="{{ old('pastortelephone') }}" placeholder="Pastor/Church Mobile" />
+                                                <input type="text" name="pastortelephone" value="{{ old('pastortelephone') }}" placeholder="Pastor/Church Mobile" required/>
                                             </div>
                                             <!-- <div class="col-3">
                                                 <label class="fieldlabels">Guardian Telephone: </label>
@@ -212,7 +212,7 @@
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Have another Sponsor: </label>
-                                                <select name="AnotherSponsorship">
+                                                <select name="AnotherSponsorship" required>
                                                     <option value="">Choose</option>
                                                     <option value="YES" <?php echo old('AnotherSponsorship') == "YES" ? 'selected' : "" ?>>YES</option>
                                                     <option value="NO" <?php echo old('AnotherSponsorship') == "NO" ? 'selected' : "" ?>>NO</option>

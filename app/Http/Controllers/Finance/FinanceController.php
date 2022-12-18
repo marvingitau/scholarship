@@ -9,6 +9,7 @@ use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use App\Models\Admin\FeeSection;
 use Yajra\Datatables\Datatables;
+use App\Exports\PaymasterFeeData;
 use App\Imports\FeePaymentImport;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
@@ -76,7 +77,11 @@ class FinanceController extends Controller
         // dd($fee);
         return view('finance.yearlyfeelist', compact('activeYear', 'fee', 'feesection'));
     }
-
+ 
+    public function yealyFeeReport()
+    {
+        return Excel::download(new PaymasterFeeData, 'feehistory-' . date('h.i.s.a') . '.xlsx');
+    }
     public function yearlyfeesdata()
     {
         $feeyear = Fees::select(['id', 'beneficiary_id', 'beneficiary', 'expectedterm1', 'expectedterm2', 'expectedterm3', 'AllocatedYealyFee', 'year']);

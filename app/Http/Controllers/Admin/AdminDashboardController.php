@@ -823,6 +823,11 @@ class AdminDashboardController extends Controller
     public function postnewschoolinfo(Request $request)
     {
         $schrec = SchoolInfo::create($request->all());
+        $current = is_null($request->current) ? 0 : 1;
+     
+        if($current){
+            Beneficiaryform::where('id',$request->beneficiary_id)->update(['SecondaryAdmitted'=>$request->name]);
+        }
         activity()->log("School Info Creation for user: " . $request->beneficiary_id . " ,record:" . $schrec->id);
         alert('CREATED', 'School Information Creation was a Success', 'success')->autoClose(10000);
         return back();
@@ -832,7 +837,7 @@ class AdminDashboardController extends Controller
     public function updatenewschoolinfo(Request $request)
     {
 
-        // dd($request->all());
+        // dd($request->all()); 
 
         $schrec = SchoolInfo::where('id', $request->id)->first();
         $schrec->name = $request->name;
@@ -843,6 +848,12 @@ class AdminDashboardController extends Controller
         $schrec->admissionno = $request->admissionno;
         $schrec->current = is_null($request->current) ? 0 : 1;
         $schrec->save();
+
+        $current = is_null($request->current) ? 0 : 1;
+     
+        if($current){
+            Beneficiaryform::where('id',$request->beneficiary_id)->update(['SecondaryAdmitted'=>$request->name]);
+        }
 
         activity()->log("School Info Update for user: " . $request->beneficiary_id . " ,record:" . $schrec->id);
         alert('UPDATED', 'School Information Update was a Success', 'success')->autoClose(10000);

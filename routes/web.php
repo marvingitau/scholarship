@@ -318,11 +318,15 @@ Route::group(['middleware'=>'role:finance','prefix'=>'finance'],function(){
         Route::get('/feestatement', [FinanceController::class,'yearlyfees'])->name('finance.pendingfee');
         Route::get('/feepayment',[FinanceController::class,'feepaymentview'])->name('finance.feepayment');
         Route::post('/import/feepayment',[FinanceController::class,'importfeepayment'])->name('finance.importfeepayment');
+        //Fee History
+        Route::get('/export/feehistory',[FinanceController::class,'yealyFeeReport'])->name('finance.exportfeehistory');
+
 
         Route::get('/bankstatement',[FinanceController::class,'bankstatementview'])->name('finance.bankstatement');
         Route::get('get/bankstatement',[FinanceController::class,'getfeeexcel'])->name('finance.getbankstatement');
 
         Route::get('/viewfeestatement/{id}', [FinanceController::class,'viewstatement'])->name('finance.viewpendingfee');
         Route::post('/updatefeeledger', [FinanceController::class,'updatefeeledger'])->name('finance.updatefeeledger');
+
     });
 });
