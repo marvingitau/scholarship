@@ -18,6 +18,7 @@ use App\Models\Admin\ActionReason;
 use App\Models\Clerk\AcademicInfo;
 use App\Models\Clerk\FamilyDetail;
 use Illuminate\Support\Facades\DB;
+use App\Exports\Ongoingbeneficiary;
 use App\Models\Admin\Communication;
 use App\Models\Clerk\StatementNeed;
 use App\Http\Controllers\Controller;
@@ -27,11 +28,11 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Admin\TransferHistory;
 use App\Models\Clerk\Beneficiaryform;
+use App\Models\Clerk\ExpectedTermFee;
 use App\Models\Clerk\EmergencyContact;
 use App\Models\Admin\DisplinarySection;
 use App\Models\Admin\MentorshipSection;
 use App\Models\Admin\SchoolReportHeader;
-use App\Models\Clerk\ExpectedTermFee;
 
 class AdminDashboardController extends Controller
 {
@@ -931,9 +932,15 @@ class AdminDashboardController extends Controller
             return back()->withInput();
         }
 
-        $continuing = Fees::join('beneficiaryforms','fees.beneficiary_id','=','beneficiaryforms.id')->where('fees.year',$activeYear->year)->where('fees.AllocatedYealyFee',0)->get();
+        $continuing = Fees::join('beneficiaryforms','fees.beneficiary_id','=','beneficiaryforms.id')->where('fees.year',$activeYear->year)->where('fees.AllocatedYealyFee',0)->where('beneficiaryforms.AdminStatus','APPROVED')->get();
+        
         return view('admin.continuingbeneficiaries',compact('continuing'));
 
+    }
+
+    public function ongoingbeneficiaryexcel()
+    {
+        return Excel::download(new Ongoingbeneficiary,'beneficiary-' . date('h.i.s.a') . '.xlsx');
     }
 
     public function ongoingfeeview($id)

@@ -2,7 +2,7 @@
     <thead>
     <tr>
         <th>BANK NAME</th>
-        <th>BRANCH </th>
+        <th>BRANCH</th>
         <th>BANK CODE</th>
         <th>A/C NO</th>
         <th>BENEFICIARY</th>

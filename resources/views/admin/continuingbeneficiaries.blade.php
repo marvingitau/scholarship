@@ -13,7 +13,10 @@
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">Ongoing Beneficiaries</h1>
+            <div class="d-flex my-2">
+                <h1 class="h3 mb-2 text-gray-800">Ongoing Beneficiaries</h1>
+                <a href="{{route('admin.excelongoingbeneficiary')}}" class="btn btn-info ml-auto">Ongoing Beneficiaries List</a>
+            </div>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">

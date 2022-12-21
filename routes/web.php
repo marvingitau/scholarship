@@ -153,6 +153,7 @@ Route::group(['middleware'=>'role:admin'],function () {
         Route::get('/ongoing-beneficiary',[AdminDashboardController::class,'ongoingbeneficiary'])->name('admin.ongoingbeneficiary');
         Route::get('/beneficiary-fee/{id}',[AdminDashboardController::class,'ongoingfeeview'])->name('admin.ongoingfeeview');
         Route::post('/post/beneficiary-fee',[AdminDashboardController::class,'postongoingfeeview'])->name('admin.postongoingfeeview');
+        Route::get('/ongoing-beneficiary-excel',[AdminDashboardController::class,'ongoingbeneficiaryexcel'])->name('admin.excelongoingbeneficiary');
 
 
 
@@ -271,7 +272,7 @@ Route::group(['middleware'=>'role:committee'],function () {
         Route::get('/ongoing-beneficiary',[CommitteeDashboardController::class,'ongoingbeneficiary'])->name('committee.ongoingbeneficiary');
         Route::get('/beneficiary-fee/{id}',[CommitteeDashboardController::class,'ongoingfeeview'])->name('committee.ongoingfeeview');
         Route::post('/post/beneficiary-fee',[CommitteeDashboardController::class,'postongoingfeeview'])->name('committee.postongoingfeeview');
-
+        Route::get('/ongoing-beneficiary-excel',[CommitteeDashboardController::class,'ongoingbeneficiaryexcel'])->name('committee.excelongoingbeneficiary');
 
 
     });
@@ -305,6 +306,7 @@ Route::group(['middleware'=>'role:clerk','prefix'=>'clerk'],function(){
         Route::get('/ongoing-beneficiary',[BeneficiaryformController::class,'ongoingbeneficiary'])->name('clerk.ongoingbeneficiary');
         Route::get('/beneficiary-fee/{id}',[BeneficiaryformController::class,'ongoingfeeview'])->name('clerk.ongoingfeeview');
         Route::post('/post/beneficiary-fee',[BeneficiaryformController::class,'postongoingfeeview'])->name('clerk.postongoingfeeview');
+        Route::get('/ongoing-beneficiary-excel',[BeneficiaryformController::class,'ongoingbeneficiaryexcel'])->name('clerk.excelongoingbeneficiary');
 
 
     });

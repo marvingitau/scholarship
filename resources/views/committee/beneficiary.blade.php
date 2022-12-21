@@ -20,9 +20,9 @@
                 <li class="nav-item px-2">
                     <a class="nav-link border bg-danger text-white" href="{{route('committee.beneficiarymentorship',$personalSection['id'])}}">Mentorship Section</a>
                 </li>
-                <li class="nav-item px-2">
+                <!-- <li class="nav-item px-2">
                     <a class="nav-link border bg-danger text-white" href="{{route('committee.beneficiaryfee',$personalSection['id'])}}">Payment of Fee</a>
-                </li>
+                </li> -->
                 <li class="nav-item px-2">
                     <a class="nav-link border bg-danger text-white" href="{{route('committee.schoolreport',$personalSection['id'])}}">School Result</a>
                 </li>

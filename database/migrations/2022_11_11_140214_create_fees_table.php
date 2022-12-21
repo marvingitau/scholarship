@@ -25,7 +25,7 @@ class CreateFeesTable extends Migration
             $table->integer('expectedterm1')->nullable();//School expected value
             $table->integer('expectedterm2')->nullable();
             $table->integer('expectedterm3')->nullable();
-            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('status')->default(1);// indicates if this fee is the current one.
             $table->timestamps();
         });
     }

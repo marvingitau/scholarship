@@ -31,14 +31,6 @@
 
 
     <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{route('clerk.applicationlist')}}">
-            <i class="fas fa-list"></i>
-            <span>Pending Applications</span></a>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
 
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -48,14 +40,23 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Physical Form Operations:</h6>
-                <a class="collapse-item" href="{{route('clerk.newapplication')}}">Secondary Application</a>
-                <a class="collapse-item" href="{{route('clerk.tertiaryapplication')}}">Tertiary Application</a>
-                <a class="collapse-item" href="{{route('clerk.theologyapplication')}}">Theology Application</a>
-                <a class="collapse-item" href="{{route('clerk.specialapplication')}}">Special Application</a>
+                <a class="collapse-item" href="{{route('clerk.newapplication')}}">Secondary School</a>
+                <a class="collapse-item" href="{{route('clerk.tertiaryapplication')}}">Tertiary </a>
+                <a class="collapse-item" href="{{route('clerk.theologyapplication')}}">Theology </a>
+                <a class="collapse-item" href="{{route('clerk.specialapplication')}}">Special School</a>
                 <!-- <a class="collapse-item" href="cards.html">Pending Form Entries</a>
                 <a class="collapse-item" href="cards.html">Approved Form Entries</a> -->
             </div>
         </div>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('clerk.applicationlist')}}">
+            <i class="fas fa-list"></i>
+            <span>Pending Applications</span></a>
     </li>
 
 
