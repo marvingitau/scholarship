@@ -286,6 +286,9 @@ Route::group(['middleware'=>'role:clerk','prefix'=>'clerk'],function(){
         //Archive beneficiary
 
         Route::get('/stats', [ClerkDashboardController::class,'stats'])->name('clerk.stats');
+        Route::get('/beneficiaries', [ClerkDashboardController::class,'beneficiaries'])->name('clerk.beneficiaries');
+        Route::get('/beneficiary/{id}', [ClerkDashboardController::class,'beneficiary'])->name('clerk.selectbeneficiary');
+
         // Beneficiary form urls
         Route::get('/new-application',[BeneficiaryformController::class,'index'])->name('clerk.newapplication');
         Route::get('/application-list',[BeneficiaryformController::class,'applicationlist'])->name('clerk.applicationlist');
@@ -308,6 +311,20 @@ Route::group(['middleware'=>'role:clerk','prefix'=>'clerk'],function(){
         Route::post('/post/beneficiary-fee',[BeneficiaryformController::class,'postongoingfeeview'])->name('clerk.postongoingfeeview');
         Route::get('/ongoing-beneficiary-excel',[BeneficiaryformController::class,'ongoingbeneficiaryexcel'])->name('clerk.excelongoingbeneficiary');
 
+        //Additional Information
+        Route::get('/additionalinfo/{id}',[ClerkDashboardController::class,'additionalinfo'])->name('clerk.additionalinfo');
+        Route::post('/updateadditionalinfo/{id}',[ClerkDashboardController::class,'updateadditionalinfo'])->name('clerk.updateadditionalinfo');
+        Route::get('/newschoolinfo/{id}',[ClerkDashboardController::class,'newschoolinfo'])->name('clerk.newschoolinfo');
+        Route::post('/postnewschoolinfo',[ClerkDashboardController::class,'postnewschoolinfo'])->name('clerk.postnewschoolinfo');
+        Route::get('/getschoolinfo/{id}',[ClerkDashboardController::class,'getschoolinfo'])->name('clerk.getschoolinfo');
+        Route::post('/updatenewschoolinfo',[ClerkDashboardController::class,'updatenewschoolinfo'])->name('clerk.updatenewschoolinfo');
+        Route::get('/deleteschoolinfo/{id}',[ClerkDashboardController::class,'delschoolinfo'])->name('clerk.deleteschoolinfo');
+
+        Route::get('/newtransfer/{id}',[ClerkDashboardController::class,'newtransfer'])->name('clerk.newtransfer');
+        Route::post('/postnewtransfer',[ClerkDashboardController::class,'postnewtransfer'])->name('clerk.postnewtransfer');
+        Route::get('/gettransfer/{id}',[ClerkDashboardController::class,'gettransfer'])->name('clerk.gettransfer');
+        Route::post('/updatenewtransfer',[ClerkDashboardController::class,'updatenewtransfer'])->name('clerk.updatenewtransfer');
+        Route::get('/deletetransfer/{id}',[ClerkDashboardController::class,'deltransfer'])->name('clerk.deletetransfer');
 
     });
 });

@@ -51,7 +51,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{route('finance.bankstatement')}}">
             <i class="fas fa-list"></i>
-            <span> Bank Statement</span></a>
+            <span> Payment Voucher</span></a>
     </li>
 
 

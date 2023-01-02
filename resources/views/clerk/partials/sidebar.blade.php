@@ -70,6 +70,15 @@
             <span>Ongoing beneficiaries</span></a>
     </li>
 
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Nav Item - Charts -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('clerk.beneficiaries')}}">
+            <i class="fas fa-bezier-curve"></i>
+            <span>Beneficiaries</span></a>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
