@@ -55,7 +55,7 @@
                                             <h2 class="fs-title">Personal Information:</h2>
                                         </div>
                                         <div class="col-5">
-                                            <h2 class="steps">Step 1 - 7</h2>
+                                            <h2 class="steps">Step 1 - 8</h2>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -193,7 +193,7 @@
                                             <h2 class="fs-title">Academic Information:</h2>
                                         </div>
                                         <div class="col-5">
-                                            <h2 class="steps">Step 2 - 7</h2>
+                                            <h2 class="steps">Step 2 - 8</h2>
                                         </div>
                                     </div>
 
@@ -240,7 +240,7 @@
                                             <h2 class="fs-title">Family Information:</h2>
                                         </div>
                                         <div class="col-5">
-                                            <h2 class="steps">Step 3 - 7</h2>
+                                            <h2 class="steps">Step 3 - 8</h2>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -318,7 +318,7 @@
                                             <h2 class="fs-title">Statement of Need Information:</h2>
                                         </div>
                                         <div class="col-5">
-                                            <h2 class="steps">Step 4 - 7</h2>
+                                            <h2 class="steps">Step 4 - 8</h2>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -344,7 +344,7 @@
                                             <h2 class="fs-title">Siblings Information:</h2>
                                         </div>
                                         <div class="col-5">
-                                            <h2 class="steps">Step 5 - 7</h2>
+                                            <h2 class="steps">Step 5 - 8</h2>
                                         </div>
                                     </div>
 
@@ -393,7 +393,7 @@
                                             <h2 class="fs-title">Emergency Contact Information:</h2>
                                         </div>
                                         <div class="col-5">
-                                            <h2 class="steps">Step 6 - 7</h2>
+                                            <h2 class="steps">Step 6 - 8</h2>
                                         </div>
                                     </div>
 
@@ -401,32 +401,32 @@
                                     <div class="row">
 
                                         <div class="col-3">
-                                            <label class="fieldlabels">Emergency Name: *</label>
-                                            <input type="text" name="EmergencyName" value="{{ $emergencySection['EmergencyName']}}" placeholder="Emergency Name" disabled />
+                                            <label class="fieldlabels">Name: *</label>
+                                            <input type="text" name="EmergencyName" value="{{ $emergencySection['EmergencyName']}}" placeholder="Name" disabled />
                                         </div>
                                         <div class="col-3">
-                                            <label class="fieldlabels">Emergency Relationship: *</label>
-                                            <input type="text" name="EmergencyRelationship" value="{{ $emergencySection['EmergencyRelationship']}}" placeholder="Emergency Relationship" disabled />
+                                            <label class="fieldlabels">Relationship: *</label>
+                                            <input type="text" name="EmergencyRelationship" value="{{ $emergencySection['EmergencyRelationship']}}" placeholder="Relationship" disabled />
                                         </div>
                                         <div class="col-6">
-                                            <label class="fieldlabels">Emergency Physical Address: *</label>
-                                            <input type="text" name="EmergencyPhysicalAddress" value="{{ $emergencySection['EmergencyPhysicalAddress']}}" placeholder="Emergency Physical Address" disabled />
+                                            <label class="fieldlabels">Physical Address: *</label>
+                                            <input type="text" name="EmergencyPhysicalAddress" value="{{ $emergencySection['EmergencyPhysicalAddress']}}" placeholder="Physical Address" disabled />
                                         </div>
                                         <div class="col-3">
-                                            <label class="fieldlabels">Emergency P.O.Box : *</label>
-                                            <input type="text" name="EmergencyPoBox" value="{{ $emergencySection['EmergencyPoBox']}}" placeholder="Emergency P.O.Box" disabled />
+                                            <label class="fieldlabels">P.O.Box : *</label>
+                                            <input type="text" name="EmergencyPoBox" value="{{ $emergencySection['EmergencyPoBox']}}" placeholder="P.O.Box" disabled />
                                         </div>
                                         <div class="col-3">
-                                            <label class="fieldlabels">Emergency Telephone: *</label>
-                                            <input type="text" name="EmergencyTelephone" value="{{ $emergencySection['EmergencyTelephone']}}" placeholder="Emergency Telephone" disabled />
+                                            <label class="fieldlabels">Telephone: *</label>
+                                            <input type="text" name="EmergencyTelephone" value="{{ $emergencySection['EmergencyTelephone']}}" placeholder="Telephone" disabled />
                                         </div>
                                         <div class="col-3">
-                                            <label class="fieldlabels">Emergency Mobile: *</label>
-                                            <input type="text" name="EmergencyMobile" value="{{ $emergencySection['EmergencyMobile']}}" placeholder="Emergency Mobile" disabled />
+                                            <label class="fieldlabels">Mobile: *</label>
+                                            <input type="text" name="EmergencyMobile" value="{{ $emergencySection['EmergencyMobile']}}" placeholder="Mobile" disabled />
                                         </div>
                                         <div class="col-3">
-                                            <label class="fieldlabels">Emergency Email: *</label>
-                                            <input type="text" name="EmergencyEmail" value="{{ $emergencySection['EmergencyEmail']}}" placeholder="Emergency Email" disabled />
+                                            <label class="fieldlabels">Email: *</label>
+                                            <input type="text" name="EmergencyEmail" value="{{ $emergencySection['EmergencyEmail']}}" placeholder="Email" disabled />
                                         </div>
 
 
@@ -445,6 +445,72 @@
                                 <input type="button" name="previous" class="previous action-button-previous" value="Previous" /> -->
                             </fieldset>
 
+                            <fieldset>
+                                <div class="form-card">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <h2 class="fs-title">Attachements:</h2>
+                                        </div>
+                                        <div class="col-5">
+                                            <h2 class="steps">Step 7 - 8</h2>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for=""> Fees Structures</label>
+                                            </div>
+                                            <ul>
+                                                @if($feestructure)
+                                                @foreach($feestructure as $fee)
+                                                <li>
+                                                    <a href="{{route('committee.downloadsupportingdoc',$fee->id)}}" target="_blank" rel="noopener noreferrer" style="color:unset;text-decoration:none">
+                                                        {{$fee->name}}
+                                                    </a>
+                                                </li>
+                                                @endforeach
+                                                @endif
+                                            </ul>
+
+                                        </div>
+                                        <div class="col-4">
+                                        <div class="form-group">
+                                                <label for=""> Application Soft-Copy</label>
+                                            </div>
+                                            <ul>
+                                                @if($softcopy)
+                                                @foreach($softcopy as $copy)
+                                                <li>
+                                                    <a href="{{route('committee.downloadsupportingdoc',$copy->id)}}" target="_blank" rel="noopener noreferrer" style="color:unset;text-decoration:none">
+                                                        {{$copy->name}}
+                                                    </a>
+                                                </li>
+                                                @endforeach
+                                                @endif
+                                            </ul>
+                                        </div>
+                                        <div class="col-4">
+                                        <div class="form-group">
+                                                <label for="">Passport</label>
+                                            </div>
+                                            <ul>
+                                                @if($passport)
+                                                @foreach($passport as $passport)
+                                                <li>
+                                                    <a href="{{route('committee.downloadsupportingdoc',$passport->id)}}" target="_blank" rel="noopener noreferrer" style="color:unset;text-decoration:none">
+                                                        {{$passport->name}}
+                                                    </a>
+                                                </li>
+                                                @endforeach
+                                                @endif
+                                            </ul>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </fieldset>
 
                             <fieldset>
                                 <div class="row">
@@ -452,7 +518,7 @@
                                         <h2 class="fs-title">Approval:</h2>
                                     </div>
                                     <div class="col-5">
-                                        <h2 class="steps">Step 7 - 7</h2>
+                                        <h2 class="steps">Step 8 - 8</h2>
                                     </div>
                                 </div>
                                 <div class="row">

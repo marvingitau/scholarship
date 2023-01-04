@@ -75,6 +75,23 @@
                                 <input type="number" name="AllocatedYealyFee" class="form-control" placeholder="Allocated YearlyFee" required>
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for=""> Fees Structures</label>
+                            </div>
+                            <ul>
+                                @if($feestructure)
+                                @foreach($feestructure as $fee)
+                                <li>
+                                    <a href="{{route('committee.downloadsupportingdoc',$fee->id)}}" target="_blank" rel="noopener noreferrer" style="color:unset;text-decoration:none">
+                                        {{$fee->name}}
+                                    </a>
+                                </li>
+                                @endforeach
+                                @endif
+                            </ul>
+
+                        </div>
 
                         <div class="col-md-12">
                             <button class="btn btn-info" type="submit">Submit</button>

@@ -424,32 +424,32 @@
                                     <div class="row">
 
                                         <div class="col-3">
-                                            <label class="fieldlabels">Emergency Name: *</label>
-                                            <input type="text" name="EmergencyName" value="{{ $emergencySection['EmergencyName']}}" placeholder="Emergency Name" disabled />
+                                            <label class="fieldlabels">Name: *</label>
+                                            <input type="text" name="EmergencyName" value="{{ $emergencySection['EmergencyName']}}" placeholder="Name" disabled />
                                         </div>
                                         <div class="col-3">
-                                            <label class="fieldlabels">Emergency Relationship: *</label>
-                                            <input type="text" name="EmergencyRelationship" value="{{ $emergencySection['EmergencyRelationship']}}" placeholder="Emergency Relationship" disabled />
+                                            <label class="fieldlabels">Relationship: *</label>
+                                            <input type="text" name="EmergencyRelationship" value="{{ $emergencySection['EmergencyRelationship']}}" placeholder="Relationship" disabled />
                                         </div>
                                         <div class="col-6">
-                                            <label class="fieldlabels">Emergency Physical Address: *</label>
-                                            <input type="text" name="EmergencyPhysicalAddress" value="{{ $emergencySection['EmergencyPhysicalAddress']}}" placeholder="Emergency Physical Address" disabled />
+                                            <label class="fieldlabels">Physical Address: *</label>
+                                            <input type="text" name="EmergencyPhysicalAddress" value="{{ $emergencySection['EmergencyPhysicalAddress']}}" placeholder="Physical Address" disabled />
                                         </div>
                                         <div class="col-3">
-                                            <label class="fieldlabels">Emergency P.O.Box : *</label>
-                                            <input type="text" name="EmergencyPoBox" value="{{ $emergencySection['EmergencyPoBox']}}" placeholder="Emergency P.O.Box" disabled />
+                                            <label class="fieldlabels">P.O.Box : *</label>
+                                            <input type="text" name="EmergencyPoBox" value="{{ $emergencySection['EmergencyPoBox']}}" placeholder="P.O.Box" disabled />
                                         </div>
                                         <div class="col-3">
-                                            <label class="fieldlabels">Emergency Telephone: *</label>
-                                            <input type="text" name="EmergencyTelephone" value="{{ $emergencySection['EmergencyTelephone']}}" placeholder="Emergency Telephone" disabled />
+                                            <label class="fieldlabels">Telephone: *</label>
+                                            <input type="text" name="EmergencyTelephone" value="{{ $emergencySection['EmergencyTelephone']}}" placeholder="Telephone" disabled />
                                         </div>
                                         <div class="col-3">
-                                            <label class="fieldlabels">Emergency Mobile: *</label>
-                                            <input type="text" name="EmergencyMobile" value="{{ $emergencySection['EmergencyMobile']}}" placeholder="Emergency Mobile" disabled />
+                                            <label class="fieldlabels">Mobile: *</label>
+                                            <input type="text" name="EmergencyMobile" value="{{ $emergencySection['EmergencyMobile']}}" placeholder="Mobile" disabled />
                                         </div>
                                         <div class="col-3">
-                                            <label class="fieldlabels">Emergency Email: *</label>
-                                            <input type="text" name="EmergencyEmail" value="{{ $emergencySection['EmergencyEmail']}}" placeholder="Emergency Email" disabled />
+                                            <label class="fieldlabels">Email: *</label>
+                                            <input type="text" name="EmergencyEmail" value="{{ $emergencySection['EmergencyEmail']}}" placeholder="Email" disabled />
                                         </div>
 
 

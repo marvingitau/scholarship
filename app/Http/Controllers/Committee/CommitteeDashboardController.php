@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 use App\Exports\Ongoingbeneficiary;
 use App\Models\Admin\Communication;
 use App\Models\Clerk\StatementNeed;
+use App\Models\Clerk\SupportingDoc;
 use App\Http\Controllers\Controller;
 use App\Models\Clerk\FamilyProperty;
 use Illuminate\Support\Facades\Auth;
@@ -112,13 +113,25 @@ class CommitteeDashboardController extends Controller
             $emergencySection = EmergencyContact::where('beneficiary_id', $id)->first()->toArray();
             $familyPropertySection = DB::table('family_properties')->where('beneficiary_id', $id)->get()->toArray();
             $expectedFee = ExpectedTermFee::where('beneficiary_id', $id)->first()->toArray();
-            // dd($personalSection['Type']);
+
+            $feestructure = SupportingDoc::all()->filter(function ($value) {
+                return $value->type == "FEES"; // assuming, that your timestamp gets converted to a Carbon object.
+            })->where('beneficiary_id',$id);
+
+            $passport = SupportingDoc::all()->filter(function ($value) {
+                return  $value->type == "PASSPORT"; 
+            })->where('beneficiary_id',$id);
+
+            $softcopy = SupportingDoc::all()->filter(function ($value) {
+                return  $value->type == "FORM";
+            })->where('beneficiary_id',$id);
+
             if ($personalSection['Type'] == 'THEOLOGY') {
-                return view('committee.theologyapplicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'expectedFee']));
+                return view('committee.theologyapplicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'expectedFee','feestructure','passport','softcopy']));
             } elseif ($personalSection['Type'] == 'SPECIAL') {
-                return view('committee.specialapplicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'expectedFee']));
+                return view('committee.specialapplicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'expectedFee','feestructure','passport','softcopy']));
             } else {
-                return view('committee.applicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'expectedFee']));
+                return view('committee.applicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'expectedFee','feestructure','passport','softcopy']));
             }
         } else {
             return back();
@@ -946,10 +959,23 @@ class CommitteeDashboardController extends Controller
     {
         $activeYear = AcademicYear::where('status', 1)->first();
         $beneficiary = Fees::where('beneficiary_id',$id)->where('year',$activeYear->year)->first();
-        return view('committee.continuingfees',compact('activeYear','beneficiary','id'));
+        
+       
+        $feestructure = SupportingDoc::all()->filter(function ($value) {
+            $today = Carbon::now();
+            return $value->created_at->year === $today->year && $value->type == "FEES"; // assuming, that your timestamp gets converted to a Carbon object.
+        })->where('beneficiary_id',$id);
+        // dd($feestructure);
+        return view('committee.continuingfees',compact('activeYear','beneficiary','id','feestructure'));
     }
 
-    
+    public function downloadfeestructure($id)
+    {
+        $path = SupportingDoc::where('id', $id)->first()->file_path;
+        // dd(storage_path('app/public/'.$path));
+        return response()->download(storage_path('app/public/' . $path));
+    }
+
     public function postongoingfeeview(Request $request)
     {
         $request->validate([

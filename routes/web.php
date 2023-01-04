@@ -156,6 +156,9 @@ Route::group(['middleware'=>'role:admin'],function () {
         Route::get('/ongoing-beneficiary-excel',[AdminDashboardController::class,'ongoingbeneficiaryexcel'])->name('admin.excelongoingbeneficiary');
 
 
+        //Download Supporting Docs - FeeStrures
+        Route::get('/beneficiary-doc/{id}',[AdminDashboardController::class,'downloadsupportingdoc'])->name('admin.downloadsupportingdoc');
+
 
     });
 }); 
@@ -274,6 +277,8 @@ Route::group(['middleware'=>'role:committee'],function () {
         Route::post('/post/beneficiary-fee',[CommitteeDashboardController::class,'postongoingfeeview'])->name('committee.postongoingfeeview');
         Route::get('/ongoing-beneficiary-excel',[CommitteeDashboardController::class,'ongoingbeneficiaryexcel'])->name('committee.excelongoingbeneficiary');
 
+        //Download Supporting Docs - FeeStrures
+        Route::get('/beneficiary-structure/{id}',[CommitteeDashboardController::class,'downloadfeestructure'])->name('committee.downloadsupportingdoc');
 
     });
 }); 

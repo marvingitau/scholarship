@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Session;
 use App\Exports\OngoingbeneficiaryClerk;
 use App\Http\Requests\StoreBeneficiaryformRequest;
 use App\Http\Requests\UpdateBeneficiaryformRequest;
+use App\Models\Clerk\SupportingDoc;
 
 // use GuzzleHttp\Psr7\Request;
 
@@ -79,14 +80,14 @@ class BeneficiaryformController extends Controller
         $expectedfee = ExpectedTermFee::where('beneficiary_id', $id)->first();
 
         if ($personalInfo->Type == "THEOLOGY") {
-            return view('clerk.edittheologybeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence','expectedfee'));
+            return view('clerk.edittheologybeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence', 'expectedfee'));
         } elseif ($personalInfo->Type == "TERTIARY") {
-            return view('clerk.edittertiarybeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence','expectedfee'));
+            return view('clerk.edittertiarybeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence', 'expectedfee'));
         } elseif ($personalInfo->Type == "SPECIAL") {
-            return view('clerk.editspecialbeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence','expectedfee'));
+            return view('clerk.editspecialbeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence', 'expectedfee'));
         } else {
 
-            return view('clerk.editbeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence','expectedfee'));
+            return view('clerk.editbeneficiaryform', compact('id', 'personalInfo', 'academicInfo', 'famDetails', 'siblingsDetails', 'stateOfNeed', 'emergence', 'expectedfee'));
         }
     }
 
@@ -200,24 +201,24 @@ class BeneficiaryformController extends Controller
             //     FamilyProperty::create(['beneficiary_id' => $benObj->id, 'Type1' => $value, 'Size1' => $data['Size1'][$key], 'Location1' => $data['Location1'][$key]]);
             // }
             ExpectedTermFee::updateOrCreate(
-                ['beneficiary_id' =>$benObj->id, 'year' => $activeYear->year],
+                ['beneficiary_id' => $benObj->id, 'year' => $activeYear->year],
                 [
                     'TermOneFee' => $request->TermOneFee,
                     'TermTwoFee' => $request->TermTwoFee,
                     'TermThreeFee' => $request->TermThreeFee,
-                    'beneficiary' =>$request->lastname." ".$request->firstname,
+                    'beneficiary' => $request->lastname . " " . $request->firstname,
                 ]
             );
 
             Fees::updateOrCreate(
-                ['beneficiary_id' =>$benObj->id, 'year' => $activeYear->year],
+                ['beneficiary_id' => $benObj->id, 'year' => $activeYear->year],
                 [
                     'expectedterm1' => $request->TermOneFee,
                     'expectedterm2' => $request->TermTwoFee,
                     'expectedterm3' => $request->TermThreeFee,
-                    'beneficiary' =>$request->lastname." ".$request->firstname,
-                    'yearlyfee'=>$benObj->SchoolFees,
-                    'school'=>$benObj->SecondaryAdmitted,
+                    'beneficiary' => $request->lastname . " " . $request->firstname,
+                    'yearlyfee' => $benObj->SchoolFees,
+                    'school' => $benObj->SecondaryAdmitted,
                 ]
             );
 
@@ -238,7 +239,7 @@ class BeneficiaryformController extends Controller
             toast('Active Year is Required !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
             return back()->withInput();
         }
-        
+
         //Check whether father mother or guardian emails are available
         if (is_null($request->FatherMobile) && is_null($request->MotherMobile) && is_null($request->GuardianMobile)) {
 
@@ -331,23 +332,23 @@ class BeneficiaryformController extends Controller
 
 
             ExpectedTermFee::updateOrCreate(
-                ['beneficiary_id' =>$benObj->id, 'year' => $activeYear->year],
+                ['beneficiary_id' => $benObj->id, 'year' => $activeYear->year],
                 [
                     'TermOneFee' => $request->TermOneFee,
                     'TermTwoFee' => $request->TermTwoFee,
                     'TermThreeFee' => $request->TermThreeFee,
-                    'beneficiary' =>$request->lastname." ".$request->firstname,
+                    'beneficiary' => $request->lastname . " " . $request->firstname,
                 ]
             );
             Fees::updateOrCreate(
-                ['beneficiary_id' =>$benObj->id, 'year' => $activeYear->year],
+                ['beneficiary_id' => $benObj->id, 'year' => $activeYear->year],
                 [
                     'expectedterm1' => $request->TermOneFee,
                     'expectedterm2' => $request->TermTwoFee,
                     'expectedterm3' => $request->TermThreeFee,
-                    'beneficiary' =>$request->lastname." ".$request->firstname,
-                    'yearlyfee'=>$benObj->SchoolFees,
-                    'school'=>$benObj->SecondaryAdmitted,
+                    'beneficiary' => $request->lastname . " " . $request->firstname,
+                    'yearlyfee' => $benObj->SchoolFees,
+                    'school' => $benObj->SecondaryAdmitted,
                 ]
             );
             activity()->log('Beneficiary record updated:' . $request->firstname . " " . $request->middlename);
@@ -480,25 +481,25 @@ class BeneficiaryformController extends Controller
             //     FamilyProperty::create(['beneficiary_id' => $benObj->id, 'Type1' => $value, 'Size1' => $data['Size1'][$key], 'Location1' => $data['Location1'][$key]]);
             // }
             ExpectedTermFee::updateOrCreate(
-                ['beneficiary_id' =>$benObj->id, 'year' => $activeYear->year],
+                ['beneficiary_id' => $benObj->id, 'year' => $activeYear->year],
                 [
                     'TermOneFee' => $request->TermOneFee,
                     'TermTwoFee' => $request->TermTwoFee,
                     'TermThreeFee' => $request->TermThreeFee,
-                    'beneficiary' =>$request->lastname." ".$request->firstname,
+                    'beneficiary' => $request->lastname . " " . $request->firstname,
                 ]
             );
             Fees::updateOrCreate(
-                ['beneficiary_id' =>$benObj->id, 'year' => $activeYear->year],
+                ['beneficiary_id' => $benObj->id, 'year' => $activeYear->year],
                 [
                     'expectedterm1' => $request->TermOneFee,
                     'expectedterm2' => $request->TermTwoFee,
                     'expectedterm3' => $request->TermThreeFee,
-                    'beneficiary' =>$request->lastname." ".$request->firstname,
-                    'yearlyfee'=>$benObj->SchoolFees,
-                    'school'=>$benObj->SecondaryAdmitted,
+                    'beneficiary' => $request->lastname . " " . $request->firstname,
+                    'yearlyfee' => $benObj->SchoolFees,
+                    'school' => $benObj->SecondaryAdmitted,
                 ]
-                );
+            );
 
             activity()->log('Beneficiary record updated:' . $request->firstname . " " . $request->middlename);
             alert('UPDATED', 'Beneficiary Updated was a Success', 'success')->autoClose(10000);
@@ -626,25 +627,25 @@ class BeneficiaryformController extends Controller
             //     FamilyProperty::create(['beneficiary_id' => $benObj->id, 'Type1' => $value, 'Size1' => $data['Size1'][$key], 'Location1' => $data['Location1'][$key]]);
             // }
             ExpectedTermFee::updateOrCreate(
-                ['beneficiary_id' =>$benObj->id, 'year' => $activeYear->year],
+                ['beneficiary_id' => $benObj->id, 'year' => $activeYear->year],
                 [
                     'TermOneFee' => $request->TermOneFee,
                     'TermTwoFee' => $request->TermTwoFee,
                     'TermThreeFee' => $request->TermThreeFee,
-                    'beneficiary' =>$request->lastname." ".$request->firstname,
+                    'beneficiary' => $request->lastname . " " . $request->firstname,
                 ]
             );
             Fees::updateOrCreate(
-                ['beneficiary_id' =>$benObj->id, 'year' => $activeYear->year],
+                ['beneficiary_id' => $benObj->id, 'year' => $activeYear->year],
                 [
                     'expectedterm1' => $request->TermOneFee,
                     'expectedterm2' => $request->TermTwoFee,
                     'expectedterm3' => $request->TermThreeFee,
-                    'beneficiary' =>$request->lastname." ".$request->firstname,
-                    'yearlyfee'=>$benObj->SchoolFees,
-                    'school'=>$benObj->SecondaryAdmitted,
+                    'beneficiary' => $request->lastname . " " . $request->firstname,
+                    'yearlyfee' => $benObj->SchoolFees,
+                    'school' => $benObj->SecondaryAdmitted,
                 ]
-                );
+            );
             activity()->log('Beneficiary record updated:' . $request->firstname . " " . $request->middlename);
             alert('UPDATED', 'Beneficiary Updated was a Success', 'success')->autoClose(10000);
             return back();
@@ -662,6 +663,13 @@ class BeneficiaryformController extends Controller
      */
     public function store(Request $request)
     {
+        // check whether the documents are of expected standard
+        $request->validate([
+            'applicationformsoftcopy' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
+            'schoolfeestructure' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
+            'applicantpassport' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
+        ]);
+
         //check existence of an active year
         $activeYear = AcademicYear::where('status', 1)->first();
         if (is_null($activeYear)) {
@@ -677,8 +685,8 @@ class BeneficiaryformController extends Controller
 
         $activeNo = ($request->FatherMobile != null) ? $request->FatherMobile : (($request->MotherMobile != null) ? $request->MotherMobile : ($request->GuardianMobile));
 
-        $phoneexists = Communication::where('phone',$activeNo)->count();
-        if($phoneexists){
+        $phoneexists = Communication::where('phone', $activeNo)->count();
+        if ($phoneexists) {
             activity()->log('Active Year is Null:' . $request->firstname . " " . $request->middlename);
             toast('Phone Number Already Exist !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
             return back()->withInput();
@@ -787,6 +795,54 @@ class BeneficiaryformController extends Controller
             //     FamilyProperty::create(['beneficiary_id' => $benObj->id, 'Type1' => $value, 'Size1' => $data['Size1'][$key], 'Location1' => $data['Location1'][$key]]);
             // }
 
+            if ($request->file()) {
+
+                if(!is_null($request->applicationformsoftcopy)){
+                    $fileName = time() . '_' . $request->applicationformsoftcopy->getClientOriginalName();
+                    $filePath = $request->file('applicationformsoftcopy')->storeAs('uploads', $fileName, 'public');
+                    SupportingDoc::updateOrCreate(
+                        ['beneficiary_id' => $benObj->id, 'type' => 'FORM'],
+                        [
+                            'name' =>  $request->applicationformsoftcopy->getClientOriginalName(),
+                            'name_unique' => time() . '_' . $request->applicationformsoftcopy->getClientOriginalName(),
+                            'file_path' => $filePath,
+                            
+                        ]
+                    );
+                }
+             
+                if(!is_null($request->applicantpassport)){
+                    $fileName2 = time() . '_' . $request->applicantpassport->getClientOriginalName();
+                    $filePath2 = $request->file('applicantpassport')->storeAs('uploads', $fileName2, 'public');
+                    SupportingDoc::updateOrCreate(
+                        ['beneficiary_id' => $benObj->id, 'type' => 'PASSPORT'],
+                        [
+                            'name' =>  $request->applicantpassport->getClientOriginalName(),
+                            'name_unique' => time() . '_' . $request->applicantpassport->getClientOriginalName(),
+                            'file_path' => $filePath2,
+                            
+                        ]
+                    );
+                }
+              
+                if(!is_null($request->schoolfeestructure)){
+                    $fileName3 = time() . '_' . $request->schoolfeestructure->getClientOriginalName();
+                    $filePath3 = $request->file('schoolfeestructure')->storeAs('uploads', $fileName3, 'public');
+                    SupportingDoc::updateOrCreate(
+                        ['beneficiary_id' => $benObj->id, 'type' => 'FEES'],
+                        [
+                            'name' =>  $request->schoolfeestructure->getClientOriginalName(),
+                            'name_unique' => time() . '_' . $request->schoolfeestructure->getClientOriginalName(),
+                            'file_path' => $filePath3,
+                            
+                        ]
+                    );
+                }
+                
+
+
+            }
+
             activity()->log('Beneficiary record updated:' . $request->firstname . " " . $request->middlename);
             alert('UPDATED', 'Beneficiary Updated was a Success', 'success')->autoClose(10000);
             return back();
@@ -799,8 +855,11 @@ class BeneficiaryformController extends Controller
                     // 'MobileActive' => ['required', 'unique:beneficiaryforms'],
                     'firstname' => ['required'],
                     'lastname' => ['required'],
-                    'phone' =>['unique:communications']
+                    'phone' => ['unique:communications'],
                     // 'EmailGuardian'=>['required', 'string', 'email', 'max:255','unique:beneficiaryforms']  //
+                    'applicationformsoftcopy' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
+                    'schoolfeestructure' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
+                    'applicantpassport' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
                 ]
             );
 
@@ -844,20 +903,67 @@ class BeneficiaryformController extends Controller
                         'TermOneFee' => $request->TermOneFee,
                         'TermTwoFee' => $request->TermTwoFee,
                         'TermThreeFee' => $request->TermThreeFee,
-                        'beneficiary' =>$request->lastname." ".$request->firstname,
+                        'beneficiary' => $request->lastname . " " . $request->firstname,
                     ]
                 );
                 Fees::updateOrCreate(
-                    ['beneficiary_id' =>$resp->id, 'year' => $activeYear->year],
+                    ['beneficiary_id' => $resp->id, 'year' => $activeYear->year],
                     [
                         'expectedterm1' => $request->TermOneFee,
                         'expectedterm2' => $request->TermTwoFee,
                         'expectedterm3' => $request->TermThreeFee,
-                        'beneficiary' =>$request->lastname." ".$request->firstname,
-                        'yearlyfee'=>$resp->SchoolFees,
-                        'school'=>$resp->SecondaryAdmitted,
+                        'beneficiary' => $request->lastname . " " . $request->firstname,
+                        'yearlyfee' => $resp->SchoolFees,
+                        'school' => $resp->SecondaryAdmitted,
                     ]
-                    );
+                );
+
+                if ($request->file()) {
+                    if(!is_null($request->applicationformsoftcopy)){
+                        $fileName = time() . '_' . $request->applicationformsoftcopy->getClientOriginalName();
+                        $filePath = $request->file('applicationformsoftcopy')->storeAs('uploads', $fileName, 'public');
+                        SupportingDoc::updateOrCreate(
+                            ['beneficiary_id' => $resp->id, 'type' => 'FORM'],
+                            [
+                                'name' =>  $request->applicationformsoftcopy->getClientOriginalName(),
+                                'name_unique' => time() . '_' . $request->applicationformsoftcopy->getClientOriginalName(),
+                                'file_path' => $filePath,
+                                
+                            ]
+                        );
+                    }
+                  
+                    if(!is_null($request->applicantpassport)){
+                        $fileName2 = time() . '_' . $request->applicantpassport->getClientOriginalName();
+                        $filePath2 = $request->file('applicantpassport')->storeAs('uploads', $fileName2, 'public');
+                        SupportingDoc::updateOrCreate(
+                            ['beneficiary_id' => $resp->id, 'type' => 'PASSPORT'],
+                            [
+                                'name' =>  $request->applicantpassport->getClientOriginalName(),
+                                'name_unique' => time() . '_' . $request->applicantpassport->getClientOriginalName(),
+                                'file_path' => $filePath2,
+                                
+                            ]
+                        );
+                    }
+                 
+                    if(!is_null($request->schoolfeestructure)){
+                        $fileName3 = time() . '_' . $request->schoolfeestructure->getClientOriginalName();
+                        $filePath3 = $request->file('schoolfeestructure')->storeAs('uploads', $fileName3, 'public');
+                        SupportingDoc::updateOrCreate(
+                            ['beneficiary_id' => $resp->id, 'type' => 'FEES'],
+                            [
+                                'name' =>  $request->schoolfeestructure->getClientOriginalName(),
+                                'name_unique' => time() . '_' . $request->schoolfeestructure->getClientOriginalName(),
+                                'file_path' => $filePath3,
+                                
+                            ]
+                        );
+    
+                    }
+                   
+
+                }
 
 
                 activity()->log('Beneficiary record uploaded:' . $request->firstname . " " . $request->middlename);
@@ -874,13 +980,19 @@ class BeneficiaryformController extends Controller
 
     public function storeSpecial(Request $request)
     {
-         //check existence of an active year
-         $activeYear = AcademicYear::where('status', 1)->first();
-         if (is_null($activeYear)) {
-             activity()->log('Active Year is Null:' . $request->firstname . " " . $request->middlename);
-             toast('Active Year is Required !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
-             return back()->withInput();
-         }
+            // check whether the documents are of expected standard
+            $request->validate([
+                'applicationformsoftcopy' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
+                'schoolfeestructure' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
+                'applicantpassport' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
+            ]);
+        //check existence of an active year
+        $activeYear = AcademicYear::where('status', 1)->first();
+        if (is_null($activeYear)) {
+            activity()->log('Active Year is Null:' . $request->firstname . " " . $request->middlename);
+            toast('Active Year is Required !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back()->withInput();
+        }
 
         //Check whether father mother or guardian emails are available
         if (is_null($request->FatherMobile) && is_null($request->MotherMobile) && is_null($request->GuardianMobile)) {
@@ -890,8 +1002,8 @@ class BeneficiaryformController extends Controller
         }
 
         $activeNo = ($request->FatherMobile != null) ? $request->FatherMobile : (($request->MotherMobile != null) ? $request->MotherMobile : ($request->GuardianMobile));
-        $phoneexists = Communication::where('phone',$activeNo)->count();
-        if($phoneexists){
+        $phoneexists = Communication::where('phone', $activeNo)->count();
+        if ($phoneexists) {
             activity()->log('Active Year is Null:' . $request->firstname . " " . $request->middlename);
             toast('Phone Number Already Exist !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
             return back()->withInput();
@@ -1011,6 +1123,9 @@ class BeneficiaryformController extends Controller
                     'firstname' => ['required'],
                     'lastname' => ['required'],
                     // 'EmailGuardian'=>['required', 'string', 'email', 'max:255','unique:beneficiaryforms']  //
+                    'applicationformsoftcopy' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
+                    'schoolfeestructure' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
+                    'applicantpassport' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
                 ]
             );
 
@@ -1047,26 +1162,74 @@ class BeneficiaryformController extends Controller
                 $name = $request->firstname ." ".$request->lastname;
                  Fees::updateOrCreate(['beneficiary_id' => $resp->id, 'year' => $academicYear->year], ['beneficiary' => $name, 'yearlyfee' => $request->SchoolFees, 'yearlyfeebal' => $request->SchoolFees, 'school' => $request->SecondaryAdmitted]);*/
 
-                 ExpectedTermFee::updateOrCreate(
+                ExpectedTermFee::updateOrCreate(
                     ['beneficiary_id' => $resp->id, 'year' => $activeYear->year],
                     [
                         'TermOneFee' => $request->TermOneFee,
                         'TermTwoFee' => $request->TermTwoFee,
                         'TermThreeFee' => $request->TermThreeFee,
-                        'beneficiary' =>$request->lastname." ".$request->firstname,
+                        'beneficiary' => $request->lastname . " " . $request->firstname,
                     ]
                 );
                 Fees::updateOrCreate(
-                    ['beneficiary_id' =>$resp->id, 'year' => $activeYear->year],
+                    ['beneficiary_id' => $resp->id, 'year' => $activeYear->year],
                     [
                         'expectedterm1' => $request->TermOneFee,
                         'expectedterm2' => $request->TermTwoFee,
                         'expectedterm3' => $request->TermThreeFee,
-                        'beneficiary' =>$request->lastname." ".$request->firstname,
-                        'yearlyfee'=>$resp->SchoolFees,
-                        'school'=>$resp->SecondaryAdmitted,
+                        'beneficiary' => $request->lastname . " " . $request->firstname,
+                        'yearlyfee' => $resp->SchoolFees,
+                        'school' => $resp->SecondaryAdmitted,
                     ]
-                    );
+                );
+
+                if ($request->file()) {
+                    if(!is_null($request->applicationformsoftcopy)){
+                        $fileName = time() . '_' . $request->applicationformsoftcopy->getClientOriginalName();
+                        $filePath = $request->file('applicationformsoftcopy')->storeAs('uploads', $fileName, 'public');
+                        SupportingDoc::updateOrCreate(
+                            ['beneficiary_id' => $resp->id, 'type' => 'FORM'],
+                            [
+                                'name' =>  $request->applicationformsoftcopy->getClientOriginalName(),
+                                'name_unique' => time() . '_' . $request->applicationformsoftcopy->getClientOriginalName(),
+                                'file_path' => $filePath,
+                                
+                            ]
+                        );
+                    }
+                  
+                    if(!is_null($request->applicantpassport)){
+                        $fileName2 = time() . '_' . $request->applicantpassport->getClientOriginalName();
+                        $filePath2 = $request->file('applicantpassport')->storeAs('uploads', $fileName2, 'public');
+                        SupportingDoc::updateOrCreate(
+                            ['beneficiary_id' => $resp->id, 'type' => 'PASSPORT'],
+                            [
+                                'name' =>  $request->applicantpassport->getClientOriginalName(),
+                                'name_unique' => time() . '_' . $request->applicantpassport->getClientOriginalName(),
+                                'file_path' => $filePath2,
+                                
+                            ]
+                        );
+                    }
+                 
+                    if(!is_null($request->schoolfeestructure)){
+                        $fileName3 = time() . '_' . $request->schoolfeestructure->getClientOriginalName();
+                        $filePath3 = $request->file('schoolfeestructure')->storeAs('uploads', $fileName3, 'public');
+                        SupportingDoc::updateOrCreate(
+                            ['beneficiary_id' => $resp->id, 'type' => 'FEES'],
+                            [
+                                'name' =>  $request->schoolfeestructure->getClientOriginalName(),
+                                'name_unique' => time() . '_' . $request->schoolfeestructure->getClientOriginalName(),
+                                'file_path' => $filePath3,
+                                
+                            ]
+                        );
+    
+                    }
+                   
+
+                }
+
                 activity()->log('Beneficiary record uploaded:' . $request->firstname . " " . $request->middlename);
                 alert('UPLOAD', 'Beneficiary Upload was a Success', 'success')->autoClose(10000);
                 return back();
@@ -1080,13 +1243,19 @@ class BeneficiaryformController extends Controller
 
     public function storeTheology(Request $request)
     {
-         //check existence of an active year
-         $activeYear = AcademicYear::where('status', 1)->first();
-         if (is_null($activeYear)) {
-             activity()->log('Active Year is Null:' . $request->firstname . " " . $request->middlename);
-             toast('Active Year is Required !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
-             return back()->withInput();
-         }
+            // check whether the documents are of expected standard
+            $request->validate([
+                'applicationformsoftcopy' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
+                'schoolfeestructure' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
+                'applicantpassport' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
+            ]);
+        //check existence of an active year
+        $activeYear = AcademicYear::where('status', 1)->first();
+        if (is_null($activeYear)) {
+            activity()->log('Active Year is Null:' . $request->firstname . " " . $request->middlename);
+            toast('Active Year is Required !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
+            return back()->withInput();
+        }
 
         //Check whether father mother or guardian emails are available
         if (is_null($request->MobileActive)) {
@@ -1100,8 +1269,8 @@ class BeneficiaryformController extends Controller
         }
 
         $activeNo = ($request->MobileActive != null) ? $request->MobileActive : '';
-        $phoneexists = Communication::where('phone',$activeNo)->count();
-        if($phoneexists){
+        $phoneexists = Communication::where('phone', $activeNo)->count();
+        if ($phoneexists) {
             activity()->log('Active Year is Null:' . $request->firstname . " " . $request->middlename);
             toast('Phone Number Already Exist !!', 'error')->timerProgressBar()->autoClose(30000)->showCloseButton();
             return back()->withInput();
@@ -1226,6 +1395,9 @@ class BeneficiaryformController extends Controller
                     // 'ActivePhoneNumber'=>['required'],
                     // 'Marks6'=>['required'],
                     // 'EmailGuardian'=>['required', 'string', 'email', 'max:255','unique:beneficiaryforms']  //
+                    'applicationformsoftcopy' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
+                    'schoolfeestructure' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
+                    'applicantpassport' => 'nullable|mimes:jpeg,png,jpg,csv,txt,xlx,xls,pdf|max:5048',
                 ]
             );
 
@@ -1268,22 +1440,69 @@ class BeneficiaryformController extends Controller
                         'TermOneFee' => $request->TermOneFee,
                         'TermTwoFee' => $request->TermTwoFee,
                         'TermThreeFee' => $request->TermThreeFee,
-                        'beneficiary' =>$request->lastname." ".$request->firstname,
+                        'beneficiary' => $request->lastname . " " . $request->firstname,
                     ]
                 );
 
                 Fees::updateOrCreate(
-                    ['beneficiary_id' =>$resp->id, 'year' => $activeYear->year],
+                    ['beneficiary_id' => $resp->id, 'year' => $activeYear->year],
                     [
                         'expectedterm1' => $request->TermOneFee,
                         'expectedterm2' => $request->TermTwoFee,
                         'expectedterm3' => $request->TermThreeFee,
-                        'beneficiary' =>$request->lastname." ".$request->firstname,
-                        'yearlyfee'=>$resp->SchoolFees,
-                        'school'=>$resp->SecondaryAdmitted,
+                        'beneficiary' => $request->lastname . " " . $request->firstname,
+                        'yearlyfee' => $resp->SchoolFees,
+                        'school' => $resp->SecondaryAdmitted,
                     ]
-                    );
+                );
 
+                if ($request->file()) {
+                    if(!is_null($request->applicationformsoftcopy)){
+                        $fileName = time() . '_' . $request->applicationformsoftcopy->getClientOriginalName();
+                        $filePath = $request->file('applicationformsoftcopy')->storeAs('uploads', $fileName, 'public');
+                        SupportingDoc::updateOrCreate(
+                            ['beneficiary_id' => $resp->id, 'type' => 'FORM'],
+                            [
+                                'name' =>  $request->applicationformsoftcopy->getClientOriginalName(),
+                                'name_unique' => time() . '_' . $request->applicationformsoftcopy->getClientOriginalName(),
+                                'file_path' => $filePath,
+                                
+                            ]
+                        );
+                    }
+                  
+                    if(!is_null($request->applicantpassport)){
+                        $fileName2 = time() . '_' . $request->applicantpassport->getClientOriginalName();
+                        $filePath2 = $request->file('applicantpassport')->storeAs('uploads', $fileName2, 'public');
+                        SupportingDoc::updateOrCreate(
+                            ['beneficiary_id' => $resp->id, 'type' => 'PASSPORT'],
+                            [
+                                'name' =>  $request->applicantpassport->getClientOriginalName(),
+                                'name_unique' => time() . '_' . $request->applicantpassport->getClientOriginalName(),
+                                'file_path' => $filePath2,
+                                
+                            ]
+                        );
+                    }
+                 
+                    if(!is_null($request->schoolfeestructure)){
+                        $fileName3 = time() . '_' . $request->schoolfeestructure->getClientOriginalName();
+                        $filePath3 = $request->file('schoolfeestructure')->storeAs('uploads', $fileName3, 'public');
+                        SupportingDoc::updateOrCreate(
+                            ['beneficiary_id' => $resp->id, 'type' => 'FEES'],
+                            [
+                                'name' =>  $request->schoolfeestructure->getClientOriginalName(),
+                                'name_unique' => time() . '_' . $request->schoolfeestructure->getClientOriginalName(),
+                                'file_path' => $filePath3,
+                                
+                            ]
+                        );
+    
+                    }
+                   
+
+                }
+                
                 activity()->log('Beneficiary record uploaded:' . $request->firstname . " " . $request->middlename);
                 alert('UPLOAD', 'Beneficiary Upload was a Success', 'success')->autoClose(10000);
                 return back();
@@ -1309,22 +1528,25 @@ class BeneficiaryformController extends Controller
             return back()->withInput();
         }
 
-        $continuing = Fees::join('beneficiaryforms','fees.beneficiary_id','=','beneficiaryforms.id')->where('fees.year','!=',$activeYear->year)->where('fees.status',1)->get(); 
-        return view('clerk.continuingbeneficiaries',compact('continuing'));
-
+        $continuing = Fees::join('beneficiaryforms', 'fees.beneficiary_id', '=', 'beneficiaryforms.id')->where('fees.year', '!=', $activeYear->year)->where('fees.status', 1)->get();
+        return view('clerk.continuingbeneficiaries', compact('continuing'));
     }
 
     public function ongoingbeneficiaryexcel()
     {
-        return Excel::download(new OngoingbeneficiaryClerk,'beneficiary-' . date('h.i.s.a') . '.xlsx');
+        return Excel::download(new OngoingbeneficiaryClerk, 'beneficiary-' . date('h.i.s.a') . '.xlsx');
     }
 
     public function ongoingfeeview($id)
     {
         $activeYear = AcademicYear::where('status', 1)->first();
-        $beneficiary = Fees::where('beneficiary_id',$id)->first();
+        $beneficiary = Fees::where('beneficiary_id', $id)->first();
 
-        return view('clerk.continuingfees',compact('activeYear','beneficiary','id'));
+        SupportingDoc::all()->filter(function ($value) {
+            $today = Carbon::now();
+            return $value->created_at->year === $today->year; // assuming, that your timestamp gets converted to a Carbon object.
+        })->where('beneficiary_id', $id);
+        return view('clerk.continuingfees', compact('activeYear', 'beneficiary', 'id'));
     }
 
     /**
@@ -1336,24 +1558,44 @@ class BeneficiaryformController extends Controller
     public function postongoingfeeview(Request $request)
     {
         $request->validate([
-            'ExpectedTermOne'=>'required'
+            'ExpectedTermOne' => 'required',
+            'schoolfeestructure' => 'mimes:jpeg,png,jpg,csv,txt,xlx,xls,docx,pdf|max:5048',
         ]);
         $activeYear = AcademicYear::where('status', 1)->first();
-        $beneficiary = Beneficiaryform::where('id',$request->id)->first();
+        $beneficiary = Beneficiaryform::where('id', $request->id)->first();
 
         Fees::updateOrCreate(
-            ['beneficiary_id' =>$request->id, 'year' => $activeYear->year],
+            ['beneficiary_id' => $request->id, 'year' => $activeYear->year],
             [
                 'expectedterm1' => $request->ExpectedTermOne,
                 'expectedterm2' => $request->ExpectedTermTwo,
                 'expectedterm3' => $request->ExpectedTermThree,
-                'beneficiary' =>$beneficiary->lastname." ".$beneficiary->firstname,
-                'yearlyfee'=>$request->ExpectedYearly,
-                'school'=>$beneficiary->SecondaryAdmitted,
-                'status'=>1,
+                'beneficiary' => $beneficiary->lastname . " " . $beneficiary->firstname,
+                'yearlyfee' => $request->ExpectedYearly,
+                'school' => $beneficiary->SecondaryAdmitted,
+                'status' => 1, //Active Fee record
             ]
         );
-        Fees::where('beneficiary_id',$request->id)->where('year','!=', $activeYear->year)->update(['status'=>0]);
+        Fees::where('beneficiary_id', $request->id)->where('year', '!=', $activeYear->year)->update(['status' => 0]);
+
+        if ($request->file()) {
+            if(!is_null($request->schoolfeestructure)){
+                $fileName3 = time() . '_' . $request->schoolfeestructure->getClientOriginalName();
+                $filePath3 = $request->file('schoolfeestructure')->storeAs('uploads', $fileName3, 'public');
+                SupportingDoc::updateOrCreate(
+                    ['beneficiary_id' => $request->id, 'type' => 'FEES'],
+                    [
+                        'name' =>  $request->schoolfeestructure->getClientOriginalName(),
+                        'name_unique' => time() . '_' . $request->schoolfeestructure->getClientOriginalName(),
+                        'file_path' => $filePath3,
+                        
+                    ]
+                );
+
+            }
+           
+
+        }
 
         activity()->log('Beneficiary fee record creared:' . $request->firstname . " " . $request->lastname);
         alert('CREATED', 'Beneficiary fee Creation was a Success', 'success')->autoClose(10000);

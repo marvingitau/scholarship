@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 use App\Exports\Ongoingbeneficiary;
 use App\Models\Admin\Communication;
 use App\Models\Clerk\StatementNeed;
+use App\Models\Clerk\SupportingDoc;
 use App\Http\Controllers\Controller;
 use App\Models\Clerk\FamilyProperty;
 use Illuminate\Support\Facades\Auth;
@@ -112,13 +113,29 @@ class AdminDashboardController extends Controller
             $emergencySection = EmergencyContact::where('beneficiary_id', $id)->first()->toArray();
             $familyPropertySection = DB::table('family_properties')->where('beneficiary_id', $id)->get()->toArray();
             $expectedFee = ExpectedTermFee::where('beneficiary_id', $id)->first()->toArray();
+
+            $feestructure = SupportingDoc::all()->filter(function ($value) {
+                // $today = Carbon::now();
+                // $value->created_at->year === $today->year && 
+                return $value->type == "FEES"; // assuming, that your timestamp gets converted to a Carbon object.
+            })->where('beneficiary_id',$id);
+
+            $passport = SupportingDoc::all()->filter(function ($value) {
+              
+                return  $value->type == "PASSPORT"; 
+            })->where('beneficiary_id',$id);
+
+            $softcopy = SupportingDoc::all()->filter(function ($value) {
+                return  $value->type == "FORM";
+            })->where('beneficiary_id',$id);
+            
             // dd($personalSection['Type']);
             if ($personalSection['Type'] == 'THEOLOGY') {
-                return view('admin.theologyapplicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'expectedFee']));
+                return view('admin.theologyapplicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'expectedFee','feestructure','passport','softcopy']));
             } elseif ($personalSection['Type'] == 'SPECIAL') {
-                return view('admin.specialapplicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'expectedFee']));
+                return view('admin.specialapplicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'expectedFee','feestructure','passport','softcopy']));
             } else {
-                return view('admin.applicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'expectedFee']));
+                return view('admin.applicant', compact(['personalSection', 'academicSection', 'familySection', 'statementSection', 'siblingSection', 'emergencySection', 'familyPropertySection', 'expectedFee','feestructure','passport','softcopy']));
             }
         } else {
             return back();
@@ -947,7 +964,13 @@ class AdminDashboardController extends Controller
     {
         $activeYear = AcademicYear::where('status', 1)->first();
         $beneficiary = Fees::where('beneficiary_id',$id)->where('year',$activeYear->year)->first();
-        return view('admin.continuingfees',compact('activeYear','beneficiary','id'));
+
+        $feestructure = SupportingDoc::all()->filter(function ($value) {
+            $today = Carbon::now();
+            return $value->type == "FEES" && $value->created_at->year === $today->year; // assuming, that your timestamp gets converted to a Carbon object.
+        })->where('beneficiary_id',$id);
+
+        return view('admin.continuingfees',compact('activeYear','beneficiary','id','feestructure'));
     }
 
     
@@ -972,69 +995,11 @@ class AdminDashboardController extends Controller
         return back();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function downloadsupportingdoc($id)
     {
-        //
+        $path = SupportingDoc::where('id', $id)->first()->file_path;
+        // dd(storage_path('app/public/'.$path));
+        return response()->download(storage_path('app/public/' . $path));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+   
 }

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Models\Admin\Communication;
 use App\Models\Admin\StudyMaterial;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreStudyMaterialRequest;
 use App\Http\Requests\UpdateStudyMaterialRequest;
-use Illuminate\Support\Facades\File;
 
 class StudyMaterialController extends Controller
 {
@@ -95,6 +97,30 @@ class StudyMaterialController extends Controller
             ->delay(now()->addSeconds(2));
 
         dispatch($job);
+
+        /*$data = Communication::where('beneficiary_type',$details['category'])->get();
+        $path = StudyMaterial::where('id',$details['id'])->first()->file_path;
+        
+        $input['subject'] = "Study Material";
+        $input['path'] = storage_path('app/public/'.$path);
+
+     
+        
+
+        foreach ($data as $key => $value) {
+            $input['email'] = $value->email;
+            $input['name'] = $value->belongsto;
+
+           Mail::send('mail.studymaterial', [], function($message) use($input){
+                $message->to($input['email'], $input['name'])->subject($input['subject']);
+                $message->attach($input['path']);
+              
+
+            });
+          
+        }*/
+        
+
         $cat->mailed = 1;
         $cat->save();
 

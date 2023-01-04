@@ -2,17 +2,16 @@
 
 namespace App\Jobs;
 
-use App\Models\Admin\Communication;
-use Mail;
 use Illuminate\Bus\Queueable;
+use App\Models\Admin\Communication;
 use App\Models\Admin\StudyMaterial;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Clerk\Beneficiaryform;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
-
 
 class SendQueueEmail implements ShouldQueue
 {
@@ -49,12 +48,13 @@ class SendQueueEmail implements ShouldQueue
             $input['email'] = $value->email;
             $input['name'] = $value->belongsto;
 
-            \Mail::send('mail.studymaterial', [], function($message) use($input){
+           Mail::send('mail.studymaterial', [], function($message) use($input){
                 $message->to($input['email'], $input['name'])->subject($input['subject']);
                 $message->attach($input['path']);
               
 
             });
+          
         }
     }
 }

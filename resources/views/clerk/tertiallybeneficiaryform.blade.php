@@ -37,7 +37,7 @@
                             </div>  -->
                             <br> <!-- fieldsets -->
 
-                            <form method="POST" action="{{ route('clerk.storepersonaldetail') }}" class="form-input">
+                            <form method="POST" action="{{ route('clerk.storepersonaldetail') }}" class="form-input" enctype="multipart/form-data">
                                 <input type="hidden" name="Type" value="TERTIARY">
                                 @csrf
                                 <fieldset>
@@ -76,7 +76,7 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">First Name: *</label>
-                                                <input type="text" name="firstname" value="{{ old('firstname') }}" placeholder="First Name" required/>
+                                                <input type="text" name="firstname" value="{{ old('firstname') }}" placeholder="First Name" required />
                                                 @error('firstname')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                 @enderror
@@ -84,11 +84,11 @@
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Middle Name: </label>
                                                 <input type="text" name="middlename" value="{{ old('middlename') }}" placeholder="Middle Name" />
-                                                
+
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Last Name: *</label>
-                                                <input type="text" name="lastname" value="{{ old('lastname') }}" placeholder="Last Name" required/>
+                                                <input type="text" name="lastname" value="{{ old('lastname') }}" placeholder="Last Name" required />
                                                 @error('lastname')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                 @enderror
@@ -107,11 +107,11 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Date of Birth: </label>
-                                                <input type="date" name="DOB" value="{{ old('DOB') }}" placeholder="Age" required/>
+                                                <input type="date" name="DOB" value="{{ old('DOB') }}" placeholder="Age" required />
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Active Email:* </label>
-                                                <input type="email" name="email" value="{{ old('email') }}" placeholder="Active Email" required/>
+                                                <input type="email" name="email" value="{{ old('email') }}" placeholder="Active Email" required />
                                                 @error('email')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                 @enderror
@@ -131,7 +131,7 @@
 
                                             <div class="col-md-6">
                                                 <label class="fieldlabels">Institute Admitted: </label>
-                                                <input type="text" name="SecondaryAdmitted" value="{{ old('SecondaryAdmitted') }}" placeholder="Institute Admitted" required/>
+                                                <input type="text" name="SecondaryAdmitted" value="{{ old('SecondaryAdmitted') }}" placeholder="Institute Admitted" required />
                                             </div>
 
                                             <div class="col-md-3">
@@ -145,7 +145,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Expected Term1/Semester1 Fees: </label>
-                                                <input type="number" name="TermOneFee" value="{{ old('TermOneFee') }}" placeholder="Term1/Semester1 Fees" required/>
+                                                <input type="number" name="TermOneFee" value="{{ old('TermOneFee') }}" placeholder="Term1/Semester1 Fees" required />
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Expected Term2/Semester2 Fees: </label>
@@ -153,12 +153,12 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="fieldlabels">Expected Term3/Semester3 Fees: </label>
-                                                <input type="number" name="TermThreeFee" value="{{ old('TermThreeFee') }}" placeholder="Term3/Semester3 Fees" >
+                                                <input type="number" name="TermThreeFee" value="{{ old('TermThreeFee') }}" placeholder="Term3/Semester3 Fees">
                                             </div>
 
                                             <div class="col-md-12">
                                                 <label class="fieldlabels">Annual Fees: </label>
-                                                <input type="number" name="SchoolFees" value="{{ old('SchoolFees') }}" placeholder="Annual Fees" required/>
+                                                <input type="number" name="SchoolFees" value="{{ old('SchoolFees') }}" placeholder="Annual Fees" required />
                                             </div>
 
                                             <div class="col-md-3">
@@ -188,14 +188,14 @@
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Pastor Name: </label>
-                                                <input type="text" name="pastorname" value="{{ old('pastorname') }}" placeholder="Pastor Name" required/>
+                                                <input type="text" name="pastorname" value="{{ old('pastorname') }}" placeholder="Pastor Name" />
                                             </div>
 
                                             <div class="col-md-3">
                                                 <label class="fieldlabels">Pastor/Church Mobile: </label>
-                                                <input type="text" name="pastortelephone" value="{{ old('pastortelephone') }}" placeholder="Pastor/Church Mobile" required/>
+                                                <input type="text" name="pastortelephone" value="{{ old('pastortelephone') }}" placeholder="Pastor/Church Mobile" />
                                             </div>
-                                            
+
                                             <!-- <div class="col-3">
                                                 <label class="fieldlabels">Guardian Telephone: </label>
                                                 <input type="text" name="TelephoneGuardian" value="{{ old('TelephoneGuardian') }}" class="@error('TelephoneGuardian') is-invalid @enderror" value="{{ old('TelephoneGuardian') }}" placeholder="Guardian Telephone" />
@@ -255,11 +255,11 @@
                                             <div class="row">
                                                 <div class="col-md-5">
                                                     <label class="fieldlabels">Subject : </label>
-                                                    <input type="text" name="Subject1[]" placeholder="Subject"  />
+                                                    <input type="text" name="Subject1[]" placeholder="Subject" />
                                                 </div>
                                                 <div class="col-md-5">
                                                     <label class="fieldlabels">Marks/Grade : </label>
-                                                    <input type="text" name="Marks1[]" placeholder="Marks"  />
+                                                    <input type="text" name="Marks1[]" placeholder="Marks" />
 
                                                 </div>
                                                 <div class="col-md-2">
@@ -470,32 +470,32 @@
                                         <div class="row">
 
                                             <div class="col-3">
-                                                <label class="fieldlabels">Emergency Name: *</label>
-                                                <input type="text" name="EmergencyName" value="{{ old('EmergencyName') }}" placeholder="Emergency Name" />
+                                                <label class="fieldlabels">Name: *</label>
+                                                <input type="text" name="EmergencyName" value="{{ old('EmergencyName') }}" placeholder="Name" />
                                             </div>
                                             <div class="col-3">
-                                                <label class="fieldlabels">Emergency Relationship: *</label>
-                                                <input type="text" name="EmergencyRelationship" value="{{ old('EmergencyRelationship') }}" placeholder="Emergency Relationship" />
+                                                <label class="fieldlabels">Relationship: *</label>
+                                                <input type="text" name="EmergencyRelationship" value="{{ old('EmergencyRelationship') }}" placeholder="Relationship" />
                                             </div>
                                             <div class="col-6">
-                                                <label class="fieldlabels">Emergency Physical Address: *</label>
-                                                <input type="text" name="EmergencyPhysicalAddress" value="{{ old('EmergencyPhysicalAddress') }}" placeholder="Emergency Physical Address" />
+                                                <label class="fieldlabels">Physical Address: *</label>
+                                                <input type="text" name="EmergencyPhysicalAddress" value="{{ old('EmergencyPhysicalAddress') }}" placeholder="Physical Address" />
                                             </div>
                                             <div class="col-3">
-                                                <label class="fieldlabels">Emergency P.O.Box : *</label>
-                                                <input type="text" name="EmergencyPoBox" value="{{ old('EmergencyPoBox') }}" placeholder="Emergency P.O.Box" />
+                                                <label class="fieldlabels">P.O.Box : *</label>
+                                                <input type="text" name="EmergencyPoBox" value="{{ old('EmergencyPoBox') }}" placeholder="P.O.Box" />
                                             </div>
                                             <div class="col-3">
-                                                <label class="fieldlabels">Emergency Telephone: *</label>
-                                                <input type="text" name="EmergencyTelephone" value="{{ old('EmergencyTelephone') }}" placeholder="Emergency Telephone" />
+                                                <label class="fieldlabels">Telephone: *</label>
+                                                <input type="text" name="EmergencyTelephone" value="{{ old('EmergencyTelephone') }}" placeholder="Telephone" />
                                             </div>
                                             <div class="col-3">
-                                                <label class="fieldlabels">Emergency Mobile: *</label>
-                                                <input type="text" name="EmergencyMobile" value="{{ old('EmergencyMobile') }}" placeholder="Emergency Mobile" />
+                                                <label class="fieldlabels">Mobile: *</label>
+                                                <input type="text" name="EmergencyMobile" value="{{ old('EmergencyMobile') }}" placeholder="Mobile" />
                                             </div>
                                             <div class="col-3">
-                                                <label class="fieldlabels">Emergency Email: *</label>
-                                                <input type="text" name="EmergencyEmail" value="{{ old('EmergencyEmail') }}" placeholder="Emergency Email" />
+                                                <label class="fieldlabels">Email: *</label>
+                                                <input type="text" name="EmergencyEmail" value="{{ old('EmergencyEmail') }}" placeholder="Email" />
                                             </div>
 
 
@@ -509,6 +509,38 @@
                                     </div>
                                     <!-- <input type="button" name="next" class="next action-button" value="Next" />
                                 <input type="button" name="previous" class="previous action-button-previous" value="Previous" /> -->
+                                </fieldset>
+
+                                <fieldset>
+                                    <div class="form-card">
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <h2 class="fs-title">Supporting Documents:</h2>
+                                            </div>
+                                            <div class="col-5">
+                                                <h2 class="steps">Step 7 - 7</h2>
+                                            </div>
+                                        </div>
+
+                                        <div class="property_repeater">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label class="fieldlabels">Application Form Soft copy</label>
+                                                    <input type="file" name="applicationformsoftcopy" placeholder="Application form" />
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="fieldlabels">School Fee Structure</label>
+                                                    <input type="file" name="schoolfeestructure" placeholder="School Fee Structure" />
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="fieldlabels">Applicant Passport/Photo</label>
+                                                    <input type="file" name="applicantpassport" placeholder="Applicant Passport" />
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </fieldset>
 
                                 <!-- <fieldset>

@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="card">
-                <form action="{{route('clerk.postongoingfeeview')}}" method="POST">
+                <form action="{{route('clerk.postongoingfeeview')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id" value="{{$id}}">
                     <input type="hidden" name="year" value="{{$activeYear->year}}">
@@ -63,13 +63,16 @@
                                 <input type="number" name="ExpectedTermThree" class="form-control" placeholder="Expected Term3/Semester3">
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-8">
                             <div class="form-group">
                                 <label for="">Expected YearlyFee</label>
                                 <input type="number" name="ExpectedYearly" class="form-control" placeholder="Expected YearlyFee">
                             </div>
                         </div>
-
+                        <div class="col-md-4">
+                                                    <label class="fieldlabels">School Fee Structure</label>
+                                                    <input type="file" name="schoolfeestructure" placeholder="School Fee Structure" />
+                                                </div>
                         <div class="col-md-12">
                             <button class="btn btn-info" type="submit">Submit</button>
                         </div>
